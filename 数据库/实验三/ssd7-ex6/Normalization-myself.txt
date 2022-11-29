@@ -1,0 +1,45 @@
+/*
+*@author:wangzhesi
+*  053597
+*/
+
+****1****
+List the primary key: 
+TrackingNum(PK)
+
+****2****
+List all the FDs:
+ TrackingNum -> {EmpID,EmpName,OrderNo,ShipToAddr,ShippedDate}
+ EmpID -> {EmpName}
+ OrderNo -> {ShipToAddr}
+
+****3****
+List all the update anomalies and provide an example of each:
+<1>Insertion:
+One exampleis: If we want to insert a new employee ,we only have he or she EmpID and EmpName.It will occour a insertion,because the new employee dose not have the order of shipped. Another example is: If we insert a new order of the shipment, we only have the OrderNo,hipToAddr and ShippedDate. There will also be a insertion, because the new order may not have a employee to shipped it.
+<2>Deletion:
+One employee just appear only one time,If we delete the order of this employee, there will be a deletion happen, because after we delete this order we will lose the information of this employee.
+<3>Modification:
+If we change one the ShipToAddr or ShippedDate of the order,we will be a modification, because the other oders which have the same OrderNo will not be changed. The datebase will not be the same and the order which have the same OrderNo will have different ShipToAddr or ShippedDate.
+
+****4****
+The nomal form is relation in 2NF.Because firstly,this formal has a relation in which the intersection of each row and column contains one and only one value; Secondly,this formal have full functional dependency on TrackingNum. But this form have transitive dependency, so it is not a3NF.                       
+
+****5****
+Apply normalization to it incrementally, bringing the relation to 3NF:
+
+3NF a relation that is in 1NF and 2NF and in which no non-primary-key attribute is transitively dependent on the primary key. This nomal form is 2NF,so we olny change from 2NF to 3NF.  
+The formal of 3NF:
+	SHIPMENT(TrackingNum, EmpID, OrderNo, ShippedDate)
+	Employee(EmpID, EmpName)
+	Order(OrderNo, ShipToAddr)
+The SHIPMENT:
+	TrackingNum -> {EmpID, OrderNo, ShippedDate}
+The Employee:
+	EmpID -> {EmpName}
+The Orde:
+	OrderNo -> {ShipToAddr}
+After this change, this formal doesn't have transitive dependency. EmpID, OrderNo, ShippedDate only dependent on the primary key TrackingNum.EmpName only dependent on the primary key EmpID. ShipToAddr only dependent on the primary key OrderNo.
+
+
+

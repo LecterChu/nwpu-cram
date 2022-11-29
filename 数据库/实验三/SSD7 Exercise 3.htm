@@ -1,0 +1,1506 @@
+<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SSD7 Exercise 6</title>
+<style type="text/css">
+p {
+	margin: 0px;
+}
+
+table {
+  width: 100%;
+}
+
+textarea {
+  width: 98%;
+}
+
+.crit-top-left {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+	border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	border-right: 1;
+	border-right-color: #CCCCCC;
+	border-right-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-top-right {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+	border-left: 1;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged {
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged-top {
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	border-top: 1;
+	border-top-color: #CCCCCC;
+	border-top-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged-bottom {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged-both {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	border-top: 1;
+	border-top-color: #CCCCCC;
+	border-top-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.disabled {
+  background-color: #CCCCCC;
+}
+
+.instructions {
+  font-family: monospace;
+	font-size: smaller;
+}
+
+.negative {
+  color: red;
+	font-weight: bold;
+}
+
+.positive {
+  color: #22BB22;
+	font-weight: bold;
+}
+
+.range {
+  font-size: smaller;
+}
+
+.hidden {
+  display: none;
+}
+        </style><script type="text/javascript" language="JavaScript1.2">
+var printCache = '';
+
+if (typeof window.onbeforeprint == 'undefined') { //NS
+	//do nothing for now
+} else if (typeof window.onbeforeprint == 'object') { //IE
+	window.onbeforeprint = function() {
+		var criterion_sets = document.getElementsByTagName('TR');
+		var len = criterion_sets.length;
+		var parentName = name.split('-')[0];
+	
+		for (var i = 0; i < len; i++) {
+			if (criterion_sets[i].id.indexOf('IDAABWR-') != -1) {
+				if (criterion_sets[i].style.display == '') {
+					printCache = criterion_sets[i].id;
+				}
+
+				criterion_sets[i].style.display = '';
+			}
+		}
+	}
+	
+	window.onafterprint = function() {
+		showCSet(printCache);
+	}
+}
+
+          function getRubricID() {
+            return 'IDAABWR';
+          }
+
+var feedbacks = document.getElementsByTagName('textarea');
+var inputs = document.getElementsByTagName('input');
+var selects = document.getElementsByTagName('select');
+var spans = document.getElementsByTagName('span');
+var NORM_SCORED = 1;
+var MAX_SCORED = 2;
+var MIN_SCORED = 3;
+var hasChanged = false;
+var normalScoringDisabled = false;
+
+function deselect() {
+  if (document.selection) {
+    document.selection.empty();//IE
+  } else if (window.getSelection) {
+    window.getSelection().removeAllRanges;//NS
+  }
+}
+
+function myDump(values) {
+  var result = "<pre>Values are:\n";
+    for (var i in values) {
+      result += i + ' = ' + values[i] + '\n';
+    }
+
+    var w = window.open("", "dump");
+    w.document.open();
+    w.document.write(result + '</pre>');
+    w.document.close();
+}
+
+function getBaseScore(name) {
+  return inputs['rubric-type'].value == 'additive'
+           ? getMinScore(name)
+           : getMaxScore(name);
+}
+
+function getCritChildren (name) {
+  var children = new Array();
+  var len = inputs.length;
+
+  for (var i = 0;  i < len; i++) {
+    if (inputs[i].name.indexOf(name) == 0
+        && (inputs[i].type == 'radio' ||
+            inputs[i].type =='checkbox')) {
+      children.push(inputs[i]);
+    }
+  }    
+
+  return children;
+}
+
+function getCSetChildren(name) {
+  return inputs[name + '-children']
+           ? inputs[name + '-children'].value.split(',')
+           : new Array();
+}
+
+function getFeedback(name) {
+  return feedbacks[name + '-feedback']
+           ? feedbacks[name + '-feedback'].value
+           : '';
+}
+
+function setFeedback(name, text) {
+  feedbacks[name + '-feedback'].value = text;
+}
+
+function getFOScore(name) {
+  var type = replaceType(name, 'score');
+  var in_score = inputs[type];
+
+  if (in_score) {
+    return parseFloat(in_score.value);
+  }
+
+  var sp_score = spans[type];
+
+  if (sp_score) {
+    return parseFloat(sp_score.childNodes[0].data);
+  }
+
+  return null;
+}
+
+function setFOScore(name, score) {
+  var in_score = inputs[replaceType(name, 'score')];
+  in_score.value = parseFloat(score);
+}
+
+function getFOText(name) {
+  var text = spans[replaceType(name, 'text')];
+
+  return text ? toHTML(text) : '';
+}
+
+function getMaxFeedback(name) {
+  return spans[name + '-maxf'] ? toHTML(spans[name + '-maxf']) : '';
+}
+
+function getMaxScore(name) {
+  return parseFloat(inputs[name + '-max'].value);
+}
+
+function getMinFeedback(name) {
+  return spans[name + '-minf'] ? toHTML(spans[name + '-minf']) : '';
+}
+
+function getMinScore(name) {
+  return parseFloat(inputs[name + '-min'].value);
+}
+
+function getParent(name) {
+  return inputs[name + '-parent'] 
+           ? inputs[name + '-parent'].value
+           : '';
+}
+
+function getRule(name) {
+  return inputs[name + '-rule'] ? inputs[name + '-rule'].value : 'sum';
+}
+
+function getScore(name) {
+  return parseFloat(inputs[name + '-score'].value);
+}
+
+function setScore(name, score) {
+  var score_box = inputs[name + '-score'];
+  var max_score = getMaxScore(name);
+  var min_score = getMinScore(name);
+
+  if (score > max_score) {
+    score_box.value = max_score;
+  } else if (score < min_score) {
+    score_box.value = min_score;
+  } else {
+    score_box.value = score;
+  }
+}
+
+function getScoringMethod(name) {
+  var qs = selects[name + '-qs'];
+	
+  if (qs) {
+    var len = qs.options.length;
+
+    for (var i = 0;  i < len; i++) {
+      if (qs.options[i].selected) {
+        return ++i;
+      }
+    }
+  }
+
+  return NORM_SCORED;
+}
+
+function getTitle(name) {
+  return toHTML(document.getElementsByTagName('td')[name + '-title']);
+}
+
+function hasQuickScore() {
+  var qs = getCSetChildren(getRubricID())[0];
+  
+  return getTitle(qs) == 'Quick Score';
+}
+
+function isQuickScored() {
+  var qs = getCSetChildren(getRubricID())[0];
+  
+  if (hasQuickScore()) {
+    return feedbacks[qs + '-feedback'].value != '';
+  }
+  
+  return false
+}
+
+function isPrintable(name) {
+  var siblings = getCSetChildren(getParent(name));
+  var len = siblings.length;
+
+  for (var i = 0; i < len; i++) {
+    if (getScore(siblings[i]) != getBaseScore(siblings[i])
+        || hasFeedback(siblings[i])) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function hasFeedback(name) {
+  var children = getCSetChildren(name);
+  var len = children.length;
+
+  if (len == 0) {
+    return getFeedback(name) != '';
+  } else {
+    for (var i = 0; i < len; i++) {
+      if (getFeedback(name) != '' || hasFeedback(children[i])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+}
+
+function showCSet(name) {
+  var criterion_sets = document.getElementsByTagName('tr');
+  var len = criterion_sets.length;
+  var parentName = name.split('-')[0];
+
+  for (var i = 0; i < len; i++) {
+    if (criterion_sets[i].id == name) {
+      criterion_sets[i].style.display = "";
+    } else if (criterion_sets[i].id.indexOf(parentName) != -1) {
+      criterion_sets[i].style.display = 'none';
+    }
+  }
+
+  var tabs = document.getElementsByTagName('TH');
+  len = tabs.length;
+
+  var compName = name.split('-')[1] + '-tab';
+
+  for (var i = 0; i < len; i++) {
+    if (tabs[i].id == compName) {
+      tabs[i].firstChild.style.color = "white";
+			tabs[i].style.borderColor = "white";
+			tabs[i].style.borderStyle = "inset";
+    } else {
+      tabs[i].firstChild.style.color = "black";
+			tabs[i].style.borderColor = "#CCCCCC";
+			tabs[i].style.borderStyle = "outset";
+    }
+  }
+}
+
+function generateReloadValues() {
+  var len = inputs.length;
+  var out = 'reloadValues = function() {\n';
+
+  for (var i = 0; i < len; i++) {
+    switch (inputs[i].type) {
+      case 'radio':
+      case 'checkbox':
+        if (inputs[i].checked) {
+          out += '    inputs[' + i + '].checked = true;\n'
+        }
+
+        break;
+      case 'text':
+        if (inputs[i].value != '') {
+          if (inputs[i].name.search(/score\d*$/) != -1 
+              && inputs[i].value != 
+                 getBaseScore(inputs[i].name.split('-')[0])) {
+            out += '    inputs[' + i + '].value = '
+                + inputs[i].value + ';\n';
+          }
+        }
+
+        break;
+      default:
+        //do nothing
+        break;
+    }
+  }
+
+  len = selects.length;
+
+  for (var i = 0; i < len; i++) {
+    var optlen = selects[i].options.length;
+
+    for (var j = 0; j < optlen; j++) {
+      if (selects[i].options[j].selected && 
+          ! selects[i].options[j].defaultSelected) {
+        out += '    selects[' + i + '].options[' + j + '].selected = true;\n';
+       }
+    }
+  }
+
+  len = feedbacks.length;
+
+  for (var i = 0; i < len; i++) {
+    if (feedbacks[i].value != '') {
+      out += '    feedbacks[' + i + '].value = unescape("'
+          + escape(feedbacks[i].value) + '");\n';
+    }
+  }
+
+  return out + '}\n';
+}
+
+function renderCSetFeedback(arr) {
+  var len = arr.length;
+  var out = '<ul>';
+
+  for (var i = 0; i < len; i++) {
+    switch (getRule(arr[i])) {
+      case 'sum':
+        if (isPrintable(arr[i])) {
+          var children = getCSetChildren(arr[i]);
+          var clen = children.length;
+          var style = (clen != 0) ? 'style="font-size: 125%"' : '';
+
+          out += '<li><b ' + style + '>' + getTitle(arr[i]) + '</b><br>\n'
+              +  'Score: ' + getScore(arr[i]) + '/' + getMaxScore(arr[i]) 
+              + '<br>\n';
+
+          var fdbk = getFeedback(arr[i]);
+
+          if (fdbk != '') {
+            out += '<table bgcolor="#CCCCCC">'
+                + '<tr><td>' +  Strings.NLtoBR(fdbk) 
+                + '</td></tr></table>\n';
+          }
+
+          out += "<br>\n";
+
+          if (children.length != 0 && getScoringMethod(arr[i]) == 1) {
+            out += renderCSetFeedback(children);
+          }
+        }
+
+        break;
+      default:
+        //do nothing
+        break;
+    }
+  }
+
+  return out + '</ul>';
+}
+
+function renderFeedback() {
+  var out = '<b style="font-size: 150%">Feedback for ' 
+          + getTitle(getRubricID()) + '</b><br>\n'
+          + '<span style="font-size:125%">Total Score: ' 
+          + getScore(getRubricID()) + '/' + getMaxScore(getRubricID()) 
+          + '</span><br>\n';
+  var fdbk = getFeedback(getRubricID());
+
+	if (fdbk != '') {
+		out += '<table bgcolor="#CCCCCC">'
+				+ '<tr><td>' +  Strings.NLtoBR(fdbk) 
+				+ '</td></tr></table>\n';
+	}
+
+  if (isQuickScored()) {
+    var qs = getCSetChildren(getRubricID())[0];
+
+		out += '<table bgcolor="#CCCCCC">'
+				+ '<tr><td>' +  Strings.NLtoBR(getFeedback(qs)) 
+				+ '</td></tr></table>\n';
+  } else {
+    var children = getCSetChildren(getRubricID());
+
+    out += renderCSetFeedback(children.slice((hasQuickScore() ? 1 : 0)));
+  }
+
+  return out;
+}
+
+function viewRenderedFeedback() {
+  var out = "<html>\n<head>\n<title>" + getTitle(getRubricID())
+          + "</title>\n</head><body>\n" + renderFeedback()
+          + "\n</body>\n</html>\n";
+  var w = window.open("", "renderedFeedback");
+
+  w.document.open();
+  w.document.write(out);
+  w.document.close();
+}
+
+function  resetRubric() {
+  if (confirm("Resetting the rubric will remove all feedback.\nAre you sure you want to continue?")) {
+         hasChanged = false;
+         document.forms[0].reset();
+         document.forms[1].reset();
+         updateRubric(getRubricID());
+	}
+}
+
+function loadRubric(name) {
+  showCSet(name);
+
+  var fn = Strings.ltrim(inputs['content_pieces'].value.replace(/&#34;/g, '"'));
+
+  if (fn != '') {
+    var reloadValues;
+
+    eval(fn);
+
+    reloadValues();
+  }
+}
+
+function submitRubric() {
+  if (hasChanged) {
+    inputs['content_pieces'].value = generateReloadValues();//feedback
+    inputs['rendered_feedback'].value = renderFeedback();//rubric_input
+    inputs['result'].value = getScore(getRubricID());//grade
+
+    document.forms['general'].submit();
+  } else {
+    var warning = 'You have not changed the score on this rubric.\n'
+                + 'You will not receive this warning again.';
+
+    alert(warning);
+    hasChanged = true;
+  }
+}
+
+function modifyScore(name) {
+  var score = getScore(name);
+
+  while (isNaN(score)) {
+    score = prompt('Please enter a number.');
+
+    if (score) {
+      setScore(name, score);
+			
+      score = getScore(name);
+    } else {
+      update(name);
+      return;
+    }
+  }
+
+	if (score > getMaxScore(name)) {
+		setScore(name, getMaxScore(name));
+		
+		score = getScore(name);
+	} else if(score < getMinScore(name)){
+		setScore(name, getMinScore(name));
+		
+		score = getScore(name);
+	}
+	
+	setScore(name, parseFloat(score));
+	
+  var children = getCritChildren(name);
+  var len = children.length;
+
+  for (var i = 0; i < len; i++) {
+    children[i].checked = false;
+  }
+
+  updateCSet(getParent(name));
+}
+
+function update(name) {
+  var children = getCritChildren(name);
+  var len = children.length;
+  var total = getBaseScore(name);
+  var feedback = getFeedback(name);
+
+  for (var i = 0; i < len; i++) {
+    if (children[i].checked) {
+      //deal with score
+      var score = getFOScore(children[i].value);
+
+      while (isNaN(score)) {
+        var num = prompt('Please enter a score for the option selected.', '');
+
+        if (num) {
+          setFOScore(children[i].value, num);
+          score = getFOScore(children[i].value);
+        } else {
+          children[i].checked = false;
+
+          if (num == '') {
+            alert("Action cancelled.\nEmpty value entered.");
+          }
+
+            return;
+        }
+      }
+
+      total += score;
+
+      //deal with feedback text.
+      if (feedback.indexOf(getFOText(children[i].value)) == -1) {
+        feedback += getFOText(children[i].value) + '\n';
+      }
+    } else {
+      feedback = Strings.remove(getFOText(children[i].value), feedback);
+    }
+  }
+
+  setFeedback(name, feedback);
+  setScore(name, total);
+
+  updateCSet(getParent(name));
+}
+
+function updateCSet(name) {
+  //This would be the rubric score set.
+  if (getParent(name) == '') {
+    updateRubric(name);
+    return;
+  }
+
+  setScore(name, computeScore(name, getCSetChildren(name)));
+  updateCSet(getParent(name));
+}
+
+function updateRubric(name) {
+  var children = getCSetChildren(name);
+  hasChanged = true;
+
+  if (isQuickScored()) {
+    setScore(name, getScore(children[0]));
+
+    if (! normalScoringDisabled) {
+      normalScoringDisabled = true;
+
+      disableNormalScoring('#CCCCCC');
+    }
+  } else {
+    setScore(name, computeScore(name, children.slice((hasQuickScore() ? 1 : 0))));
+
+    if (normalScoringDisabled) {
+      normalScoringDisabled = false;
+
+      disableNormalScoring('#FFFFFF');
+    }
+  }
+}
+
+//is modifying the showCSet values.
+function disableNormalScoring(bgcolor) {
+  var notAffected = getRubricID() + ',' + getCSetChildren(getRubricID())[0];
+  var len = inputs.length;
+
+  for (var i = 0; i < len; i++) {//not working correctly.
+    if (notAffected.indexOf(inputs[i].name.split('-')[0]) == -1
+        && (inputs[i].type == 'radio' || inputs[i].type == 'checkbox'
+            || inputs[i].type == 'text')
+        && inputs[i].className != 'disabled') {
+      inputs[i].disabled = normalScoringDisabled;
+
+      if (inputs[i].type == 'text') {
+        inputs[i].style.color = '#000000';
+        inputs[i].style.backgroundColor = bgcolor;
+      }
+    }
+  }
+
+  len = selects.length;
+
+  for (var i = 0; i < len; i++) {
+    selects[i].disabled = normalScoringDisabled;
+    selects[i].style.backgroundColor = bgcolor;
+  }
+	
+  len = feedbacks.length;
+
+  for (var i = 0; i < len; i++) {
+    if(notAffected.indexOf(feedbacks[i].name.split('-')[0]) == -1) {
+      feedbacks[i].disabled = normalScoringDisabled;
+      feedbacks[i].style.backgroundColor = bgcolor;
+    }
+  }
+
+  //add remark as to why disabled in tabbed c-set titles
+	var children = getCSetChildren(getRubricID()).slice(1);
+	len = children.length;
+	
+	for (var i = 0; i < len; i++) {
+	  if (normalScoringDisabled) {
+		  var t = document.getElementsByTagName('td')[children[i] + '-title'];
+			var nd = document.createElement('span');
+			
+			nd.style.fontSize = 'smaller';
+			nd.style.color = 'red';
+			nd.style.marginLeft = '3em';
+			nd.appendChild(document.createTextNode(' (Disabled because rubric is Quick-Scored.)'));
+			
+			t.appendChild(nd);
+		} else {
+		  var t = document.getElementsByTagName('td')[children[i] + '-title'];
+			
+			t.removeChild(t.lastChild);
+		}
+	}
+}
+
+function computeScore(name, children) {
+  var len = children.length;
+  var total;
+  var feedback = getFeedback(name);
+  var maxf = getMaxFeedback(name);
+  var minf = getMinFeedback(name);
+
+  if (useQuickScore(name) && getScoringMethod(name) == MAX_SCORED) {
+    total = getMaxScore(name);
+
+    if (feedback.indexOf(maxf) == -1) {
+      feedback += maxf + '\n';
+    }
+
+    if (feedback.indexOf(minf) != -1) {
+      feedback = Strings.remove(minf, feedback);
+    }
+
+    setFeedback(name, feedback);
+		
+		displayCSetChildren(name, 'none');
+  } else if (useQuickScore(name) && getScoringMethod(name) == MIN_SCORED) {
+    total = getMinScore(name);
+
+    if (feedback.indexOf(minf) == -1) {
+      feedback += minf + '\n';
+    }
+
+    if (feedback.indexOf(maxf) != -1) {
+      feedback = Strings.remove(maxf, feedback);
+    }
+
+    setFeedback(name, feedback);
+		
+		displayCSetChildren(name, 'none');
+  } else {
+    if (feedback.indexOf(maxf) != -1) {
+      feedback = Strings.remove(maxf, feedback);
+    }
+
+    if (feedback.indexOf(minf) != -1) {
+      feedback = Strings.remove(minf, feedback);
+    }
+		
+    setFeedback(name, feedback);
+		
+		if (useQuickScore(name)) {
+  		displayCSetChildren(name, '');
+    }
+		
+    switch(getRule(name)) {
+      case 'sum':
+        if (inputs['rubric-type'].value == 'additive') {
+          total = getMinScore(name);
+
+          for (var i = 0; i < len; i++) {
+            total += getScore(children[i]) + getMinScore(children[i]);
+          }
+        } else {
+          total = getMaxScore(name);
+
+          for (var i = 0; i < len; i++) {
+            total += getScore(children[i]) - getMaxScore(children[i]);
+          }
+        }
+
+        break;
+      case 'average':
+        total = 0;
+
+        for (var i = 0; i < len; i++) {
+          total += getScore(children[i]);
+        }
+
+        total /= len;
+        break;
+      case 'product':
+        total = getMaxScore(name);
+
+        for (var i = 0; i < len; i++) {
+          total *= (getScore(children[i]) / getMaxScore(children[i]));
+        }
+
+        break;
+      case 'max':
+        total = Number.NEGATIVE_INFINITY;
+
+        for (var i = 0; i < len; i++) {
+          total = Math.max(total, getScore(children[i]));
+        }
+
+        break;
+      case 'min':
+        total = Number.POSITIVE_INFINITY;
+
+        for (var i = 0; i < len; i++) {
+          total = Math.min(total, getScore(children[i]));
+        }
+
+        break;
+      default:
+        //do nothing
+        break;
+    }
+  }
+
+  if (usePercentOfTotal(name)) {
+    var denom = 0;
+
+    for (var i = 0; i < len; i++) {
+      denom += getMaxScore(children[i]);
+    }
+
+    total = (denom - (getMaxScore(name) - total)) / denom * 100;
+  }
+
+  return total;
+}
+
+function displayCSetChildren(name, style) {
+  var children = getCSetChildren(name);
+	var len = children.length;
+	
+	for (var i= 0; i < len; i++) {
+		var child = document.getElementsByTagName('tr')[name + '-' + children[i]];
+		
+		child.style.display = style;
+	}
+}
+
+function usePercentOfTotal(name) {
+  return inputs[name + '-poft'].value == 'true';
+}
+
+function useQuickScore(name) {
+  return selects[name + '-qs'];
+}
+
+function replaceType(name, type) {
+  return name.replace(/xxxxxxxx/, type);
+}
+
+function validateFOScore(name) {
+  var score_box = inputs[replaceType(name, 'score')];
+
+  if (isNaN(getFOScore(name)) && score_box.value != '') {
+    alert('Please enter a number.');
+
+    score_box.value = '';
+    score_box.focus();
+  }
+	
+	if (score_box.value) {
+		score_box.value = parseFloat(score_box.value);
+	}
+}
+
+/**
+ *	A collection of string functions missing from JavaScript.
+ */
+var Strings = new function() {
+  this.ltrim = function(str) {
+    return str.replace(/^\s*/, '');
+  }
+
+  this.rtrim = function(str) {
+    return str.replace(/\s*$/, '');
+  }
+
+  this.NLtoBR = function(str) {
+    return str.replace(/\n/g , '<br class="inserted">');
+  }
+
+  this.BRtoNL = function(str) {
+    return str.replace(/<br class="inserted">/g, '\n');
+  }
+
+  //remove the needle from the haystack and return the haystack
+  this.remove = function(needle, haystack) {
+    var index = haystack.indexOf(needle);
+
+    return (index == -1)
+           ? haystack
+           : haystack.substring(0, index)
+             + this.ltrim(haystack.substr(index + needle.length));		
+  }
+}
+
+/**
+ *  toHTML(node) works recursively to render a given node as HTML.
+ *  @param node The DOM node to start with.
+ *  @return The contents of the node as HTML
+ */
+function toHTML(node) {
+  var children = node.childNodes;
+  var len = children.length;	
+  var out = '';
+
+  for (var i = 0; i < len; i++) {
+    var nodeName = children[i].nodeName.toLowerCase();
+
+    switch (nodeName) {
+      case '#text':
+        out += children[i].data.replace(/<{1}/g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, ' ');
+
+	break;
+      default:
+        var attrs = children[i].attributes;
+        var atlen = attrs.length;
+        out += '<' + nodeName;
+
+        for (var j = 0; j < atlen; j++) {
+          if (attrs[j].specified) {
+            out += ' ' + attrs[j].name + '="' 
+                +  attrs[j].value.replace(/"/g, '&#34;') +'"';
+          }
+        }
+
+        out += '>';
+
+        switch (nodeName) {
+          case ('input'):
+          case ('br'):
+            //do nothing
+            break;
+          default:
+            out += this.toHTML(children[i]) + '<' + '/' + nodeName + '>';
+            break;
+        }
+
+        break;
+    }
+  }
+
+  return out;
+}
+
+        </script></head>
+<body onload="loadRubric('IDAABWR-IDANBWR')" bgcolor="#EEEEEE"><a name="top"></a><form action="" name="general" method="post"><input value="general" type="hidden" name="rubric_name"><input value="" type="hidden" name="content_pieces"><input type="hidden" name="rendered_feedback"><input type="hidden" name="practical_grade_id"><input type="hidden" name="result"><input value="pass" type="hidden" name="total_type"></form>
+<form action="" name="IDAABWR-form"><input value="subtractive" type="hidden" name="rubric-type"><table>
+<tbody>
+<tr>
+<td>
+<table border="1" cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="100" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDAABWR-score"><span class="range">[<b>100</b>:0]</span><input value="100" type="hidden" name="IDAABWR-max"><input value="0" type="hidden" name="IDAABWR-min"><input value="" type="hidden" name="IDAABWR-parent"><input value="IDANBWR,IDAHCWR,IDAJHWR" type="hidden" name="IDAABWR-children"></td>
+<td class="crit-top-right" id="IDAABWR-title">SSD7 Exercise 6 (v2.0)</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<p>Scoring rule: <input value="sum" type="hidden" name="IDAABWR-rule"><input value="false" type="hidden" name="IDAABWR-poft"></p>
+<div class="instructions">Assessment determines student competency in: <br>1. Identifying functional dependencies<br>2. Identifying a relation's normal form.<br>3. Normalizing a relation.<br></div><br><textarea rows="3" name="IDAABWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td colspan="2">
+<table>
+<tbody>
+<tr>
+<td><input value="Submit Rubric" type="button" style="width: 150px;" onclick="submitRubric()"><input value="Render Feedback" type="button" style="width: 150px;" onclick="viewRenderedFeedback()"></td>
+<td align="right"><input value="Reset Rubric" type="button" style="width: 150px;" onclick="resetRubric()"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table cellpadding="0" cellspacing="0">
+<thead>
+<tr id="tabs1">
+<th colspan="4" onclick="showCSet('IDAABWR-IDANBWR');" style="border-width: 2px;" bgcolor="#A86666" id="IDANBWR-tab"><a href="javascript:showCSet('IDAABWR-IDANBWR');">Quick Score</a></th>
+<th colspan="4" onclick="showCSet('IDAABWR-IDAHCWR');" style="border-width: 2px;" bgcolor="#999900" id="IDAHCWR-tab"><a href="javascript:showCSet('IDAABWR-IDAHCWR');">Normalization</a></th>
+<th colspan="4" onclick="showCSet('IDAABWR-IDAJHWR');" style="border-width: 2px;" bgcolor="#45BA45" id="IDAJHWR-tab"><a href="javascript:showCSet('IDAABWR-IDAJHWR');">Late or Resubmission</a></th>
+</tr>
+</thead>
+<tbody>
+<tr id="IDAABWR-IDANBWR">
+<td colspan="12">
+<table cellpadding="0" cellspacing="3" bgcolor="#A86666" border="1">
+<tbody>
+<tr>
+<td>
+<table cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="100" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDANBWR-score"><span class="range">[<b>100</b>:0]</span><input value="100" type="hidden" name="IDANBWR-max"><input value="0" type="hidden" name="IDANBWR-min"><input value="IDAABWR" type="hidden" name="IDANBWR-parent"><input value="" type="hidden" name="IDANBWR-children"></td>
+<td class="crit-top-right" id="IDANBWR-title">Quick Score</td>
+</tr>
+<tr>
+<td class="crit-merged-both" colspan="2">Scoring rule: This section overrides scores and comments from all other scoring sections.<br><div class="instructions">Use these criteria to quickly score an assignment.</div>
+</td>
+</tr>
+<tr class="hidden">
+<td class="crit-merged-bottom" colspan="2"><textarea rows="3" name="IDANBWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDANBWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDANBWR');" name="IDANBWR-cbx1"></td>
+<td>
+                    (<span class="positive" id="IDANBWR-cbx1-score1">0</span>)
+                  <span id="IDANBWR-cbx1-text1">Good work.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDANBWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDANBWR');" name="IDANBWR-cbx2"></td>
+<td>
+                    (<span class="negative" id="IDANBWR-cbx2-score2">-35</span>)
+                  <span id="IDANBWR-cbx2-text2">Insufficient ability to identify functional dependencies.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDANBWR-cbx3-xxxxxxxx3" type="checkbox" onclick="update('IDANBWR');" name="IDANBWR-cbx3"></td>
+<td>
+                    (<span class="negative" id="IDANBWR-cbx3-score3">-35</span>)
+                  <span id="IDANBWR-cbx3-text3">Insufficient ability to normalize a relation.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDANBWR-cbx4-xxxxxxxx4" type="checkbox" onclick="update('IDANBWR');" name="IDANBWR-cbx4"></td>
+<td>
+                    (<span class="negative" id="IDANBWR-cbx4-score4">-30</span>)
+                  <span id="IDANBWR-cbx4-text4">Insufficient ability to identify a relation's normal form.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDANBWR-cbx5-xxxxxxxx5" type="checkbox" onclick="update('IDANBWR');" name="IDANBWR-cbx5"></td>
+<td>
+                    (<span class="negative" id="IDANBWR-cbx5-score5">-100</span>)
+                  <span id="IDANBWR-cbx5-text5">Submission missing.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAABWR-IDAHCWR">
+<td colspan="12">
+<table cellpadding="0" cellspacing="3" bgcolor="#999900" border="1">
+<tbody>
+<tr>
+<td style="padding-left: 0px">
+<table cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="100" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDAHCWR-score"><span class="range">[<b>100</b>:0]</span><input value="100" type="hidden" name="IDAHCWR-max"><input value="0" type="hidden" name="IDAHCWR-min"><input value="IDAABWR" type="hidden" name="IDAHCWR-parent"><input value="IDA3CWR,IDAVDWR,IDAYEWR,IDAWFWR" type="hidden" name="IDAHCWR-children"></td>
+<td class="crit-top-right" id="IDAHCWR-title">Normalization</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="3">
+<p>Scoring rule: <input value="sum" type="hidden" name="IDAHCWR-rule"><input value="false" type="hidden" name="IDAHCWR-poft"></p>
+<div class="instructions">Assess students' ability to normalize a relation.</div>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="3"><textarea rows="5" name="IDAHCWR-feedback"></textarea></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAHCWR-IDA3CWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDA3CWR-score" onblur="modifyScore('IDA3CWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDA3CWR-max"><input value="0" type="hidden" name="IDA3CWR-min"><input value="IDAHCWR" type="hidden" name="IDA3CWR-parent"><input value="" type="hidden" name="IDA3CWR-children"></td>
+<td class="crit-top-right" id="IDA3CWR-title">Primary Key for shipment table.</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<div class="instructions"></div>
+</td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="3" name="IDA3CWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA3CWR-radio-xxxxxxxx1" type="radio" onclick="update('IDA3CWR');" name="IDA3CWR-radio"></td>
+<td>
+                    (<span class="negative" id="IDA3CWR-radio-score1">-10</span>)
+                  <span id="IDA3CWR-radio-text1">Primary key for shipment is not listed or is incorrect.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA3CWR-radio-xxxxxxxx2" type="radio" onclick="update('IDA3CWR');" name="IDA3CWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDA3CWR-radio-score2">0</span>)
+                  <span id="IDA3CWR-radio-text2">Primary key for shipment table: <b>good</b>.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDA3CWR')" name="IDA3CWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAHCWR-IDAVDWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="25" type="text" style="width: 2.5em;" name="IDAVDWR-score" onblur="modifyScore('IDAVDWR')"><span class="range">[<b>25</b>:0]</span><input value="25" type="hidden" name="IDAVDWR-max"><input value="0" type="hidden" name="IDAVDWR-min"><input value="IDAHCWR" type="hidden" name="IDAVDWR-parent"><input value="" type="hidden" name="IDAVDWR-children"></td>
+<td class="crit-top-right" id="IDAVDWR-title">Functional Dependencies.</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAVDWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAVDWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDAVDWR');" name="IDAVDWR-cbx1"></td>
+<td><input value="-13" type="text" style="width: 2.5em;" name="IDAVDWR-cbx1-score1" onblur="validateFOScore('IDAVDWR-cbx1-xxxxxxxx1');update('IDAVDWR');"><span id="IDAVDWR-cbx1-text1">Incorrect or incomplete listing of functional dependencies involving the tracking number.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAVDWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDAVDWR');" name="IDAVDWR-cbx2"></td>
+<td><input value="-12" type="text" style="width: 2.5em;" name="IDAVDWR-cbx2-score2" onblur="validateFOScore('IDAVDWR-cbx2-xxxxxxxx2');update('IDAVDWR');"><span id="IDAVDWR-cbx2-text2">Incorrect or incomplete listing of functional dependencies involving the employee id number.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAVDWR-cbx3-xxxxxxxx3" type="checkbox" onclick="update('IDAVDWR');" name="IDAVDWR-cbx3"></td>
+<td><input value="-25" type="text" style="width: 2.5em;" name="IDAVDWR-cbx3-score3" onblur="validateFOScore('IDAVDWR-cbx3-xxxxxxxx3');update('IDAVDWR');"><span id="IDAVDWR-cbx3-text3">Incorrect or incomplete listing of functional dependencies </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAVDWR-cbx4-xxxxxxxx4" type="checkbox" onclick="update('IDAVDWR');" name="IDAVDWR-cbx4"></td>
+<td>
+                    (<span class="positive" id="IDAVDWR-cbx4-score4">0</span>)
+                  <span id="IDAVDWR-cbx4-text4">Functional Dependencies: <b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAHCWR-IDAYEWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="30" type="text" style="width: 2.5em;" name="IDAYEWR-score" onblur="modifyScore('IDAYEWR')"><span class="range">[<b>30</b>:0]</span><input value="30" type="hidden" name="IDAYEWR-max"><input value="0" type="hidden" name="IDAYEWR-min"><input value="IDAHCWR" type="hidden" name="IDAYEWR-parent"><input value="" type="hidden" name="IDAYEWR-children"></td>
+<td class="crit-top-right" id="IDAYEWR-title">Identifying a relation's normal form.</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAYEWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAYEWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDAYEWR');" name="IDAYEWR-cbx1"></td>
+<td><input value="-15" type="text" style="width: 2.5em;" name="IDAYEWR-cbx1-score1" onblur="validateFOScore('IDAYEWR-cbx1-xxxxxxxx1');update('IDAYEWR');"><span id="IDAYEWR-cbx1-text1">Incorrect or insufficient explanation for shipment table's normal form.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAYEWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDAYEWR');" name="IDAYEWR-cbx2"></td>
+<td><input value="-30" type="text" style="width: 2.5em;" name="IDAYEWR-cbx2-score2" onblur="validateFOScore('IDAYEWR-cbx2-xxxxxxxx2');update('IDAYEWR');"><span id="IDAYEWR-cbx2-text2">Incorrect or missing normal form of shipment table.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAYEWR-cbx3-xxxxxxxx3" type="checkbox" onclick="update('IDAYEWR');" name="IDAYEWR-cbx3"></td>
+<td>
+                    (<span class="positive" id="IDAYEWR-cbx3-score3">0</span>)
+                  <span id="IDAYEWR-cbx3-text3">Normal Form of Shipment Table: <b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAHCWR-IDAWFWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="35" type="text" style="width: 2.5em;" name="IDAWFWR-score" onblur="modifyScore('IDAWFWR')"><span class="range">[<b>35</b>:0]</span><input value="35" type="hidden" name="IDAWFWR-max"><input value="0" type="hidden" name="IDAWFWR-min"><input value="IDAHCWR" type="hidden" name="IDAWFWR-parent"><input value="" type="hidden" name="IDAWFWR-children"></td>
+<td class="crit-top-right" id="IDAWFWR-title">Normalizing a relation.</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAWFWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAWFWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDAWFWR');" name="IDAWFWR-cbx1"></td>
+<td><input value="-3" type="text" style="width: 2.5em;" name="IDAWFWR-cbx1-score1" onblur="validateFOScore('IDAWFWR-cbx1-xxxxxxxx1');update('IDAWFWR');"><span id="IDAWFWR-cbx1-text1">Incorrect transformation from 1nf to 2nf if applicable.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAWFWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDAWFWR');" name="IDAWFWR-cbx2"></td>
+<td><input value="-4" type="text" style="width: 2.5em;" name="IDAWFWR-cbx2-score2" onblur="validateFOScore('IDAWFWR-cbx2-xxxxxxxx2');update('IDAWFWR');"><span id="IDAWFWR-cbx2-text2">Incorrect or insufficient explanation as to why the previously unnormalized relation is now 1nf if applicable.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAWFWR-cbx3-xxxxxxxx3" type="checkbox" onclick="update('IDAWFWR');" name="IDAWFWR-cbx3"></td>
+<td><input value="-7" type="text" style="width: 2.5em;" name="IDAWFWR-cbx3-score3" onblur="validateFOScore('IDAWFWR-cbx3-xxxxxxxx3');update('IDAWFWR');"><span id="IDAWFWR-cbx3-text3">Incorrect transformation from 1nf to 2nf if applicable.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAWFWR-cbx4-xxxxxxxx4" type="checkbox" onclick="update('IDAWFWR');" name="IDAWFWR-cbx4"></td>
+<td><input value="-7" type="text" style="width: 2.5em;" name="IDAWFWR-cbx4-score4" onblur="validateFOScore('IDAWFWR-cbx4-xxxxxxxx4');update('IDAWFWR');"><span id="IDAWFWR-cbx4-text4">Incorrect or insufficient explanation as to why the previously 1nf relation is now 2nf if applicable.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAWFWR-cbx5-xxxxxxxx5" type="checkbox" onclick="update('IDAWFWR');" name="IDAWFWR-cbx5"></td>
+<td><input value="-7" type="text" style="width: 2.5em;" name="IDAWFWR-cbx5-score5" onblur="validateFOScore('IDAWFWR-cbx5-xxxxxxxx5');update('IDAWFWR');"><span id="IDAWFWR-cbx5-text5">Incorrect transformation from 2nf to 3nf if applicable.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAWFWR-cbx6-xxxxxxxx6" type="checkbox" onclick="update('IDAWFWR');" name="IDAWFWR-cbx6"></td>
+<td><input value="-7" type="text" style="width: 2.5em;" name="IDAWFWR-cbx6-score6" onblur="validateFOScore('IDAWFWR-cbx6-xxxxxxxx6');update('IDAWFWR');"><span id="IDAWFWR-cbx6-text6">Incorrect or insufficient explanation as to why the previously 2nf relation is now in 3nf if applicable.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAWFWR-cbx7-xxxxxxxx7" type="checkbox" onclick="update('IDAWFWR');" name="IDAWFWR-cbx7"></td>
+<td>
+                    (<span class="positive" id="IDAWFWR-cbx7-score7">0</span>)
+                  <span id="IDAWFWR-cbx7-text7">Normalization of shipment table: <b>good</b>.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAABWR-IDAJHWR">
+<td colspan="12">
+<table cellpadding="0" cellspacing="3" bgcolor="#45BA45" border="1">
+<tbody>
+<tr>
+<td style="padding-left: 0px">
+<table cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="20" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDAJHWR-score"><span class="range">[<b>20</b>:0]</span><input value="20" type="hidden" name="IDAJHWR-max"><input value="0" type="hidden" name="IDAJHWR-min"><input value="IDAABWR" type="hidden" name="IDAJHWR-parent"><input value="IDACQWR" type="hidden" name="IDAJHWR-children"></td>
+<td class="crit-top-right" id="IDAJHWR-title">Late or Resubmission</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="3">
+<p>Scoring rule: The criterion-set has the same value as its child criterion.<input value="sum" type="hidden" name="IDAJHWR-rule"><input value="false" type="hidden" name="IDAJHWR-poft"></p>
+<div class="instructions">Use this section to deduct any points for a late submission or a resubmission.</div>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="3"><textarea rows="5" name="IDAJHWR-feedback"></textarea></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAJHWR-IDACQWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="20" type="text" style="width: 2.5em;" name="IDACQWR-score" onblur="modifyScore('IDACQWR')"><span class="range">[<b>20</b>:0]</span><input value="20" type="hidden" name="IDACQWR-max"><input value="0" type="hidden" name="IDACQWR-min"><input value="IDAJHWR" type="hidden" name="IDACQWR-parent"><input value="" type="hidden" name="IDACQWR-children"></td>
+<td class="crit-top-right" id="IDACQWR-title">Late or Re-submission</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<div class="instructions">Deduct any points for a late submission or a re-submission.</div>
+</td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="3" name="IDACQWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDACQWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDACQWR');" name="IDACQWR-cbx1"></td>
+<td><input value="-20" type="text" style="width: 2.5em;" name="IDACQWR-cbx1-score1" onblur="validateFOScore('IDACQWR-cbx1-xxxxxxxx1');update('IDACQWR');"><span id="IDACQWR-cbx1-text1">Submission: <b>late</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDACQWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDACQWR');" name="IDACQWR-cbx2"></td>
+<td><input value="-20" type="text" style="width: 2.5em;" name="IDACQWR-cbx2-score2" onblur="validateFOScore('IDACQWR-cbx2-xxxxxxxx2');update('IDACQWR');"><span id="IDACQWR-cbx2-text2">Submission: <b>re-submission</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</form><a href="#top">Return to top.</a></body>
+</html>

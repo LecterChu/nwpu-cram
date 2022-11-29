@@ -1,0 +1,203 @@
+1.
+--drop table account
+create table account
+( user_id int,
+  balance int,
+  primary key (user_id)
+);
+
+insert into account
+values ('01','100');
+
+insert into account
+values ('02','100');
+
+
+2.打开两个窗口会话
+
+
+3.在两个窗口中各自开始一个新事务
+--windows1
+begin transaction
+
+--windows2
+begin transaction
+
+
+4.
+update account
+set balance=455.66
+where user_id = 2
+
+
+5.
+select *
+from account;
+
+结果：
+	user_id   balance
+1                  1       100.5
+2                  2      455.66
+
+
+6.
+select *
+from account;
+
+结果
+	user_id   balance
+1                  2          100
+2                  1      100.5
+
+
+7.在第一个窗口中提交事务
+commit transaction
+
+
+8.第二个窗口查询
+select *
+from account;
+
+结果：
+	user_id   balance
+1                  1       100.5
+2                  2      455.66
+第一个窗口中的事务生效。
+原因：因为窗口一中事务已经commit并且窗口一二之前没有约束限制，所以窗口二中也有了相应的修改。
+
+
+9.第二个窗口提交事务
+commit transaction
+
+
+10.两个窗口都开始一个新的事务
+--windows1
+begin transaction
+
+--windows2
+begin transaction
+
+
+
+11.第二个窗口设置隔离等级：
+set transaction isolation level serializable;
+
+
+
+12.第一个窗口设置id为2的账户余额为1400
+update account
+set balance=1400
+where user_id = 2;
+
+
+13.的第二个床阔设置id为1的账户余额为1
+update account
+set balance=1
+where user_id = 1;
+
+
+14.
+--windows1
+select *
+from account;
+结果：
+	user_id   balance
+1                  1       100.5
+2                  2        1400
+
+--windows2
+select *
+from account;
+结果：
+	user_id   balance
+1                  2     455.66
+2                  1              1
+
+
+15.第一个窗口提交事务
+--windows1
+commit transaction
+
+
+
+16.第二个窗口查询所有行
+ --windows2
+select *
+from account;
+结果：
+	user_id   balance
+1                  2     455.66
+2                  1              1
+在第二个窗口中没有改变
+原因：
+因为两个事务隔离等级为串行化，第二个窗口无法读取第一个窗口同时进行的数据更改。
+
+
+17.第二个窗口提交事务
+--windows2
+commit transaction
+
+--windows1
+select *
+from account;
+结果：
+	user_id   balance
+1                  2        1400
+2                  1              1
+
+--windows2
+select *
+from account;
+结果：
+	user_id   balance
+1                  2        1400
+2                  1              1
+两个窗口查询的结果一致
+原因：所有事务都是被提交的状态，然后由于串行化的隔离等级，所以窗口中的数据结果是一样的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

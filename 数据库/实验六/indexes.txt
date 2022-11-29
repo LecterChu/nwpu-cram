@@ -1,0 +1,288 @@
+一、
+1.
+①创建表
+--drop table customer_lot;
+--drop table customer;
+--drop table lot;
+
+ create table customer(
+ customer_id integer,
+ customer_first_name varchar(100),
+ customer_last_name varchar(100));
+
+ create table lot(
+ lot_id integer,
+ lot_description varchar(100),
+ lot_size float,
+ lot_district integer,
+ lot_value float,
+ lot_street_address varchar(100));
+
+ create table customer_lot(
+ customer_id integer,
+ lot_id integer);
+
+②导入数据：
+copy lot from 'D:\\pgdata\\lot.out';
+copy customer from 'D:\\pgdata\\customer.out';
+copy customer_lot from 'D:\\pgdata\\customer_lot.out';
+
+2.
+select relname,reltuples,relpages
+from pg_class
+where relname = 'lot';
+输出结果：
+relname   reltuples   relpages
+lot       249999      2688
+
+lot块因子：249999/2688=93
+
+select relname, reltuples, relpages 
+from pg_class;
+where relname='customer';
+输出结果：
+relname   reltuples   relpages
+customer  249999      1441
+
+customer块因子：249999/1441=173
+
+select relname, reltuples, relpages 
+from pg_class 
+where relname='customer_lot';
+
+输出结果：
+relname       reltuples   relpages
+customer_lot  249999      1107
+
+customer_lot块因子：249999/1107=226
+
+3.
+①
+explain analyze
+select lot_id
+from lot
+where lot_size between 300 and 15000;
+输出结果:
+Seq Scan on lot  (cost=0.00..6437.98 rows=147272 width=4) (actual time=0.223..43.588 rows=147220 loops=1)"
+  Filter: ((lot_size >= '300'::double precision) AND (lot_size <= '15000'::double precision))
+  Rows Removed by Filter: 102779
+Planning Time: 2.152 ms
+Execution Time: 46.452 ms
+
+②
+explain analyze
+select lot_id 
+from lot 
+where lot_value between 300 and 15000;
+输出结果：
+Gather  (cost=1000.00..6272.57 rows=3787 width=4) (actual time=0.528..53.095 rows=3733 loops=1)
+  Workers Planned: 1
+  Workers Launched: 1
+  ->  Parallel Seq Scan on lot  (cost=0.00..4893.87 rows=2228 width=4) (actual time=0.010..13.453 rows=1867 loops=2)
+        Filter: ((lot_value >= '300'::double precision) AND (lot_value <= '15000'::double precision))
+        Rows Removed by Filter: 123133
+Planning Time: 0.075 ms
+Execution Time: 53.201 ms
+
+③
+explain analyze 
+select * 
+from customer 
+where customer_id=12;
+输出结果：
+Gather  (cost=1000.00..4279.33 rows=1 width=16) (actual time=2.743..55.675 rows=1 loops=1)
+  Workers Planned: 1
+  Workers Launched: 1
+  ->  Parallel Seq Scan on customer  (cost=0.00..3279.23 rows=1 width=16) (actual time=1.031..13.247 rows=1 loops=2)
+        Filter: (customer_id = 12)
+        Rows Removed by Filter: 124999
+Planning Time: 0.619 ms
+Execution Time: 55.706 ms
+
+④
+explain analyze 
+insert into customer 
+values (250001, 'Vince', 'Smith' );
+输出结果：
+Insert on customer  (cost=0.00..0.01 rows=1 width=440) (actual time=8.881..8.881 rows=0 loops=1)
+  ->  Result  (cost=0.00..0.01 rows=1 width=440) (actual time=0.001..0.001 rows=1 loops=1)
+Planning Time: 0.027 ms
+Execution Time: 8.918 ms
+
+⑤
+explain analyze 
+delete from customer 
+where customer_id='250001'; 
+输出结果：
+Delete on customer  (cost=0.00..4565.99 rows=1 width=6) (actual time=14.586..14.586 rows=0 loops=1)
+  ->  Seq Scan on customer  (cost=0.00..4565.99 rows=1 width=6) (actual time=14.567..14.567 rows=1 loops=1)
+        Filter: (customer_id = 250001)
+        Rows Removed by Filter: 249999
+Planning Time: 0.036 ms
+Execution Time: 23.392 ms
+
+⑥
+explain analyze 
+update customer 
+set customer_first_name='Vinny' 
+where customer_id='249001';
+输出结果： 
+Update on customer  (cost=0.00..4565.99 rows=1 width=234) (actual time=15.188..15.188 rows=0 loops=1)
+  ->  Seq Scan on customer  (cost=0.00..4565.99 rows=1 width=234) (actual time=15.083..15.158 rows=1 loops=1)
+        Filter: (customer_id = 249001)
+        Rows Removed by Filter: 249998
+Planning Time: 0.043 ms
+Execution Time: 15.201 ms
+
+⑦
+explain analyze 
+select avg(lot_size) 
+from lot; 
+输出结果：
+Finalize Aggregate  (cost=5526.34..5526.35 rows=1 width=8) (actual time=35.232..35.232 rows=1 loops=1)
+  ->  Gather  (cost=5526.23..5526.34 rows=1 width=32) (actual time=34.911..38.286 rows=2 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        ->  Partial Aggregate  (cost=4526.23..4526.24 rows=1 width=32) (actual time=17.373..17.373 rows=1 loops=2)
+              ->  Parallel Seq Scan on lot  (cost=0.00..4158.58 rows=147058 width=8) (actual time=0.007..7.838 rows=125000 loops=2)
+Planning Time: 0.054 ms
+Execution Time: 38.375 ms
+
+4.
+查询1和查询2都是对于特定值的范围顺序扫描，可以使用b-tree提高查询性能
+查询3使用根据customer_id的查询条件，可以使用hash提高查询性能。
+查询4是插入数据，不需要建立索引，此时如果使用b-tree很可能会导致性能下降。
+查询5和6都默认使用顺序扫描，可以使用hash提高查询性能。
+查询7是一个聚合函数，它对表lot进行顺序扫描。
+
+5.
+create index customer_id_index on customer using hash(customer_id);
+create index lot_id_index on lot using hash(lot_id);
+create index lot_value_index on lot using btree(lot_value);
+create index lot_size_index on lot using btree(lot_size);
+
+①
+explain analyze 
+select lot_id 
+from lot 
+where lot_size between 300 and 15000;
+输出结果:
+Seq Scan on lot  (cost=0.00..6437.98 rows=147272 width=4) (actual time=0.009..28.126 rows=147220 loops=1)
+  Filter: ((lot_size >= '300'::double precision) AND (lot_size <= '15000'::double precision))
+  Rows Removed by Filter: 102779
+Planning Time: 1.538 ms
+Execution Time: 30.971 ms
+
+②
+explain analyze 
+select lot_id 
+from lot 
+where lot_value between 300 and 15000;
+输出结果:
+Bitmap Heap Scan on lot  (cost=83.09..2967.35 rows=3773 width=4) (actual time=0.722..2.156 rows=3733 loops=1)
+  Recheck Cond: ((lot_value >= '300'::double precision) AND (lot_value <= '15000'::double precision))
+  Heap Blocks: exact=2024
+  ->  Bitmap Index Scan on lot_value_index  (cost=0.00..82.15 rows=3773 width=0) (actual time=0.517..0.517 rows=3733 loops=1)
+        Index Cond: ((lot_value >= '300'::double precision) AND (lot_value <= '15000'::double precision))
+Planning Time: 0.087 ms
+Execution Time: 2.280 ms
+
+③
+explain analyze 
+select * 
+from customer 
+where customer_id=12;
+输出结果:
+Index Scan using customer_id_index on customer  (cost=0.00..8.02 rows=1 width=16) (actual time=0.114..0.115 rows=1 loops=1)
+  Index Cond: (customer_id = 12)
+Planning Time: 1.224 ms
+Execution Time: 0.132 ms
+
+④
+explain analyze
+insert into customer 
+values (250001, 'Vince', 'Smith' );
+输出结果:
+Insert on customer  (cost=0.00..0.01 rows=1 width=440) (actual time=0.713..0.713 rows=0 loops=1)
+  ->  Result  (cost=0.00..0.01 rows=1 width=440) (actual time=0.002..0.002 rows=1 loops=1)
+Planning Time: 0.052 ms
+Execution Time: 0.762 ms
+
+⑤
+explain analyze 
+delete from customer 
+where customer_id='250001'; 
+输出结果：
+Delete on customer  (cost=0.00..8.02 rows=1 width=6) (actual time=0.068..0.068 rows=0 loops=1)
+  ->  Index Scan using customer_id_index on customer  (cost=0.00..8.02 rows=1 width=6) (actual time=0.009..0.010 rows=1 loops=1)
+        Index Cond: (customer_id = 250001)
+Planning Time: 0.045 ms
+Execution Time: 0.088 ms
+
+⑥
+explain analyze 
+update customer 
+set customer_first_name='Vinny' 
+where customer_id='249001';
+输出结果:
+Update on customer  (cost=0.00..8.02 rows=1 width=234) (actual time=0.161..0.161 rows=0 loops=1)
+  ->  Index Scan using customer_id_index on customer  (cost=0.00..8.02 rows=1 width=234) (actual time=0.119..0.120 rows=1 loops=1)
+        Index Cond: (customer_id = 249001)
+Planning Time: 0.047 ms
+Execution Time: 0.173 ms
+
+⑦
+explain analyze 
+select avg(lot_size) 
+from lot; 
+输出结果:
+Finalize Aggregate  (cost=5526.34..5526.35 rows=1 width=8) (actual time=36.701..36.701 rows=1 loops=1)
+  ->  Gather  (cost=5526.23..5526.34 rows=1 width=32) (actual time=35.101..52.447 rows=2 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        ->  Partial Aggregate  (cost=4526.23..4526.24 rows=1 width=32) (actual time=17.249..17.249 rows=1 loops=2)
+              ->  Parallel Seq Scan on lot  (cost=0.00..4158.58 rows=147058 width=8) (actual time=0.004..7.912 rows=125000 loops=2)
+Planning Time: 0.131 ms
+Execution Time: 52.501 ms
+
+表格如下：
+--------------------------------------------------------------------------------------------------------------------------------------------
+	Without Index				With Index					Performance
+												Improvement
+--------------------------------------------------------------------------------------------------------------------------------------------
+Query	Estimated	Actual 	Actual		Actual		Estimated		Actual		Actual
+Number	Disk		Disk		Run		Disk		Disk		Run
+                Accesses	                Accesses	                Time        		Accesses	                Accessed		Time
+--------------------------------------------------------------------------------------------------------------------------------------------
+1	6437.98		43.588		46.452		6437.98		28.126		30.971	33.3%
+--------------------------------------------------------------------------------------------------------------------------------------------
+2	6272.57		53.095		53.201		2967.35		2.156		2.280	95.7%
+--------------------------------------------------------------------------------------------------------------------------------------------
+3	4279.33		55.675		55.706		8.02		0.115		0.132	99.8%
+--------------------------------------------------------------------------------------------------------------------------------------------
+4	0.01		8.881		8.918		0.01		0.713		0.762	91.5%
+--------------------------------------------------------------------------------------------------------------------------------------------
+5	4565.99		14.586		23.392		8.02		0.068		0.088	99.6%
+--------------------------------------------------------------------------------------------------------------------------------------------
+6	4565.99		15.188		15.201		8.02		0.161		0.173	98.9%
+--------------------------------------------------------------------------------------------------------------------------------------------
+7	5526.35		147.084		168.659		5526.35		36.701		52.501	68.9%
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+6.
+就目前数据库数据来说，所有采用具有索引的查询，性能都有所提高。
+如果DB经过分析发现使用索引可能增加检索时间或者没有明显性能提高，那么DBMS将不会采用索引
+总的来说，采用索引是有优势的，但具体的使用与否，由DBMS决定。
+如果1，2，3类常见，4类不常见，我会采用索引，整体性能还有会提高
+如果1，2，3类占比和4类占比都是50%，我不会采用索引，最后结果整体性能可能没有太明显的提高。
+
+二、
+我将等到第一年后再索引数据库。等到数据库中的数据稳定基本不再改变时再建立索引，否则插入数据时速度会降低。当数据库中的数据稳定基本不再改变时，建立索引后，查询速度将会大大提高。
+
+三、
+因为男女性分布各占50%，DBMS必须扫描每个磁盘块才能找到数据，因为每个块都包含男性和女性记录的概率很高。
+有帮助，如果对patient_gender进行聚类，把所有的男性和女性分组在一起，必须读取50％的磁盘，从而提高速度。
+
+四、
+PostgreSQL将表格统计信息存储到一个名为pg_class系统表中，因为查询规划者必须为所有查询生成这些统计信息，这样的话每个查询的性能将会降低。

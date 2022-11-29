@@ -1,0 +1,1998 @@
+<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SSD7 Exercise 7</title>
+<style type="text/css">
+p {
+	margin: 0px;
+}
+
+table {
+  width: 100%;
+}
+
+textarea {
+  width: 98%;
+}
+
+.crit-top-left {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+	border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	border-right: 1;
+	border-right-color: #CCCCCC;
+	border-right-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-top-right {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+	border-left: 1;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged {
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged-top {
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	border-top: 1;
+	border-top-color: #CCCCCC;
+	border-top-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged-bottom {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.crit-merged-both {
+  border-bottom: 1;
+	border-bottom-color: #CCCCCC;
+	border-bottom-style: inset;
+  border-left: 2;
+	border-left-color: #CCCCCC;
+	border-left-style: inset;
+	border-top: 1;
+	border-top-color: #CCCCCC;
+	border-top-style: inset;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.disabled {
+  background-color: #CCCCCC;
+}
+
+.instructions {
+  font-family: monospace;
+	font-size: smaller;
+}
+
+.negative {
+  color: red;
+	font-weight: bold;
+}
+
+.positive {
+  color: #22BB22;
+	font-weight: bold;
+}
+
+.range {
+  font-size: smaller;
+}
+
+.hidden {
+  display: none;
+}
+        </style><script type="text/javascript" language="JavaScript1.2">
+var printCache = '';
+
+if (typeof window.onbeforeprint == 'undefined') { //NS
+	//do nothing for now
+} else if (typeof window.onbeforeprint == 'object') { //IE
+	window.onbeforeprint = function() {
+		var criterion_sets = document.getElementsByTagName('TR');
+		var len = criterion_sets.length;
+		var parentName = name.split('-')[0];
+	
+		for (var i = 0; i < len; i++) {
+			if (criterion_sets[i].id.indexOf('IDAABWR-') != -1) {
+				if (criterion_sets[i].style.display == '') {
+					printCache = criterion_sets[i].id;
+				}
+
+				criterion_sets[i].style.display = '';
+			}
+		}
+	}
+	
+	window.onafterprint = function() {
+		showCSet(printCache);
+	}
+}
+
+          function getRubricID() {
+            return 'IDAABWR';
+          }
+
+var feedbacks = document.getElementsByTagName('textarea');
+var inputs = document.getElementsByTagName('input');
+var selects = document.getElementsByTagName('select');
+var spans = document.getElementsByTagName('span');
+var NORM_SCORED = 1;
+var MAX_SCORED = 2;
+var MIN_SCORED = 3;
+var hasChanged = false;
+var normalScoringDisabled = false;
+
+function deselect() {
+  if (document.selection) {
+    document.selection.empty();//IE
+  } else if (window.getSelection) {
+    window.getSelection().removeAllRanges;//NS
+  }
+}
+
+function myDump(values) {
+  var result = "<pre>Values are:\n";
+    for (var i in values) {
+      result += i + ' = ' + values[i] + '\n';
+    }
+
+    var w = window.open("", "dump");
+    w.document.open();
+    w.document.write(result + '</pre>');
+    w.document.close();
+}
+
+function getBaseScore(name) {
+  return inputs['rubric-type'].value == 'additive'
+           ? getMinScore(name)
+           : getMaxScore(name);
+}
+
+function getCritChildren (name) {
+  var children = new Array();
+  var len = inputs.length;
+
+  for (var i = 0;  i < len; i++) {
+    if (inputs[i].name.indexOf(name) == 0
+        && (inputs[i].type == 'radio' ||
+            inputs[i].type =='checkbox')) {
+      children.push(inputs[i]);
+    }
+  }    
+
+  return children;
+}
+
+function getCSetChildren(name) {
+  return inputs[name + '-children']
+           ? inputs[name + '-children'].value.split(',')
+           : new Array();
+}
+
+function getFeedback(name) {
+  return feedbacks[name + '-feedback']
+           ? feedbacks[name + '-feedback'].value
+           : '';
+}
+
+function setFeedback(name, text) {
+  feedbacks[name + '-feedback'].value = text;
+}
+
+function getFOScore(name) {
+  var type = replaceType(name, 'score');
+  var in_score = inputs[type];
+
+  if (in_score) {
+    return parseFloat(in_score.value);
+  }
+
+  var sp_score = spans[type];
+
+  if (sp_score) {
+    return parseFloat(sp_score.childNodes[0].data);
+  }
+
+  return null;
+}
+
+function setFOScore(name, score) {
+  var in_score = inputs[replaceType(name, 'score')];
+  in_score.value = parseFloat(score);
+}
+
+function getFOText(name) {
+  var text = spans[replaceType(name, 'text')];
+
+  return text ? toHTML(text) : '';
+}
+
+function getMaxFeedback(name) {
+  return spans[name + '-maxf'] ? toHTML(spans[name + '-maxf']) : '';
+}
+
+function getMaxScore(name) {
+  return parseFloat(inputs[name + '-max'].value);
+}
+
+function getMinFeedback(name) {
+  return spans[name + '-minf'] ? toHTML(spans[name + '-minf']) : '';
+}
+
+function getMinScore(name) {
+  return parseFloat(inputs[name + '-min'].value);
+}
+
+function getParent(name) {
+  return inputs[name + '-parent'] 
+           ? inputs[name + '-parent'].value
+           : '';
+}
+
+function getRule(name) {
+  return inputs[name + '-rule'] ? inputs[name + '-rule'].value : 'sum';
+}
+
+function getScore(name) {
+  return parseFloat(inputs[name + '-score'].value);
+}
+
+function setScore(name, score) {
+  var score_box = inputs[name + '-score'];
+  var max_score = getMaxScore(name);
+  var min_score = getMinScore(name);
+
+  if (score > max_score) {
+    score_box.value = max_score;
+  } else if (score < min_score) {
+    score_box.value = min_score;
+  } else {
+    score_box.value = score;
+  }
+}
+
+function getScoringMethod(name) {
+  var qs = selects[name + '-qs'];
+	
+  if (qs) {
+    var len = qs.options.length;
+
+    for (var i = 0;  i < len; i++) {
+      if (qs.options[i].selected) {
+        return ++i;
+      }
+    }
+  }
+
+  return NORM_SCORED;
+}
+
+function getTitle(name) {
+  return toHTML(document.getElementsByTagName('td')[name + '-title']);
+}
+
+function hasQuickScore() {
+  var qs = getCSetChildren(getRubricID())[0];
+  
+  return getTitle(qs) == 'Quick Score';
+}
+
+function isQuickScored() {
+  var qs = getCSetChildren(getRubricID())[0];
+  
+  if (hasQuickScore()) {
+    return feedbacks[qs + '-feedback'].value != '';
+  }
+  
+  return false
+}
+
+function isPrintable(name) {
+  var siblings = getCSetChildren(getParent(name));
+  var len = siblings.length;
+
+  for (var i = 0; i < len; i++) {
+    if (getScore(siblings[i]) != getBaseScore(siblings[i])
+        || hasFeedback(siblings[i])) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function hasFeedback(name) {
+  var children = getCSetChildren(name);
+  var len = children.length;
+
+  if (len == 0) {
+    return getFeedback(name) != '';
+  } else {
+    for (var i = 0; i < len; i++) {
+      if (getFeedback(name) != '' || hasFeedback(children[i])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+}
+
+function showCSet(name) {
+  var criterion_sets = document.getElementsByTagName('tr');
+  var len = criterion_sets.length;
+  var parentName = name.split('-')[0];
+
+  for (var i = 0; i < len; i++) {
+    if (criterion_sets[i].id == name) {
+      criterion_sets[i].style.display = "";
+    } else if (criterion_sets[i].id.indexOf(parentName) != -1) {
+      criterion_sets[i].style.display = 'none';
+    }
+  }
+
+  var tabs = document.getElementsByTagName('TH');
+  len = tabs.length;
+
+  var compName = name.split('-')[1] + '-tab';
+
+  for (var i = 0; i < len; i++) {
+    if (tabs[i].id == compName) {
+      tabs[i].firstChild.style.color = "white";
+			tabs[i].style.borderColor = "white";
+			tabs[i].style.borderStyle = "inset";
+    } else {
+      tabs[i].firstChild.style.color = "black";
+			tabs[i].style.borderColor = "#CCCCCC";
+			tabs[i].style.borderStyle = "outset";
+    }
+  }
+}
+
+function generateReloadValues() {
+  var len = inputs.length;
+  var out = 'reloadValues = function() {\n';
+
+  for (var i = 0; i < len; i++) {
+    switch (inputs[i].type) {
+      case 'radio':
+      case 'checkbox':
+        if (inputs[i].checked) {
+          out += '    inputs[' + i + '].checked = true;\n'
+        }
+
+        break;
+      case 'text':
+        if (inputs[i].value != '') {
+          if (inputs[i].name.search(/score\d*$/) != -1 
+              && inputs[i].value != 
+                 getBaseScore(inputs[i].name.split('-')[0])) {
+            out += '    inputs[' + i + '].value = '
+                + inputs[i].value + ';\n';
+          }
+        }
+
+        break;
+      default:
+        //do nothing
+        break;
+    }
+  }
+
+  len = selects.length;
+
+  for (var i = 0; i < len; i++) {
+    var optlen = selects[i].options.length;
+
+    for (var j = 0; j < optlen; j++) {
+      if (selects[i].options[j].selected && 
+          ! selects[i].options[j].defaultSelected) {
+        out += '    selects[' + i + '].options[' + j + '].selected = true;\n';
+       }
+    }
+  }
+
+  len = feedbacks.length;
+
+  for (var i = 0; i < len; i++) {
+    if (feedbacks[i].value != '') {
+      out += '    feedbacks[' + i + '].value = unescape("'
+          + escape(feedbacks[i].value) + '");\n';
+    }
+  }
+
+  return out + '}\n';
+}
+
+function renderCSetFeedback(arr) {
+  var len = arr.length;
+  var out = '<ul>';
+
+  for (var i = 0; i < len; i++) {
+    switch (getRule(arr[i])) {
+      case 'sum':
+        if (isPrintable(arr[i])) {
+          var children = getCSetChildren(arr[i]);
+          var clen = children.length;
+          var style = (clen != 0) ? 'style="font-size: 125%"' : '';
+
+          out += '<li><b ' + style + '>' + getTitle(arr[i]) + '</b><br>\n'
+              +  'Score: ' + getScore(arr[i]) + '/' + getMaxScore(arr[i]) 
+              + '<br>\n';
+
+          var fdbk = getFeedback(arr[i]);
+
+          if (fdbk != '') {
+            out += '<table bgcolor="#CCCCCC">'
+                + '<tr><td>' +  Strings.NLtoBR(fdbk) 
+                + '</td></tr></table>\n';
+          }
+
+          out += "<br>\n";
+
+          if (children.length != 0 && getScoringMethod(arr[i]) == 1) {
+            out += renderCSetFeedback(children);
+          }
+        }
+
+        break;
+      default:
+        //do nothing
+        break;
+    }
+  }
+
+  return out + '</ul>';
+}
+
+function renderFeedback() {
+  var out = '<b style="font-size: 150%">Feedback for ' 
+          + getTitle(getRubricID()) + '</b><br>\n'
+          + '<span style="font-size:125%">Total Score: ' 
+          + getScore(getRubricID()) + '/' + getMaxScore(getRubricID()) 
+          + '</span><br>\n';
+  var fdbk = getFeedback(getRubricID());
+
+	if (fdbk != '') {
+		out += '<table bgcolor="#CCCCCC">'
+				+ '<tr><td>' +  Strings.NLtoBR(fdbk) 
+				+ '</td></tr></table>\n';
+	}
+
+  if (isQuickScored()) {
+    var qs = getCSetChildren(getRubricID())[0];
+
+		out += '<table bgcolor="#CCCCCC">'
+				+ '<tr><td>' +  Strings.NLtoBR(getFeedback(qs)) 
+				+ '</td></tr></table>\n';
+  } else {
+    var children = getCSetChildren(getRubricID());
+
+    out += renderCSetFeedback(children.slice((hasQuickScore() ? 1 : 0)));
+  }
+
+  return out;
+}
+
+function viewRenderedFeedback() {
+  var out = "<html>\n<head>\n<title>" + getTitle(getRubricID())
+          + "</title>\n</head><body>\n" + renderFeedback()
+          + "\n</body>\n</html>\n";
+  var w = window.open("", "renderedFeedback");
+
+  w.document.open();
+  w.document.write(out);
+  w.document.close();
+}
+
+function  resetRubric() {
+  if (confirm("Resetting the rubric will remove all feedback.\nAre you sure you want to continue?")) {
+         hasChanged = false;
+         document.forms[0].reset();
+         document.forms[1].reset();
+         updateRubric(getRubricID());
+	}
+}
+
+function loadRubric(name) {
+  showCSet(name);
+
+  var fn = Strings.ltrim(inputs['content_pieces'].value.replace(/&#34;/g, '"'));
+
+  if (fn != '') {
+    var reloadValues;
+
+    eval(fn);
+
+    reloadValues();
+  }
+}
+
+function submitRubric() {
+  if (hasChanged) {
+    inputs['content_pieces'].value = generateReloadValues();//feedback
+    inputs['rendered_feedback'].value = renderFeedback();//rubric_input
+    inputs['result'].value = getScore(getRubricID());//grade
+
+    document.forms['general'].submit();
+  } else {
+    var warning = 'You have not changed the score on this rubric.\n'
+                + 'You will not receive this warning again.';
+
+    alert(warning);
+    hasChanged = true;
+  }
+}
+
+function modifyScore(name) {
+  var score = getScore(name);
+
+  while (isNaN(score)) {
+    score = prompt('Please enter a number.');
+
+    if (score) {
+      setScore(name, score);
+			
+      score = getScore(name);
+    } else {
+      update(name);
+      return;
+    }
+  }
+
+	if (score > getMaxScore(name)) {
+		setScore(name, getMaxScore(name));
+		
+		score = getScore(name);
+	} else if(score < getMinScore(name)){
+		setScore(name, getMinScore(name));
+		
+		score = getScore(name);
+	}
+	
+	setScore(name, parseFloat(score));
+	
+  var children = getCritChildren(name);
+  var len = children.length;
+
+  for (var i = 0; i < len; i++) {
+    children[i].checked = false;
+  }
+
+  updateCSet(getParent(name));
+}
+
+function update(name) {
+  var children = getCritChildren(name);
+  var len = children.length;
+  var total = getBaseScore(name);
+  var feedback = getFeedback(name);
+
+  for (var i = 0; i < len; i++) {
+    if (children[i].checked) {
+      //deal with score
+      var score = getFOScore(children[i].value);
+
+      while (isNaN(score)) {
+        var num = prompt('Please enter a score for the option selected.', '');
+
+        if (num) {
+          setFOScore(children[i].value, num);
+          score = getFOScore(children[i].value);
+        } else {
+          children[i].checked = false;
+
+          if (num == '') {
+            alert("Action cancelled.\nEmpty value entered.");
+          }
+
+            return;
+        }
+      }
+
+      total += score;
+
+      //deal with feedback text.
+      if (feedback.indexOf(getFOText(children[i].value)) == -1) {
+        feedback += getFOText(children[i].value) + '\n';
+      }
+    } else {
+      feedback = Strings.remove(getFOText(children[i].value), feedback);
+    }
+  }
+
+  setFeedback(name, feedback);
+  setScore(name, total);
+
+  updateCSet(getParent(name));
+}
+
+function updateCSet(name) {
+  //This would be the rubric score set.
+  if (getParent(name) == '') {
+    updateRubric(name);
+    return;
+  }
+
+  setScore(name, computeScore(name, getCSetChildren(name)));
+  updateCSet(getParent(name));
+}
+
+function updateRubric(name) {
+  var children = getCSetChildren(name);
+  hasChanged = true;
+
+  if (isQuickScored()) {
+    setScore(name, getScore(children[0]));
+
+    if (! normalScoringDisabled) {
+      normalScoringDisabled = true;
+
+      disableNormalScoring('#CCCCCC');
+    }
+  } else {
+    setScore(name, computeScore(name, children.slice((hasQuickScore() ? 1 : 0))));
+
+    if (normalScoringDisabled) {
+      normalScoringDisabled = false;
+
+      disableNormalScoring('#FFFFFF');
+    }
+  }
+}
+
+//is modifying the showCSet values.
+function disableNormalScoring(bgcolor) {
+  var notAffected = getRubricID() + ',' + getCSetChildren(getRubricID())[0];
+  var len = inputs.length;
+
+  for (var i = 0; i < len; i++) {//not working correctly.
+    if (notAffected.indexOf(inputs[i].name.split('-')[0]) == -1
+        && (inputs[i].type == 'radio' || inputs[i].type == 'checkbox'
+            || inputs[i].type == 'text')
+        && inputs[i].className != 'disabled') {
+      inputs[i].disabled = normalScoringDisabled;
+
+      if (inputs[i].type == 'text') {
+        inputs[i].style.color = '#000000';
+        inputs[i].style.backgroundColor = bgcolor;
+      }
+    }
+  }
+
+  len = selects.length;
+
+  for (var i = 0; i < len; i++) {
+    selects[i].disabled = normalScoringDisabled;
+    selects[i].style.backgroundColor = bgcolor;
+  }
+	
+  len = feedbacks.length;
+
+  for (var i = 0; i < len; i++) {
+    if(notAffected.indexOf(feedbacks[i].name.split('-')[0]) == -1) {
+      feedbacks[i].disabled = normalScoringDisabled;
+      feedbacks[i].style.backgroundColor = bgcolor;
+    }
+  }
+
+  //add remark as to why disabled in tabbed c-set titles
+	var children = getCSetChildren(getRubricID()).slice(1);
+	len = children.length;
+	
+	for (var i = 0; i < len; i++) {
+	  if (normalScoringDisabled) {
+		  var t = document.getElementsByTagName('td')[children[i] + '-title'];
+			var nd = document.createElement('span');
+			
+			nd.style.fontSize = 'smaller';
+			nd.style.color = 'red';
+			nd.style.marginLeft = '3em';
+			nd.appendChild(document.createTextNode(' (Disabled because rubric is Quick-Scored.)'));
+			
+			t.appendChild(nd);
+		} else {
+		  var t = document.getElementsByTagName('td')[children[i] + '-title'];
+			
+			t.removeChild(t.lastChild);
+		}
+	}
+}
+
+function computeScore(name, children) {
+  var len = children.length;
+  var total;
+  var feedback = getFeedback(name);
+  var maxf = getMaxFeedback(name);
+  var minf = getMinFeedback(name);
+
+  if (useQuickScore(name) && getScoringMethod(name) == MAX_SCORED) {
+    total = getMaxScore(name);
+
+    if (feedback.indexOf(maxf) == -1) {
+      feedback += maxf + '\n';
+    }
+
+    if (feedback.indexOf(minf) != -1) {
+      feedback = Strings.remove(minf, feedback);
+    }
+
+    setFeedback(name, feedback);
+		
+		displayCSetChildren(name, 'none');
+  } else if (useQuickScore(name) && getScoringMethod(name) == MIN_SCORED) {
+    total = getMinScore(name);
+
+    if (feedback.indexOf(minf) == -1) {
+      feedback += minf + '\n';
+    }
+
+    if (feedback.indexOf(maxf) != -1) {
+      feedback = Strings.remove(maxf, feedback);
+    }
+
+    setFeedback(name, feedback);
+		
+		displayCSetChildren(name, 'none');
+  } else {
+    if (feedback.indexOf(maxf) != -1) {
+      feedback = Strings.remove(maxf, feedback);
+    }
+
+    if (feedback.indexOf(minf) != -1) {
+      feedback = Strings.remove(minf, feedback);
+    }
+		
+    setFeedback(name, feedback);
+		
+		if (useQuickScore(name)) {
+  		displayCSetChildren(name, '');
+    }
+		
+    switch(getRule(name)) {
+      case 'sum':
+        if (inputs['rubric-type'].value == 'additive') {
+          total = getMinScore(name);
+
+          for (var i = 0; i < len; i++) {
+            total += getScore(children[i]) + getMinScore(children[i]);
+          }
+        } else {
+          total = getMaxScore(name);
+
+          for (var i = 0; i < len; i++) {
+            total += getScore(children[i]) - getMaxScore(children[i]);
+          }
+        }
+
+        break;
+      case 'average':
+        total = 0;
+
+        for (var i = 0; i < len; i++) {
+          total += getScore(children[i]);
+        }
+
+        total /= len;
+        break;
+      case 'product':
+        total = getMaxScore(name);
+
+        for (var i = 0; i < len; i++) {
+          total *= (getScore(children[i]) / getMaxScore(children[i]));
+        }
+
+        break;
+      case 'max':
+        total = Number.NEGATIVE_INFINITY;
+
+        for (var i = 0; i < len; i++) {
+          total = Math.max(total, getScore(children[i]));
+        }
+
+        break;
+      case 'min':
+        total = Number.POSITIVE_INFINITY;
+
+        for (var i = 0; i < len; i++) {
+          total = Math.min(total, getScore(children[i]));
+        }
+
+        break;
+      default:
+        //do nothing
+        break;
+    }
+  }
+
+  if (usePercentOfTotal(name)) {
+    var denom = 0;
+
+    for (var i = 0; i < len; i++) {
+      denom += getMaxScore(children[i]);
+    }
+
+    total = (denom - (getMaxScore(name) - total)) / denom * 100;
+  }
+
+  return total;
+}
+
+function displayCSetChildren(name, style) {
+  var children = getCSetChildren(name);
+	var len = children.length;
+	
+	for (var i= 0; i < len; i++) {
+		var child = document.getElementsByTagName('tr')[name + '-' + children[i]];
+		
+		child.style.display = style;
+	}
+}
+
+function usePercentOfTotal(name) {
+  return inputs[name + '-poft'].value == 'true';
+}
+
+function useQuickScore(name) {
+  return selects[name + '-qs'];
+}
+
+function replaceType(name, type) {
+  return name.replace(/xxxxxxxx/, type);
+}
+
+function validateFOScore(name) {
+  var score_box = inputs[replaceType(name, 'score')];
+
+  if (isNaN(getFOScore(name)) && score_box.value != '') {
+    alert('Please enter a number.');
+
+    score_box.value = '';
+    score_box.focus();
+  }
+	
+	if (score_box.value) {
+		score_box.value = parseFloat(score_box.value);
+	}
+}
+
+/**
+ *	A collection of string functions missing from JavaScript.
+ */
+var Strings = new function() {
+  this.ltrim = function(str) {
+    return str.replace(/^\s*/, '');
+  }
+
+  this.rtrim = function(str) {
+    return str.replace(/\s*$/, '');
+  }
+
+  this.NLtoBR = function(str) {
+    return str.replace(/\n/g , '<br class="inserted">');
+  }
+
+  this.BRtoNL = function(str) {
+    return str.replace(/<br class="inserted">/g, '\n');
+  }
+
+  //remove the needle from the haystack and return the haystack
+  this.remove = function(needle, haystack) {
+    var index = haystack.indexOf(needle);
+
+    return (index == -1)
+           ? haystack
+           : haystack.substring(0, index)
+             + this.ltrim(haystack.substr(index + needle.length));		
+  }
+}
+
+/**
+ *  toHTML(node) works recursively to render a given node as HTML.
+ *  @param node The DOM node to start with.
+ *  @return The contents of the node as HTML
+ */
+function toHTML(node) {
+  var children = node.childNodes;
+  var len = children.length;	
+  var out = '';
+
+  for (var i = 0; i < len; i++) {
+    var nodeName = children[i].nodeName.toLowerCase();
+
+    switch (nodeName) {
+      case '#text':
+        out += children[i].data.replace(/<{1}/g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, ' ');
+
+	break;
+      default:
+        var attrs = children[i].attributes;
+        var atlen = attrs.length;
+        out += '<' + nodeName;
+
+        for (var j = 0; j < atlen; j++) {
+          if (attrs[j].specified) {
+            out += ' ' + attrs[j].name + '="' 
+                +  attrs[j].value.replace(/"/g, '&#34;') +'"';
+          }
+        }
+
+        out += '>';
+
+        switch (nodeName) {
+          case ('input'):
+          case ('br'):
+            //do nothing
+            break;
+          default:
+            out += this.toHTML(children[i]) + '<' + '/' + nodeName + '>';
+            break;
+        }
+
+        break;
+    }
+  }
+
+  return out;
+}
+
+        </script></head>
+<body onload="loadRubric('IDAABWR-IDANBWR')" bgcolor="#EEEEEE"><a name="top"></a><form action="" name="general" method="post"><input value="general" type="hidden" name="rubric_name"><input value="" type="hidden" name="content_pieces"><input type="hidden" name="rendered_feedback"><input type="hidden" name="practical_grade_id"><input type="hidden" name="result"><input value="pass" type="hidden" name="total_type"></form>
+<form action="" name="IDAABWR-form"><input value="subtractive" type="hidden" name="rubric-type"><table>
+<tbody>
+<tr>
+<td>
+<table border="1" cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="100" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDAABWR-score"><span class="range">[<b>100</b>:0]</span><input value="100" type="hidden" name="IDAABWR-max"><input value="0" type="hidden" name="IDAABWR-min"><input value="" type="hidden" name="IDAABWR-parent"><input value="IDANBWR,IDA1BWR,IDAYVWR" type="hidden" name="IDAABWR-children"></td>
+<td class="crit-top-right" id="IDAABWR-title">SSD7 Exercise 7 (v2.0)</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<p>Scoring rule: <input value="sum" type="hidden" name="IDAABWR-rule"><input value="false" type="hidden" name="IDAABWR-poft"></p>
+<div class="instructions">Assessment determines student competency in mapping an ER diagram to relational database tables.</div><br><textarea rows="3" name="IDAABWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td colspan="2">
+<table>
+<tbody>
+<tr>
+<td><input value="Submit Rubric" type="button" style="width: 150px;" onclick="submitRubric()"><input value="Render Feedback" type="button" style="width: 150px;" onclick="viewRenderedFeedback()"></td>
+<td align="right"><input value="Reset Rubric" type="button" style="width: 150px;" onclick="resetRubric()"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table cellpadding="0" cellspacing="0">
+<thead>
+<tr id="tabs1">
+<th colspan="4" onclick="showCSet('IDAABWR-IDANBWR');" style="border-width: 2px;" bgcolor="#A86666" id="IDANBWR-tab"><a href="javascript:showCSet('IDAABWR-IDANBWR');">Quick Score</a></th>
+<th colspan="4" onclick="showCSet('IDAABWR-IDA1BWR');" style="border-width: 2px;" bgcolor="#999900" id="IDA1BWR-tab"><a href="javascript:showCSet('IDAABWR-IDA1BWR');">ER to Relational Mapping</a></th>
+<th colspan="4" onclick="showCSet('IDAABWR-IDAYVWR');" style="border-width: 2px;" bgcolor="#45BA45" id="IDAYVWR-tab"><a href="javascript:showCSet('IDAABWR-IDAYVWR');">Late or Resubmission</a></th>
+</tr>
+</thead>
+<tbody>
+<tr id="IDAABWR-IDANBWR">
+<td colspan="12">
+<table cellpadding="0" cellspacing="3" bgcolor="#A86666" border="1">
+<tbody>
+<tr>
+<td>
+<table cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="100" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDANBWR-score"><span class="range">[<b>100</b>:0]</span><input value="100" type="hidden" name="IDANBWR-max"><input value="0" type="hidden" name="IDANBWR-min"><input value="IDAABWR" type="hidden" name="IDANBWR-parent"><input value="" type="hidden" name="IDANBWR-children"></td>
+<td class="crit-top-right" id="IDANBWR-title">Quick Score</td>
+</tr>
+<tr>
+<td class="crit-merged-both" colspan="2">Scoring rule: This section overrides scores and comments from all other scoring sections.<br><div class="instructions">Use these criteria to quickly score an assignment.</div>
+</td>
+</tr>
+<tr class="hidden">
+<td class="crit-merged-bottom" colspan="2"><textarea rows="3" name="IDANBWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDANBWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDANBWR');" name="IDANBWR-cbx1"></td>
+<td>
+                    (<span class="positive" id="IDANBWR-cbx1-score1">0</span>)
+                  <span id="IDANBWR-cbx1-text1">Good work.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDANBWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDANBWR');" name="IDANBWR-cbx2"></td>
+<td>
+                    (<span class="negative" id="IDANBWR-cbx2-score2">-100</span>)
+                  <span id="IDANBWR-cbx2-text2">Submission missing.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAABWR-IDA1BWR">
+<td colspan="12">
+<table cellpadding="0" cellspacing="3" bgcolor="#999900" border="1">
+<tbody>
+<tr>
+<td style="padding-left: 0px">
+<table cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="100" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDA1BWR-score"><span class="range">[<b>100</b>:0]</span><input value="100" type="hidden" name="IDA1BWR-max"><input value="0" type="hidden" name="IDA1BWR-min"><input value="IDAABWR" type="hidden" name="IDA1BWR-parent"><input value="IDARCWR,IDAUDWR,IDAXEWR,IDA0FWR,IDA3GWR,IDADQWR,IDAGRWR,IDAJSWR,IDAMTWR,IDAPUWR" type="hidden" name="IDA1BWR-children"></td>
+<td class="crit-top-right" id="IDA1BWR-title">ER to Relational Mapping</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="3">
+<p>Scoring rule: <input value="sum" type="hidden" name="IDA1BWR-rule"><input value="false" type="hidden" name="IDA1BWR-poft"></p>
+<div class="instructions">Assess students' ability to map an ER diagram to relational database tables.</div>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="3"><textarea rows="5" name="IDA1BWR-feedback"></textarea></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDARCWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDARCWR-score" onblur="modifyScore('IDARCWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDARCWR-max"><input value="0" type="hidden" name="IDARCWR-min"><input value="IDA1BWR" type="hidden" name="IDARCWR-parent"><input value="" type="hidden" name="IDARCWR-children"></td>
+<td class="crit-top-right" id="IDARCWR-title">Mapping Step 1</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDARCWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDARCWR-radio-xxxxxxxx1" type="radio" onclick="update('IDARCWR');" name="IDARCWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDARCWR-radio-score1" onblur="validateFOScore('IDARCWR-radio-xxxxxxxx1');update('IDARCWR');"><span id="IDARCWR-radio-text1">Incorrect: ER to Relational Mapping Step 1improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDARCWR-radio-xxxxxxxx2" type="radio" onclick="update('IDARCWR');" name="IDARCWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDARCWR-radio-score2" onblur="validateFOScore('IDARCWR-radio-xxxxxxxx2');update('IDARCWR');"><span id="IDARCWR-radio-text2">Incorrect: ER to Relational Mapping Step 1 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDARCWR-radio-xxxxxxxx3" type="radio" onclick="update('IDARCWR');" name="IDARCWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDARCWR-radio-score3">0</span>)
+                  <span id="IDARCWR-radio-text3">ER to Relational Mapping Step 1:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDARCWR-radio-xxxxxxxx4" type="radio" onclick="update('IDARCWR');" name="IDARCWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDARCWR-radio-score4">0</span>)
+                  <span id="IDARCWR-radio-text4">ER to Relational Mapping Step 1 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDARCWR')" name="IDARCWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDAUDWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDAUDWR-score" onblur="modifyScore('IDAUDWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDAUDWR-max"><input value="0" type="hidden" name="IDAUDWR-min"><input value="IDA1BWR" type="hidden" name="IDAUDWR-parent"><input value="" type="hidden" name="IDAUDWR-children"></td>
+<td class="crit-top-right" id="IDAUDWR-title">Mapping Step 2</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAUDWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAUDWR-radio-xxxxxxxx1" type="radio" onclick="update('IDAUDWR');" name="IDAUDWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAUDWR-radio-score1" onblur="validateFOScore('IDAUDWR-radio-xxxxxxxx1');update('IDAUDWR');"><span id="IDAUDWR-radio-text1">Incorrect: ER to Relational Mapping Step 2 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAUDWR-radio-xxxxxxxx2" type="radio" onclick="update('IDAUDWR');" name="IDAUDWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAUDWR-radio-score2" onblur="validateFOScore('IDAUDWR-radio-xxxxxxxx2');update('IDAUDWR');"><span id="IDAUDWR-radio-text2">Incorrect: ER to Relational Mapping Step 2 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAUDWR-radio-xxxxxxxx3" type="radio" onclick="update('IDAUDWR');" name="IDAUDWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAUDWR-radio-score3">0</span>)
+                  <span id="IDAUDWR-radio-text3">ER to Relational Mapping Step 2:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAUDWR-radio-xxxxxxxx4" type="radio" onclick="update('IDAUDWR');" name="IDAUDWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAUDWR-radio-score4">0</span>)
+                  <span id="IDAUDWR-radio-text4">ER to Relational Mapping Step 2 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDAUDWR')" name="IDAUDWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDAXEWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDAXEWR-score" onblur="modifyScore('IDAXEWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDAXEWR-max"><input value="0" type="hidden" name="IDAXEWR-min"><input value="IDA1BWR" type="hidden" name="IDAXEWR-parent"><input value="" type="hidden" name="IDAXEWR-children"></td>
+<td class="crit-top-right" id="IDAXEWR-title">Mapping Step 3</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAXEWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAXEWR-radio-xxxxxxxx1" type="radio" onclick="update('IDAXEWR');" name="IDAXEWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAXEWR-radio-score1" onblur="validateFOScore('IDAXEWR-radio-xxxxxxxx1');update('IDAXEWR');"><span id="IDAXEWR-radio-text1">Incorrect: ER to Relational Mapping Step 3 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAXEWR-radio-xxxxxxxx2" type="radio" onclick="update('IDAXEWR');" name="IDAXEWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAXEWR-radio-score2" onblur="validateFOScore('IDAXEWR-radio-xxxxxxxx2');update('IDAXEWR');"><span id="IDAXEWR-radio-text2">Incorrect: ER to Relational Mapping Step 3 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAXEWR-radio-xxxxxxxx3" type="radio" onclick="update('IDAXEWR');" name="IDAXEWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAXEWR-radio-score3">0</span>)
+                  <span id="IDAXEWR-radio-text3">ER to Relational Mapping Step 3:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAXEWR-radio-xxxxxxxx4" type="radio" onclick="update('IDAXEWR');" name="IDAXEWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAXEWR-radio-score4">0</span>)
+                  <span id="IDAXEWR-radio-text4">ER to Relational Mapping Step 3 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDAXEWR')" name="IDAXEWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDA0FWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDA0FWR-score" onblur="modifyScore('IDA0FWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDA0FWR-max"><input value="0" type="hidden" name="IDA0FWR-min"><input value="IDA1BWR" type="hidden" name="IDA0FWR-parent"><input value="" type="hidden" name="IDA0FWR-children"></td>
+<td class="crit-top-right" id="IDA0FWR-title">Mapping Step 4</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDA0FWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA0FWR-radio-xxxxxxxx1" type="radio" onclick="update('IDA0FWR');" name="IDA0FWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDA0FWR-radio-score1" onblur="validateFOScore('IDA0FWR-radio-xxxxxxxx1');update('IDA0FWR');"><span id="IDA0FWR-radio-text1">Incorrect: ER to Relational Mapping Step 4 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA0FWR-radio-xxxxxxxx2" type="radio" onclick="update('IDA0FWR');" name="IDA0FWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDA0FWR-radio-score2" onblur="validateFOScore('IDA0FWR-radio-xxxxxxxx2');update('IDA0FWR');"><span id="IDA0FWR-radio-text2">Incorrect: ER to Relational Mapping Step 4 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA0FWR-radio-xxxxxxxx3" type="radio" onclick="update('IDA0FWR');" name="IDA0FWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDA0FWR-radio-score3">0</span>)
+                  <span id="IDA0FWR-radio-text3">ER to Relational Mapping Step 4:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA0FWR-radio-xxxxxxxx4" type="radio" onclick="update('IDA0FWR');" name="IDA0FWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDA0FWR-radio-score4">0</span>)
+                  <span id="IDA0FWR-radio-text4">ER to Relational Mapping Step 4 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDA0FWR')" name="IDA0FWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDA3GWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDA3GWR-score" onblur="modifyScore('IDA3GWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDA3GWR-max"><input value="0" type="hidden" name="IDA3GWR-min"><input value="IDA1BWR" type="hidden" name="IDA3GWR-parent"><input value="" type="hidden" name="IDA3GWR-children"></td>
+<td class="crit-top-right" id="IDA3GWR-title">Mapping Step 5</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDA3GWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA3GWR-radio-xxxxxxxx1" type="radio" onclick="update('IDA3GWR');" name="IDA3GWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDA3GWR-radio-score1" onblur="validateFOScore('IDA3GWR-radio-xxxxxxxx1');update('IDA3GWR');"><span id="IDA3GWR-radio-text1">Incorrect: ER to Relational Mapping Step 5 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA3GWR-radio-xxxxxxxx2" type="radio" onclick="update('IDA3GWR');" name="IDA3GWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDA3GWR-radio-score2" onblur="validateFOScore('IDA3GWR-radio-xxxxxxxx2');update('IDA3GWR');"><span id="IDA3GWR-radio-text2">Incorrect: ER to Relational Mapping Step 5 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA3GWR-radio-xxxxxxxx3" type="radio" onclick="update('IDA3GWR');" name="IDA3GWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDA3GWR-radio-score3">0</span>)
+                  <span id="IDA3GWR-radio-text3">ER to Relational Mapping Step 5:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDA3GWR-radio-xxxxxxxx4" type="radio" onclick="update('IDA3GWR');" name="IDA3GWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDA3GWR-radio-score4">0</span>)
+                  <span id="IDA3GWR-radio-text4">ER to Relational Mapping Step 5 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDA3GWR')" name="IDA3GWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDADQWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDADQWR-score" onblur="modifyScore('IDADQWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDADQWR-max"><input value="0" type="hidden" name="IDADQWR-min"><input value="IDA1BWR" type="hidden" name="IDADQWR-parent"><input value="" type="hidden" name="IDADQWR-children"></td>
+<td class="crit-top-right" id="IDADQWR-title">Mapping Step 6</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDADQWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDADQWR-radio-xxxxxxxx1" type="radio" onclick="update('IDADQWR');" name="IDADQWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDADQWR-radio-score1" onblur="validateFOScore('IDADQWR-radio-xxxxxxxx1');update('IDADQWR');"><span id="IDADQWR-radio-text1">Incorrect: ER to Relational Mapping Step 6 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDADQWR-radio-xxxxxxxx2" type="radio" onclick="update('IDADQWR');" name="IDADQWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDADQWR-radio-score2" onblur="validateFOScore('IDADQWR-radio-xxxxxxxx2');update('IDADQWR');"><span id="IDADQWR-radio-text2">Incorrect: ER to Relational Mapping Step 6 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDADQWR-radio-xxxxxxxx3" type="radio" onclick="update('IDADQWR');" name="IDADQWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDADQWR-radio-score3">0</span>)
+                  <span id="IDADQWR-radio-text3">ER to Relational Mapping Step 6:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDADQWR-radio-xxxxxxxx4" type="radio" onclick="update('IDADQWR');" name="IDADQWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDADQWR-radio-score4">0</span>)
+                  <span id="IDADQWR-radio-text4">ER to Relational Mapping Step 6 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDADQWR')" name="IDADQWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDAGRWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDAGRWR-score" onblur="modifyScore('IDAGRWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDAGRWR-max"><input value="0" type="hidden" name="IDAGRWR-min"><input value="IDA1BWR" type="hidden" name="IDAGRWR-parent"><input value="" type="hidden" name="IDAGRWR-children"></td>
+<td class="crit-top-right" id="IDAGRWR-title">Mapping Step 7</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAGRWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAGRWR-radio-xxxxxxxx1" type="radio" onclick="update('IDAGRWR');" name="IDAGRWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAGRWR-radio-score1" onblur="validateFOScore('IDAGRWR-radio-xxxxxxxx1');update('IDAGRWR');"><span id="IDAGRWR-radio-text1">Incorrect: ER to Relational Mapping Step 7 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAGRWR-radio-xxxxxxxx2" type="radio" onclick="update('IDAGRWR');" name="IDAGRWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAGRWR-radio-score2" onblur="validateFOScore('IDAGRWR-radio-xxxxxxxx2');update('IDAGRWR');"><span id="IDAGRWR-radio-text2">Incorrect: ER to Relational Mapping Step 7 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAGRWR-radio-xxxxxxxx3" type="radio" onclick="update('IDAGRWR');" name="IDAGRWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAGRWR-radio-score3">0</span>)
+                  <span id="IDAGRWR-radio-text3">ER to Relational Mapping Step 7:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAGRWR-radio-xxxxxxxx4" type="radio" onclick="update('IDAGRWR');" name="IDAGRWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAGRWR-radio-score4">0</span>)
+                  <span id="IDAGRWR-radio-text4">ER to Relational Mapping Step 7 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDAGRWR')" name="IDAGRWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDAJSWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDAJSWR-score" onblur="modifyScore('IDAJSWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDAJSWR-max"><input value="0" type="hidden" name="IDAJSWR-min"><input value="IDA1BWR" type="hidden" name="IDAJSWR-parent"><input value="" type="hidden" name="IDAJSWR-children"></td>
+<td class="crit-top-right" id="IDAJSWR-title">Mapping Step 8</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAJSWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAJSWR-radio-xxxxxxxx1" type="radio" onclick="update('IDAJSWR');" name="IDAJSWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAJSWR-radio-score1" onblur="validateFOScore('IDAJSWR-radio-xxxxxxxx1');update('IDAJSWR');"><span id="IDAJSWR-radio-text1">Incorrect: ER to Relational Mapping Step 8 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAJSWR-radio-xxxxxxxx2" type="radio" onclick="update('IDAJSWR');" name="IDAJSWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAJSWR-radio-score2" onblur="validateFOScore('IDAJSWR-radio-xxxxxxxx2');update('IDAJSWR');"><span id="IDAJSWR-radio-text2">Incorrect: ER to Relational Mapping Step 8 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAJSWR-radio-xxxxxxxx3" type="radio" onclick="update('IDAJSWR');" name="IDAJSWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAJSWR-radio-score3">0</span>)
+                  <span id="IDAJSWR-radio-text3">ER to Relational Mapping Step 8:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAJSWR-radio-xxxxxxxx4" type="radio" onclick="update('IDAJSWR');" name="IDAJSWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAJSWR-radio-score4">0</span>)
+                  <span id="IDAJSWR-radio-text4">ER to Relational Mapping Step 8 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDAJSWR')" name="IDAJSWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDAMTWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDAMTWR-score" onblur="modifyScore('IDAMTWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDAMTWR-max"><input value="0" type="hidden" name="IDAMTWR-min"><input value="IDA1BWR" type="hidden" name="IDAMTWR-parent"><input value="" type="hidden" name="IDAMTWR-children"></td>
+<td class="crit-top-right" id="IDAMTWR-title">Mapping Step 9</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAMTWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAMTWR-radio-xxxxxxxx1" type="radio" onclick="update('IDAMTWR');" name="IDAMTWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAMTWR-radio-score1" onblur="validateFOScore('IDAMTWR-radio-xxxxxxxx1');update('IDAMTWR');"><span id="IDAMTWR-radio-text1">Incorrect: ER to Relational Mapping Step 9 improperly applied to your ER model.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAMTWR-radio-xxxxxxxx2" type="radio" onclick="update('IDAMTWR');" name="IDAMTWR-radio"></td>
+<td><input value="-10" type="text" style="width: 2.5em;" name="IDAMTWR-radio-score2" onblur="validateFOScore('IDAMTWR-radio-xxxxxxxx2');update('IDAMTWR');"><span id="IDAMTWR-radio-text2">Incorrect: ER to Relational Mapping Step 9 is not necessary for your ER model.   </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAMTWR-radio-xxxxxxxx3" type="radio" onclick="update('IDAMTWR');" name="IDAMTWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAMTWR-radio-score3">0</span>)
+                  <span id="IDAMTWR-radio-text3">ER to Relational Mapping Step 9:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAMTWR-radio-xxxxxxxx4" type="radio" onclick="update('IDAMTWR');" name="IDAMTWR-radio"></td>
+<td>
+                    (<span class="positive" id="IDAMTWR-radio-score4">0</span>)
+                  <span id="IDAMTWR-radio-text4">ER to Relational Mapping Step 9 not necessary for your ER model:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="none" type="radio" onclick="update('IDAMTWR')" name="IDAMTWR-radio"></td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDA1BWR-IDAPUWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="10" type="text" style="width: 2.5em;" name="IDAPUWR-score" onblur="modifyScore('IDAPUWR')"><span class="range">[<b>10</b>:0]</span><input value="10" type="hidden" name="IDAPUWR-max"><input value="0" type="hidden" name="IDAPUWR-min"><input value="IDA1BWR" type="hidden" name="IDAPUWR-parent"><input value="" type="hidden" name="IDAPUWR-children"></td>
+<td class="crit-top-right" id="IDAPUWR-title">SQL Statements</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2"></td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="5" name="IDAPUWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAPUWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDAPUWR');" name="IDAPUWR-cbx1"></td>
+<td><input value="-5" type="text" style="width: 2.5em;" name="IDAPUWR-cbx1-score1" onblur="validateFOScore('IDAPUWR-cbx1-xxxxxxxx1');update('IDAPUWR');"><span id="IDAPUWR-cbx1-text1">Incorrect or missing SQL Statements to create tables.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAPUWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDAPUWR');" name="IDAPUWR-cbx2"></td>
+<td><input value="-5" type="text" style="width: 2.5em;" name="IDAPUWR-cbx2-score2" onblur="validateFOScore('IDAPUWR-cbx2-xxxxxxxx2');update('IDAPUWR');"><span id="IDAPUWR-cbx2-text2">Incorrect or missing SQL Statements to populate tables.</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAPUWR-cbx3-xxxxxxxx3" type="checkbox" onclick="update('IDAPUWR');" name="IDAPUWR-cbx3"></td>
+<td>
+                    (<span class="positive" id="IDAPUWR-cbx3-score3">0</span>)
+                  <span id="IDAPUWR-cbx3-text3">SQL Statements to create and populate tables::<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAPUWR-cbx4-xxxxxxxx4" type="checkbox" onclick="update('IDAPUWR');" name="IDAPUWR-cbx4"></td>
+<td>
+                    (<span class="positive" id="IDAPUWR-cbx4-score4">0</span>)
+                  <span id="IDAPUWR-cbx4-text4">SQL Statements to create tables::<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAPUWR-cbx5-xxxxxxxx5" type="checkbox" onclick="update('IDAPUWR');" name="IDAPUWR-cbx5"></td>
+<td>
+                    (<span class="positive" id="IDAPUWR-cbx5-score5">0</span>)
+                  <span id="IDAPUWR-cbx5-text5">SQL Statements to populate tables:<b>good</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAABWR-IDAYVWR">
+<td colspan="12">
+<table cellpadding="0" cellspacing="3" bgcolor="#45BA45" border="1">
+<tbody>
+<tr>
+<td style="padding-left: 0px">
+<table cellspacing="0" bgcolor="#EEEEEE">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="20" type="text" onselect="deselect();" class="disabled" onfocus="this.blur();" style="width: 2.5em;" name="IDAYVWR-score"><span class="range">[<b>20</b>:0]</span><input value="20" type="hidden" name="IDAYVWR-max"><input value="0" type="hidden" name="IDAYVWR-min"><input value="IDAABWR" type="hidden" name="IDAYVWR-parent"><input value="IDAOWWR" type="hidden" name="IDAYVWR-children"></td>
+<td class="crit-top-right" id="IDAYVWR-title">Late or Resubmission</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="3">
+<p>Scoring rule: The criterion-set has the same value as its child criterion.<input value="sum" type="hidden" name="IDAYVWR-rule"><input value="false" type="hidden" name="IDAYVWR-poft"></p>
+<div class="instructions">Use this section to deduct any points for a late submission or a resubmission.</div>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="3"><textarea rows="5" name="IDAYVWR-feedback"></textarea></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr id="IDAYVWR-IDAOWWR">
+<td style="padding-left: 30px">
+<table bgcolor="#EEEEEE" cellspacing="0">
+<tbody>
+<tr>
+<td width="10%" class="crit-top-left"><input value="20" type="text" style="width: 2.5em;" name="IDAOWWR-score" onblur="modifyScore('IDAOWWR')"><span class="range">[<b>20</b>:0]</span><input value="20" type="hidden" name="IDAOWWR-max"><input value="0" type="hidden" name="IDAOWWR-min"><input value="IDAYVWR" type="hidden" name="IDAOWWR-parent"><input value="" type="hidden" name="IDAOWWR-children"></td>
+<td class="crit-top-right" id="IDAOWWR-title">Late or Re-submission</td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<div class="instructions">Deduct any points for a late submission or a re-submission.</div>
+</td>
+</tr>
+<tr>
+<td class="crit-merged-bottom" colspan="2"><textarea rows="3" name="IDAOWWR-feedback"></textarea></td>
+</tr>
+<tr>
+<td class="crit-merged-top" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAOWWR-cbx1-xxxxxxxx1" type="checkbox" onclick="update('IDAOWWR');" name="IDAOWWR-cbx1"></td>
+<td><input value="-20" type="text" style="width: 2.5em;" name="IDAOWWR-cbx1-score1" onblur="validateFOScore('IDAOWWR-cbx1-xxxxxxxx1');update('IDAOWWR');"><span id="IDAOWWR-cbx1-text1">Submission: <b>late</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="crit-merged" colspan="2">
+<table cellpadding="0" cellspacing="1">
+<tbody>
+<tr>
+<td width="1%" valign="top"><input value="IDAOWWR-cbx2-xxxxxxxx2" type="checkbox" onclick="update('IDAOWWR');" name="IDAOWWR-cbx2"></td>
+<td><input value="-20" type="text" style="width: 2.5em;" name="IDAOWWR-cbx2-score2" onblur="validateFOScore('IDAOWWR-cbx2-xxxxxxxx2');update('IDAOWWR');"><span id="IDAOWWR-cbx2-text2">Submission: <b>re-submission</b></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</form><a href="#top">Return to top.</a></body>
+</html>
