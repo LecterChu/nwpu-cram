@@ -1,0 +1,352 @@
+<html>
+<head>
+<title>设计模式Singleton</title>
+<!-- Powered by: PowerEasy V4.0 -->
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<script src="http://v1.68ad.com/adm1.aspx?uid=demo&adid=3"></script>
+<style type="text/css">
+<!--
+.style1 {color: #0099cc}
+-->
+</style>
+<link href='/Skin/DefaultSkin.css' rel='stylesheet' type='text/css'> <script language='JavaScript' type='text/JavaScript' src='/js/menu.js'></script>
+<script type='text/javascript' language='JavaScript1.2' src='/js/stm31.js'></script>
+<script language="JavaScript" type="text/JavaScript">
+//改变图片大小
+function resizepic(thispic)
+{
+if(thispic.width>700) thispic.width=700;
+}
+//无级缩放图片大小
+function bbimg(o)
+{
+  var zoom=parseInt(o.style.zoom, 10)||100;
+  zoom+=event.wheelDelta/12;
+  if (zoom>0) o.style.zoom=zoom+'%';
+  return false;
+}
+//双击鼠标滚动屏幕的代码
+var currentpos,timer;
+function initialize()
+{
+timer=setInterval ("scrollwindow ()",30);
+}
+function sc()
+{
+clearInterval(timer);
+}
+function scrollwindow()
+{
+currentpos=document.body.scrollTop;
+window.scroll(0,++currentpos);
+if (currentpos !=document.body.scrollTop)
+sc();
+}
+document.onmousedown=sc
+document.ondblclick=initialize
+
+//更改字体大小
+var status0='';
+var curfontsize=10;
+var curlineheight=18;
+function fontZoomA(){
+  if(curfontsize>8){
+    document.getElementById('fontzoom').style.fontSize=(--curfontsize)+'pt';
+	document.getElementById('fontzoom').style.lineHeight=(--curlineheight)+'pt';
+  }
+}
+function fontZoomB(){
+  if(curfontsize<64){
+    document.getElementById('fontzoom').style.fontSize=(++curfontsize)+'pt';
+	document.getElementById('fontzoom').style.lineHeight=(++curlineheight)+'pt';
+  }
+}
+</script>
+<script src="/bar.js"></script>
+</head>
+<body leftmargin=0 topmargin=0  oncontextmenu='return false' ondragstart='return false' onselectstart ='return false' onselect='document.selection.empty()' oncopy='document.selection.empty()' onbeforecopy='return false' onmouseup='document.selection.empty()'> 
+<noscript> 
+<iframe src=*></iframe> 
+</noscript> 
+<div id=menuDiv style='Z-INDEX: 1000; VISIBILITY: hidden; WIDTH: 1px; POSITION: absolute; HEIGHT: 1px; BACKGROUND-COLOR: #9cc5f8'></div> 
+<!-- ********网页顶部代码开始******** --> 
+<table width="760" border="0" align="center" cellpadding="0" cellspacing="0" class="top_tdbgall" style="word-break:break-all;Width:fixed">
+  <tr> 
+    <td height="4" bgcolor="#4F4F4F"></td>
+  </tr>
+  <tr> 
+    <td height="72" align="center"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr> 
+          <td width="180" height="72" align="center"><a href='http://asp.68l.com' title='ASP技术网'><img src='/images/logonew.gif' width='180' height='60' border='0'></a></td>
+          <td width="*" align="center"><a href='http://asp.68l.com' title='ASP技术网'><img src='/images/banner.gif' width='468' height='60' border='0'></a></td>
+          <td width="72"><table width="100%" height="54" border="0" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td align="center"><a class='Bottom' href='#' onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://asp.68l.com');">设为首页</a></td>
+              </tr>
+              <tr> 
+                <td align="center"><a class='Bottom' href="javascript:window.external.addFavorite('http://asp.68l.com','ASP技术网');">加入收藏</a></td>
+              </tr>
+              <tr> 
+                <td align="center"><a class='Bottom' href='mailto:admin@sogle.com'>联系站长</a></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <!--频道显示代码-->
+    <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr> 
+          <td width="30%" height="29" align="right" background="/Skin/adv43/ad_dhbg1.gif"><font color="#FFFFFF">今天是： 
+            <script language="JavaScript" type="text/JavaScript" src="/js/date.js"></script>
+            </font><img src="/Skin/adv43/ad_dhc.gif" width="28" height="29" align="absmiddle"></td>
+          <td width="70%" align="right" class="top_Channel">|&nbsp;<a class='Channel' href='/Index.asp'>首页</a>&nbsp;|&nbsp;<a class='Channel2' href='/Article/Index.html'>ASP资料</a>&nbsp;|&nbsp;<a class='Channel' href='/Soft/Index.html' target='_self'>下载中心</a>&nbsp;|&nbsp;<a class='Channel' href='/Photo/Index.html' target='_self'>美工素材</a>&nbsp;|&nbsp;<a class='Channel' href='/GuestBook/Index.asp' target='_self'>在线留言</a>&nbsp;|&nbsp;</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td height="23" background="/Skin/adv43/ad_dhgg.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="143"><img src="/Skin/adv43/ad_pdlmdh.gif" width="143" height="23" align="absmiddle"></td>
+          <td width="*" class="top1_announce"><script language='JavaScript1.2' type='text/JavaScript' src='/Article/JS/ShowClass_Menu.js'></script></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td align="center" bgcolor="#f2f2f2"><iframe  src='/ad_dh.asp' width='100%' height='84' frameborder='0' scrolling='no'></iframe></td>
+  </tr>
+  <tr> 
+    <!--banner广告显示代码-->
+    <td align="center"></td>
+  </tr>
+</table>
+    <!--导航代码开始--> 
+<table width="760" border="0" align="center" cellpadding="0" cellspacing="0" class="top_Path" style="word-break:break-all;Width:fixed"> 
+  <tr> 
+    <td width="5%" align="center"><img src="/Skin/adv43/ad_mqdhl.gif" width="40" height="25"></td> 
+    <td width="73%">您现在的位置：&nbsp;<a href='http://asp.68l.com'>ASP技术网</a>&nbsp;&gt;&gt;&nbsp;<a href='/Article/Index.html'>ASP资料</a>&nbsp;&gt;&gt;&nbsp;<a href='/Article/CJ/Index.html'>C#语言</a>&nbsp;&gt;&gt;&nbsp;正文</td> 
+    <td width="22%" align=center><img src="/Images/User_Login.gif" width="13" height="13" align="absmiddle"> <a href="/User/User_Login.asp" target="_blank" class="top_UserLogin">用户登录</a> <img src="/Images/User_Reg.gif" width="13" height="13" align="absmiddle"> <a href="/Reg/User_Reg.asp" target="_blank" class="top_UserLogin">新用户注册</a> </td> 
+  </tr> 
+</table> 
+    <!--导航代码结束--> 
+<!-- ********网页顶部代码结束******** --> 
+<!-- ********网页中部代码开始******** --> 
+	
+<table width="760"  border="0" align="center" cellpadding="0" cellspacing="0" class="center_tdbgall" style="word-break:break-all;Width:fixed">
+  <tr> 
+    <td valign="top" width="*"> 
+      <!--网页中部左栏文章内容代码开始-->
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="word-break:break-all;Width:fixed">
+        <tr> 
+          <td width="3%" valign="middle" class="main_title_282"><img src="/Skin/adv43/ad_dh.gif" width="29" height="28" align="absmiddle"></td>
+          <td width="66%" class="main_title_282">设计模式Singleton</td>
+          <td align="center" class="main_title_282">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color='#009900'>★★★</font></td>
+        </tr>
+      </table>
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="main_tdbg_575" style="word-break:break-all;Width:fixed">
+        <tr align="center" valign="middle"> 
+          <td height="48" colspan="2" background="/Skin/adv43/ad_dybg2.gif" class="main_ArticleTitle" style="word-break:break-all;Width:fixed">设计模式Singleton</td>
+        </tr>
+        <tr align="center" valign="middle" bgcolor="f8f8f8"> 
+          <td height="22" colspan="2" style="word-break:break-all;Width:fixed">副标题：</td>
+        </tr>
+        <tr align="center" bgcolor="eeeeee"> 
+          <td height="24" colspan="2">作者：本网收集 文章来源：<a href='www.765.com.cn'>本站收集</a> 点击数：<script language='javascript' src='/Article/GetHits.asp?ArticleID=853'></script> 
+            更新时间：2004-9-28</td>
+        </tr>
+        <tr> 
+          <td height="6" colspan="2" background="/Skin/adv43/ad_bx1.gif"></td>
+        </tr>
+        <tr>
+          <td colspan="2"> </td>
+        </tr>
+        <tr> 
+          <td height="600" colspan="2" valign="top" id="fontzoom" style="word-break:break-all;Width:fixed">
+            &nbsp;&nbsp;&nbsp; 引言 <BR>&nbsp;&nbsp;相信大多数拜读过"Gang Of Four"（Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides）的经典之作《Design Pattern》的同僚们，对这本书一定推崇有加。曾有人这么宣告："只有在读过《Design Pattern》后，我的编程水平才真正得到了质的飞跃。" <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;那么，如何才能步入设计模式的殿堂？设计模式是资深程序员日积月累总结出来的一套可复用的、针对面向对象软件设计的解决方案，从这个意义上说，世界上存在无数多的设计模式，"Gang Of Four"总结的23种设计模式只是其中的23个精华。入手的关键就在于领会"设计模式"的思想，然后再将它们融会贯通、灵活应用到自己到开发过程中。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;-------------------------------------------------------------------------------- <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;Singleton模式 <BR>&nbsp;&nbsp;Singleton可以说是《Design Pattern》中最简单也最实用的一个设计模式。那么，什么是Singleton？ <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;顾名思义，Singleton就是确保一个类只有唯一的一个实例。Singleton主要用于对象的创建，这意味着，如果某个类采用了Singleton模式，则在这个类被创建后，它将有且仅有一个实例可供访问。很多时候我们都会需要Singleton模式，最常见的比如我们希望整个应用程序中只有一个连接数据库的Connection实例；又比如要求一个应用程序中只存在某个用户数据结构的唯一实例。我们都可以通过应用Singleton模式达到目的。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;一眼看去，Singleton似乎有些像全局对象。但是实际上，并不能用全局对象代替Singleton模式，这是因为：其一，大量使用全局对象会使得程序质量降低，而且有些编程语言例如C#，根本就不支持全局变量。其二，全局对象的方法并不能阻止人们将一个类实例化多次：除了类的全局实例外，开发人员仍然可以通过类的构造函数创建类的多个局部实例。而Singleton模式则通过从根本上控制类的创建，将"保证只有一个实例"这个任务交给了类本身，开发人员不可能再有其它途径得到类的多个实例。这一点是全局对象方法与Singleton模式的根本区别。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;-------------------------------------------------------------------------------- <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;Singleton模式的实现 <BR>&nbsp;&nbsp;Singleton模式的实现基于两个要点： <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;1）不直接用类的构造函数，而另外提供一个Public的静态方法来构造类的实例。通常这个方法取名为Instance。Public保证了它的全局可见性，静态方法保证了不会创建出多余的实例。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;2）将类的构造函数设为Private，即将构造函数"隐藏"起来，任何企图使用构造函数创建实例的方法都将报错。这样就阻止了开发人员绕过上面的Instance方法直接创建类的实例。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;通过以上两点就可以完全控制类的创建：无论有多少地方需要用到这个类，它们访问的都是类的唯一生成的那个实例。以下C＃代码展现了两种实现Singleton模式的方式，开发人员可以根据喜好任选其一。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;实现方式一：Singleton.cs <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;using System; <BR>&nbsp;&nbsp;class SingletonDemo <BR>&nbsp;&nbsp;{ private static SingletonDemo theSingleton = null; <BR>&nbsp;&nbsp; private SingletonDemo() {} <BR>&nbsp;&nbsp; public static SingletonDemo Instance() <BR>&nbsp;&nbsp; { if (null == theSingleton) <BR>&nbsp;&nbsp; { <BR>&nbsp;&nbsp; theSingleton = new SingletonDemo(); <BR>&nbsp;&nbsp; } <BR>&nbsp;&nbsp; return theSingleton; <BR>&nbsp;&nbsp; } <BR>&nbsp;&nbsp; static void Main(string[] args) <BR>&nbsp;&nbsp; { SingletonDemo s1 = SingletonDemo.Instance(); <BR>&nbsp;&nbsp; SingletonDemo s2 = SingletonDemo.Instance(); <BR>&nbsp;&nbsp; if (s1.Equals(s2)) <BR>&nbsp;&nbsp; { Console.WriteLine("see, only one instance!"); <BR>&nbsp;&nbsp; } <BR>&nbsp;&nbsp; } <BR>&nbsp;&nbsp;} <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;与之等价的另外一种实现方式是：Singleton.cs： <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;using System; <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;class SingletonDemo <BR>&nbsp;&nbsp;{ private static SingletonDemo theSingleton = new SingletonDemo(); <BR>&nbsp;&nbsp; private SingletonDemo() {} <BR>&nbsp;&nbsp; public static SingletonDemo Instance() <BR>&nbsp;&nbsp; { return theSingleton; <BR>&nbsp;&nbsp; } <BR>&nbsp;&nbsp; static void Main(string[] args) <BR>&nbsp;&nbsp; { SingletonDemo s1 = SingletonDemo.Instance(); <BR>&nbsp;&nbsp; SingletonDemo s2 = SingletonDemo.Instance(); <BR>&nbsp;&nbsp; if (s1.Equals(s2)) <BR>&nbsp;&nbsp; { Console.WriteLine("see, only one instance!"); <BR>&nbsp;&nbsp; } <BR>&nbsp;&nbsp; } <BR>&nbsp;&nbsp;} <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;编译执行： <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;Csc Singleton.cs <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;得到运行结果： <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;see, only one instance! <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;-------------------------------------------------------------------------------- <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;.NET中的Singleton <BR>&nbsp;&nbsp;因为Singleton模式具有这样实用的价值，开发人员除了可以在程序代码中直接使用Singleton模式外，在许多大型系统的实现上也都处处可见它的影子。在微软隆重推出的.NET框架中，同样也可以发现Singleton思想闪烁的光芒。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;举例来说，在.NET框架的重要组成部分Remoting中，远程对象（Remote Object）有两种激活方式：服务器端激活方式和客户端激活方式。采用服务器端激活方式的对象又分为两种类型：Singleton对象和SingleCall对象。Singleton 对象是这样的对象：无论该对象有多少个客户端调用，它总是只有一个实例，由这个实例来处理所有的客户端请求。相反地，若将远程对象声明为 SingleCall，则系统会为每次客户端方法的调用创建一个新对象，即使这些方法调用来自同一个客户端，也即，对象只在方法调用持续期间存在，一旦方法调用结束，该对象就会被销毁。显而易见，这里的Singleton对象就是设计模式Singleton思想在.NET中的应用。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;那么，如何在.NET的Remoting中利用Singleton？.NET提供了两种方式将一个远程对象注册为Singleton：直接调用RegisterWellKnownServiceType方法，在参数中指定对象类型为Singleton；或在配置文件web.config中设定远程对象的类型为Singleton。这两种方法的效果相同，所不同的是后一种方法显得更加方便，因为改变配置文件的内容后，不必重新编译应用程序。下列代码显示了如何使用RegisterWellKnownServiceType方法注册远程对象类型： <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;RemotingConfiguration.RegisterWellKnownServiceType( Type.GetType("RemotingSamples.HelloServer,object"), "SayHello", WellKnownObjectMode.Singleton); <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;参数"SayHello"是客户端访问远程对象（这里是HelloServer）时用来代表远程对象的URI，例如tcp://localhost:8085/SayHello（假设使用的是TCP通道）。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;最后一个参数就指明了这个远程对象是Singleton类型。一旦将远程对象注册为Singleton，则在第一次客户端调用HelloServer的方法时创建这个远程对象，然后保持它直到客户端中断连接或对象超时被销毁为止。在此期间，无论有多少个客户端调用这个远处对象，所有的客户请求都将由那个已经存在的唯一实例接受处理。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;这就是Singleton在.NET中的应用。 <BR>&nbsp;&nbsp; <BR>&nbsp;&nbsp;从Singleton模式的实现和应用中也可以看出，优秀的设计模式往往都具有"简约之美"。它们采用一种"优雅"的方式，将那些成功的设计方法和体系结构能够得以被简单、方便地复用。这也是为什么现在的软件开发日益强调"设计模式"的原因之所在。如果想进一步了解更多的设计模式，还是推荐各位阅读Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides的经典之作《Design Pattern》。  </td>
+        </tr>
+        <tr> 
+          <td height="24" colspan="2" align='right' class="left_tdbgall">文章录入：<a href='/UserInfo.asp?UserName=admin'>admin</a>&nbsp;&nbsp;&nbsp;&nbsp;责任编辑：admin&nbsp; 
+          </td>
+        </tr>
+        <tr> 
+          <td width="5"></td>
+          <td width="787"><li>上一篇文章： <a href='/Article/CJ/200409/852.html' title='文章标题：C#的四个基本技巧
+作    者：本网收集
+更新时间：2004-9-28 16:01:11'>C#的四个基本技巧</a></li><br>
+            <li>下一篇文章： <a href='/Article/CJ/200409/854.html' title='文章标题：用Visual&nbsp;C#实现文件下载功能(1)
+作    者：本网收集
+更新时间：2004-9-28 16:02:47'>用Visual&nbsp;C#实现文件下载功能(1)</a></li></td>
+        </tr>
+        <tr align="right" class="left_tdbgall"> 
+          <td height="24" colspan="2">【字体：<a href="javascript:fontZoomA();" class="top_UserLogin">小</a> 
+            <a href="javascript:fontZoomB();" class="top_UserLogin">大</a>】【<a href='/Article/Comment.asp?ArticleID=853' target='_blank'>发表评论</a>】【<a href='/Article/SendMail.asp?ArticleID=853' target='_blank'>告诉好友</a>】【<a href='/Article/Print.asp?ArticleID=853' target='_blank'>打印此文</a>】【<a href='javascript:window.close();'>关闭窗口</a>】 
+          </td>
+        </tr>
+      </table>
+      <!--网页中部左栏文章内容代码结束-->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="70" align="center"></td>
+  </tr>
+</table>
+</td>
+    <td width="180" valign="top" bgcolor="#f8f8f8" style="border-left:1px #A7A9A7 solid;"> 
+      <!--网页中部右栏代码开始-->
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="word-break:break-all;Width:fixed">
+        <tr> 
+          <td class="left_title"><img src="/Skin/adv43/ad_ztlm.gif" width="174" height="28"></td>
+        </tr>
+
+        <tr> 
+          <td class="left_tdbg1"><script language='javascript' src='/Article/JS/ShowSpecialList.js'></script></td>
+        </tr>
+        <tr> 
+          <td class="left_tdbg2"></td>
+        </tr>
+        <tr> 
+          <td class="left_title"><a class="class" href="/Article/ShowHot.asp"><img src="/Skin/adv43/ad_zxrmwz.gif" width="174" height="28" border="0"></a></td>
+        </tr>
+        <tr> 
+          <td background="/Skin/adv43/ad_bg2.gif" class="left_tdbg1"><table width='100%' cellpadding='0' cellspacing='0'><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/CJ/200409/833.html' title='文章标题：保护你的代码——谁动了我的组件？
+作    者：本网收集
+更新时间：2004-9-28 15:35:51' target='_self'>保护你的代码——…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline2'>[组图]</span><a href='/Article/CJ/200409/831.html' title='文章标题：Longhorn应用开发部署初探（一）
+作    者：本网收集
+更新时间：2004-9-28 15:34:06' target='_self'>Longhorn应用开发…</a></td></tr><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/CJ/200409/826.html' title='文章标题：在.NET环境中使用单元测试工具NUnit
+作    者：本网收集
+更新时间：2004-9-28 15:29:52' target='_self'>在.NET环境中使用…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><a href='/Article/CJ/200409/643.html' title='文章标题：C++大师Stan&nbsp;Lippman:我对中国程序员的忠告
+作    者：本网收集
+更新时间：2004-9-23 15:52:43' target='_self'>C++大师Stan&nbsp;Lippman:我…</a></td></tr><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/NETKF/200409/625.html' title='文章标题：在ASP.NET中进行文件处理(3)
+作    者：本网收集
+更新时间：2004-9-23 15:30:14' target='_self'>在ASP.NET中进行…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline2'>[组图]</span><a href='/Article/NETKF/200409/623.html' title='文章标题：在ASP.NET中进行文件处理(1)
+作    者：本网收集
+更新时间：2004-9-23 15:28:52' target='_self'>在ASP.NET中进行…</a></td></tr><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline2'>[组图]</span><a href='/Article/NETKF/200409/612.html' title='文章标题：Visual&nbsp;Studio&nbsp;Whidbey——Web应用程序开发新功能预览
+作    者：本网收集
+更新时间：2004-9-23 15:15:38' target='_self'>Visual&nbsp;Studio&nbsp;W…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/NETKF/200409/606.html' title='文章标题：为你的Blog打造个性日历控件
+作    者：本网收集
+更新时间：2004-9-23 15:08:46' target='_self'>为你的Blog打造个…</a></td></tr></table></td>
+        </tr>
+        <tr> 
+          <td class="left_tdbg2"></td>
+        </tr>
+        <tr> 
+          <td class="left_title"><a class="class" href="/Article/ShowElite.asp"><img src="/Skin/adv43/ad_zxtjwz.gif" width="174" height="28" border="0"></a></td>
+        </tr>
+        <tr> 
+          <td background="/Skin/adv43/ad_bg2.gif" class="left_tdbg1"><table width='100%' cellpadding='0' cellspacing='0'><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/CJ/200409/833.html' title='文章标题：保护你的代码——谁动了我的组件？
+作    者：本网收集
+更新时间：2004-9-28 15:35:51' target='_self'>保护你的代码——…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline2'>[组图]</span><a href='/Article/CJ/200409/831.html' title='文章标题：Longhorn应用开发部署初探（一）
+作    者：本网收集
+更新时间：2004-9-28 15:34:06' target='_self'>Longhorn应用开发…</a></td></tr><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/CJ/200409/826.html' title='文章标题：在.NET环境中使用单元测试工具NUnit
+作    者：本网收集
+更新时间：2004-9-28 15:29:52' target='_self'>在.NET环境中使用…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><a href='/Article/CJ/200409/643.html' title='文章标题：C++大师Stan&nbsp;Lippman:我对中国程序员的忠告
+作    者：本网收集
+更新时间：2004-9-23 15:52:43' target='_self'>C++大师Stan&nbsp;Lippman:我…</a></td></tr><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/NETKF/200409/625.html' title='文章标题：在ASP.NET中进行文件处理(3)
+作    者：本网收集
+更新时间：2004-9-23 15:30:14' target='_self'>在ASP.NET中进行…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline2'>[组图]</span><a href='/Article/NETKF/200409/623.html' title='文章标题：在ASP.NET中进行文件处理(1)
+作    者：本网收集
+更新时间：2004-9-23 15:28:52' target='_self'>在ASP.NET中进行…</a></td></tr><tr class='listbg'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline2'>[组图]</span><a href='/Article/NETKF/200409/612.html' title='文章标题：Visual&nbsp;Studio&nbsp;Whidbey——Web应用程序开发新功能预览
+作    者：本网收集
+更新时间：2004-9-23 15:15:38' target='_self'>Visual&nbsp;Studio&nbsp;W…</a></td></tr><tr class='listbg2'><td width='10'><img src='/images/article_elite.gif' alt='推荐文章'>&nbsp;</td><td><span class='S_headline1'>[图文]</span><a href='/Article/NETKF/200409/606.html' title='文章标题：为你的Blog打造个性日历控件
+作    者：本网收集
+更新时间：2004-9-23 15:08:46' target='_self'>为你的Blog打造个…</a></td></tr></table></td>
+        </tr>
+        <tr> 
+          <td class="left_tdbg2"></td>
+        </tr>
+        <tr> 
+          <td class="left_title"><img src="/Skin/adv43/ad_xgwz.gif" width="174" height="28" border="0"></td>
+        </tr>
+        <tr> 
+          <td class="left_tdbg1">没有相关文章</td>
+        </tr>
+        <tr> 
+          <td class="left_title"><img src="/Skin/adv43/ad_zxrmwzn.gif" width="174" height="28" border="0"></td>
+        </tr>
+        <tr>
+          <td align="center"><table width='100%' cellpadding='0' cellspacing='5' border='0' align='center'><tr valign='top'><td align='center'><a href='/Article/CJ/200409/858.html' title='文章标题：.NET中的Exception处理(C#)
+作    者：本网收集
+更新时间：2004-9-28 16:08:26' target='_blank'><img class='pic1' src='/Article/UploadFiles/200409/20040928160840719.gif'  width='125' height='90' border='0'><br>.NET中的Exception处…</a></td></tr><tr valign='top'><td align='center'><a href='/Article/CJ/200409/854.html' title='文章标题：用Visual&nbsp;C#实现文件下载功能(1)
+作    者：本网收集
+更新时间：2004-9-28 16:02:47' target='_blank'><img class='pic1' src='/Article/UploadFiles/200409/20040928160305756.gif'  width='125' height='90' border='0'><br>用Visual&nbsp;C#实现文件…</a></td></tr><tr valign='top'><td align='center'><a href='/Article/CJ/200409/845.html' title='文章标题：实战揭秘：开发.Net平台应用系统框架
+作    者：本网收集
+更新时间：2004-9-28 15:45:48' target='_blank'><img class='pic1' src='/Article/UploadFiles/200409/20040928154627926.gif'  width='125' height='90' border='0'><br>实战揭秘：开发.Net…</a></td></tr><tr valign='top'><td align='center'><a href='/Article/CJ/200409/843.html' title='文章标题：面向对象的应用服务层设计
+作    者：本网收集
+更新时间：2004-9-28 15:43:17' target='_blank'><img class='pic1' src='/Article/UploadFiles/200409/20040928154401456.gif'  width='125' height='90' border='0'><br>面向对象的应用服务…</a></td></tr></table></td>
+        </tr>
+      </table>
+      <!--网页中部右栏代码结束-->
+    </td>
+  </tr>
+</table>
+   
+<table width="760" border="0" align="center" cellpadding="0" cellspacing="0" class="center_tdbgall"> 
+  <tr> 
+    <td Class="main_shadow"></td> 
+  </tr> 
+</table> 
+    <!--文章显示代码结束--> 
+    <!--网友评论代码开始-->
+<table width="760" border="0" align="center" cellpadding="0" cellspacing="0" class="center_tdbgall" style="word-break:break-all;Width:fixed"> 
+  <tr> 
+    <td height="25" class="left_title">  <img src="/Skin/adv43/ad_wypl.gif" width="174" height="28" align="absmiddle">（只显示最新10条。评论内容只代表网友观点，与本站立场无关！）</td> 
+  </tr> 
+  <tr> 
+    <td> <script language='javascript' src='/Article/Comment.asp?Action=JS&ArticleID=853'></script> </td> 
+  </tr> 
+</table> 
+<table width="760" border="0" align="center" cellpadding="0" cellspacing="0" class="center_tdbgall"> 
+  <tr> 
+    <td Class="main_shadow"></td> 
+  </tr> 
+</table>
+    <!--网友评论代码结束-->
+<!-- ********网页中部代码结束******** --> 
+<!-- ********网页底部代码开始******** --> 
+<table width="760" border="0" align="center" cellpadding="0" cellspacing="0" class="Bottom_tdbgall" style="word-break:break-all;Width:fixed">
+  <tr align="center"> 
+    <td colspan="2" class="Bottom_Adminlogo">| <a class='Bottom' href='#' onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://asp.68l.com');">设为首页</a> 
+      | <a class='Bottom' href="javascript:window.external.addFavorite('http://asp.68l.com','ASP技术网');">加入收藏</a> 
+      | <a class='Bottom' href='mailto:admin@sogle.com'>联系站长</a> | <a class='Bottom' href='/FriendSite/Index.asp' target='_blank'>友情链接</a> 
+      | <a class='Bottom' href='/Copyright.asp' target='_blank'>版权申明</a> |  <a class='Bottom' href='/Admin/Admin_Index.asp' target='_blank'>管理登录</a>&nbsp;|&nbsp;</td>
+  </tr>
+  <tr bgcolor="#FF8900"> 
+    <td height="7" colspan="2"></td>
+  </tr>
+  <tr class="Bottom_Copyright"> 
+    <td width="20%" height="68"><img src="/Skin/blue/powerease_logo.gif"></td>
+    <td width="80%" align="center"><table width=542 border=0 cellspacing=0 cellpadding=0>
+        <tr> 
+          
+    <td colspan=2 valign=bottom><font color=#333333>版权所有 Copyright&copy; 2002-2005</font> 
+      <a href=http://www.68l.com/ target=_blank>68互联</a> <font color=#333333> 核心：</font><a href=http://www.asp163.net target=_blank>PowerEasy V4.03</a></td>
+          <td width=114 rowspan=2></td>
+        </tr>
+        <tr> 
+          <td width=234 align=left valign=top><table width=232 border=0 cellspacing=0 cellpadding=0>
+              <tr> 
+                
+          <td width=232><font color=#333333>设计版本：<a href=http://www.68l.com target=_blank>Art 
+            Rascal web V4.3 改进版</a></font></td>
+              </tr>
+              <tr> 
+                <td><font color=#333333>公司名称：68互联</font></td>
+              </tr>
+            </table></td>
+          <td width=194 valign=top><table width=194 border=0 cellspacing=0 cellpadding=0>
+              <tr> 
+                <td><font color=#333333>网络供应商：</font><a href=http://www.68l.com/ target=_blank><font color=#333333>68互联虚拟主机</font></a></td>
+              </tr>
+            </table>
+            
+          </td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr bgcolor="#4F4F4F"> 
+    <td height="4" colspan="2"></td>
+  </tr>
+</table> 
+<!-- ********网页底部代码结束******** --> 
+</body>
+</html>
+<!-- Powered by: PowerEasy V4.0 -->

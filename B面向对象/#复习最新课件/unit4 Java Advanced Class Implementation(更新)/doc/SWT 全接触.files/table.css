@@ -1,0 +1,138 @@
+TABLE.data-table-1 TD {
+	PADDING-RIGHT: 4px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 5px; VERTICAL-ALIGN: top; PADDING-TOP: 4px
+}
+TABLE.data-table-1 TH {
+	PADDING-RIGHT: 4px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 5px; VERTICAL-ALIGN: top; PADDING-TOP: 4px
+}
+TABLE.data-table-1 TH {
+	BACKGROUND: #efefef
+}
+TABLE.data-table-2 {
+	MARGIN-TOP: 1px
+}
+TABLE.data-table-2 TD {
+	BORDER-BOTTOM: #ccc 1px solid
+}
+TABLE.data-table-2 TH.tb-row {
+	BORDER-BOTTOM: #ccc 1px solid
+}
+TABLE.data-table-2 TD {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; VERTICAL-ALIGN: top; PADDING-TOP: 4px
+}
+TABLE.data-table-2 TH {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; VERTICAL-ALIGN: top; PADDING-TOP: 4px
+}
+TABLE.data-table-2 TH {
+	BACKGROUND: #c8d7e3
+}
+TABLE TH.tb-row {
+	FONT-WEIGHT: normal; BACKGROUND: #fff
+}
+TABLE.data-table-1 {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 0px solid; BORDER-LEFT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid
+}
+TABLE.data-table-1 CAPTION {
+	PADDING-LEFT: 6px; BACKGROUND: #3c5f84; PADDING-BOTTOM: 4px; PADDING-TOP: 3px; TEXT-ALIGN: left
+}
+TABLE.data-table-2 CAPTION {
+	PADDING-LEFT: 6px; BACKGROUND: #3c5f84; PADDING-BOTTOM: 4px; PADDING-TOP: 3px; TEXT-ALIGN: left
+}
+TABLE.data-table-3 CAPTION {
+	PADDING-LEFT: 6px; BACKGROUND: #3c5f84; PADDING-BOTTOM: 4px; PADDING-TOP: 3px; TEXT-ALIGN: left
+}
+TABLE.data-table-2 CAPTION {
+	BORDER-BOTTOM: #fff 1px solid
+}
+TABLE.data-table-1 CAPTION EM {
+	COLOR: #fff
+}
+TABLE.data-table-2 CAPTION EM {
+	COLOR: #fff
+}
+TABLE.data-table-3 CAPTION EM {
+	COLOR: #fff
+}
+TABLE.v14-gray-table-border TABLE.data-table-1 {
+	BORDER-RIGHT: #ccc 0px solid; BORDER-TOP: #ccc 0px solid; BORDER-LEFT: #ccc 0px solid; BORDER-BOTTOM: #ccc 0px solid
+}
+TABLE.data-table-1 TD.no-padding {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px
+}
+TABLE.data-table-1 TD.ntb {
+	BORDER-TOP-WIDTH: 0px
+}
+TABLE TR.alt-row TD {
+	BACKGROUND: #eee
+}
+TABLE TR.alt-row TH.tb-row {
+	BACKGROUND: #eee
+}
+TABLE.data-table-3 TD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 6px; VERTICAL-ALIGN: top; PADDING-TOP: 4px
+}
+TABLE.data-table-3 TH {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 6px; VERTICAL-ALIGN: top; PADDING-TOP: 4px
+}
+TABLE.data-table-3 TH {
+	FONT-WEIGHT: bold
+}
+TABLE.data-table-3 TD {
+	PADDING-RIGHT: 5px
+}
+TABLE.data-table-3 {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 0px solid; BORDER-LEFT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid
+}
+TABLE.data-table-1 .imgleft {
+	PADDING-LEFT: 5px; MARGIN-RIGHT: 5px
+}
+P.dtnf {
+	FONT-SIZE: 11px; FONT-FAMILY: verdana,arial,sans-serif
+}
+TH.numeric {
+	TEXT-ALIGN: right
+}
+TD.numeric {
+	TEXT-ALIGN: right
+}
+TABLE.data-table-1 CAPTION.header-1 {
+	BACKGROUND: #98b1c4
+}
+TABLE.data-table-2 CAPTION.header-1 {
+	BACKGROUND: #98b1c4
+}
+TABLE.data-table-3 CAPTION.header-1 {
+	BACKGROUND: #98b1c4
+}
+TABLE.data-table-1 CAPTION.header-2 {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BACKGROUND: #eee; BORDER-LEFT: #ccc 1px solid
+}
+TABLE.data-table-2 CAPTION.header-2 {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BACKGROUND: #eee; BORDER-LEFT: #ccc 1px solid
+}
+TABLE.data-table-1 CAPTION.header-2 EM {
+	COLOR: #000
+}
+TABLE.data-table-2 CAPTION.header-2 EM {
+	COLOR: #000
+}
+TABLE.data-table-3 CAPTION.header-2 EM {
+	COLOR: #000
+}
+A.dtable-alink {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 15px; FONT-WEIGHT: bold; BACKGROUND: url(//www.ibm.com/i/v14/icons/fw_bold.gif) no-repeat 0px 4px; PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-TOP: 5px
+}
+A.dtable-alink:link {
+	TEXT-DECORATION: none
+}
+A.dtable-alink:visited {
+	TEXT-DECORATION: none
+}
+A.dtable-alink:hover {
+	TEXT-DECORATION: underline
+}
+DIV.dtable-bullet-list UL {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 0px; MARGIN: 0px
+}
+DIV.dtable-bullet-list LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 7px; BACKGROUND: url(//www.ibm.com/i/v14/bullets/bk-bullet.gif) no-repeat; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}

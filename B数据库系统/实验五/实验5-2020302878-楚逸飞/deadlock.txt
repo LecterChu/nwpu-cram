@@ -1,0 +1,156 @@
+1.
+create table account
+( user_id int,
+  balance real,
+  primary key (user_id)
+);
+
+insert
+into account
+values('1','100.5');
+
+insert
+into account
+values('2','100.5');
+
+
+2.开始两个窗口i会话
+
+
+3.两个窗口中都开始一个新事务
+--window1
+begin transaction
+--window2
+begin transaction
+
+4.第二个窗口中将活期储蓄账户余额更新为455.75
+update account
+set balance = 455.75
+where user_id = 2;
+
+结果：
+	user_id	balance
+1		1	    100.5
+2		2	  455.75
+
+
+5.第一个窗口中将活期储蓄账户余额更新为1400
+update account
+set balance = 1400
+where user_id = 2;
+
+结果:不能更新成功，而是显示“正在等待查询完成”
+原因：第二个窗户修改数据上了锁，第一个窗口想要修改同样的数据，需要等到第二个窗口释放锁时才会执行操作。
+
+
+6.第二个窗口提交事务，观察第一个窗口变化，解释说明
+--window2
+commit transaction
+--window1
+成功返回查询
+
+第一个窗口变化：从原本的等待变为“成功返回查询”，更新成功
+原因：第二个窗口的事务提交成功，会释放锁，所以第一个窗口的更新操作得以被执行。
+
+
+7.在第一个窗口提交事务
+--window
+commit transaction
+
+
+8.两个窗口都开始一个新事务
+--window1
+begin transaction
+--window2
+begin transaction
+
+
+9.第二个窗口中将定期储蓄账户余额更新为2400
+update account
+set balance = 2400
+where user_id = 1;
+结果：
+	user_id	balance
+1		2	     2400
+2		1	     1400
+
+
+10.第一个窗口中将活期储蓄账户余额更新为2000
+update account
+set balance = 2000
+where user_id = 2;
+结果：
+	user_id	balance
+1		1	     100.5
+2		2	     2400
+
+
+11.第一个窗口中将定期储蓄账户余额更新为1400
+update account
+set balance = 1400
+where user_id = 1;
+结果：显示“正在等待查询完成”
+
+
+12.第二个窗口中将活期储蓄账户余额更新为1000.50
+update account
+set balance = 1000.50
+where user_id = 2;
+结果：
+发生了死锁，并有以下信息显示：
+第一个窗口：成功返回了查询，耗时33秒
+第二个窗口：ERROR: 错误:  检测到死锁
+		DETAIL:  进程17284等待在事务 989上的ShareLock; 由进程11232阻塞.
+		进程11232等待在事务 988上的ShareLock; 由进程17284阻塞.
+		HINT:  详细信息请查看服务器日志.
+		CONTEXT:  当更新关系"account"的元组(0, 13)时
+
+
+
+13.观察结果，试着解释原因
+现象：发生了死锁，并且系统即使检测到了死锁并终止了事务
+原因：两个进程都想等待对方加锁的对象被释放。但是dbms中有死锁的检测与消除机制，系统及时发现了死锁并且让事务一完成，事务二中断。
+
+14.在每个窗口中查询表的数据，你观察到了什么？
+--window1
+	user_id	balance
+1		2	     2000
+2		1	     1400
+
+--window2
+ERROR: 错误:  当前事务被终止, 事务块结束之前的查询被忽略
+SQL 状态: 25P02
+
+第一个窗口正确执行了事务的所有操作，第二个窗口发生死锁没有正确完成操作
+windows1不执行coomit transaction并且在window2中执行commit transaction之后再查询的结果是：
+	user_id	balance
+1		1	     100.5
+2		2	     1400
+window1中提交事务后，window2中才查询到
+	user_id	balance
+1		2	     2000
+2		1	     1400
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+public class OneValue<T> {
+    T value;
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T t) {
+        value = t;
+    }
+}
+public class UseOneValue {
+
+    public static void main(String[] args) {
+        String value = "value";
+        OneValue<String> oneValue = new OneValue<String>();
+        oneValue.setValue(value);
+        String nv = OneValue.getValue();
+    }
+} 
+/*
+String nv = test.getValue();
+”被编译器变成了“String nv = (String)test.getValue();”
+下面的例子说明不允许泛型数组的原因
+*/
+
+OneValue<String>[]  values = new OneValue<String>[2];
+Object[] objects = values;//  
+OneValue<StringBuffer> bufferValue = new OneValue<StringBuffer>();
+bufferValue.setValue(new StringBuffer());
+StingValues[0] = bufferValue;
+OneValue<String> ref = values[0]; 
+String value = ref.getValue();
+、、、、、、、、、、、
+String value = ref.getValue()”会被替换成“String value = (String)ref.getValue()”,
+这样就会出现转型异常，如果允许泛型数组，就会导致转型异常的发生，所以就没有支持
+
+ 

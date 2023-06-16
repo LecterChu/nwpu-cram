@@ -1,0 +1,89 @@
+--1
+--(1)
+select A
+from R;
+
+--(2)
+select *
+from R
+where B = 13;
+
+--(3)
+select A,B
+from R,S
+where R.C=S.D;
+
+--2
+--(1)
+ename		project		dept
+Kasper              	Spreadsheet         	Admin
+Mohan               	Spreadsheet         	Admin
+Lin                 	Forecast               	Admin  
+Lin                 	Spreadsheet         	Admin
+
+--(2)
+并操作要求子结果集要具有相同的结构、字结果集的列数必须相同、子结果集对应的数据类型必须可以兼容。
+但r和s的列数不同，故二者不能取并集。
+
+--(3)
+结果为空。
+因为r在dept上的投影与s在dept上的投影都只包含'Accounting'、'Admin'两个值，所以二者做差的结果是空
+
+
+--3
+--(1)
+select pno
+from part
+where unitprice between 10 and 25
+
+--(2)
+select  part.pno,part.pname,sum(qty),sum(billedprice)
+from  part,invoice
+where  part.pno = invoice.pno 
+	 and invoice.ono in (select ono
+				 from orders
+				 where received like '%98%')
+group by part.pno,part.pname
+order by sum(billedprice) asc
+
+--(3)
+select pname
+from part
+where pno not in (select pno
+			from invoice,orders
+			where invoice.ono = orders.ono
+				  and orders.received like '%98%')
+
+
+--4
+create table EMPLOYEE
+(
+	id_dom 			varchar(20) not null unique,
+	name_dom 			varchar(20),
+	salary_dom 			int,
+	dept_name_dom 		varchar(20) not null ,
+	primary key(id_dom) deferrable,
+	foreign key (dept_name_dom) references DEPARTMENT(dept_name_dom) deferrable
+);
+
+create table DEPARTMENT
+(
+	dept_name_dom 		varchar(20) not null unique ,
+	id_dom 			varchar(20),
+	budget_dom 		varchar(20),
+	primary key(dept_name_dom)deferrable
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+

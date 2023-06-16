@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<title>Mapping </title>
+
+<p>1. For each strong entity type E. Create a new table. Include as its columns, 
+  all the simple attributes and simple components of the composite attributes 
+  of E. Identify the primary key and the alternate keys. Do not include any multi-valued 
+  attribute as a key. If the only unique field of an entity is a multi-valued 
+  attribute, introduce an artificial primary key field. </p>
+
+
+<p>2. For each weak entity W that is associated with only one 1:1 identifying 
+  owner relationship. Identify the table T of the owner entity type. Include as 
+  columns of T, all the simple attributes and simple components of the composite 
+  attributes of W. </p>
+
+<p>3. For each weak entity W that is associated with a 1:N or M:N identifying 
+  relationship, or participates in more than one relationship. Create a new table 
+  T. Include as its columns, all the simple attributes and simple components of 
+  the composite attributes of W. Form the primary key of T as follow: In the case 
+  of a 1:N owner relationship, by including as a foreign key in T, the primary 
+  key of the owner entity. The primary key of T is the combination of W's partial 
+  key and the foreign key. In the case of a M:N owner relationship, by creating 
+  a new column that will hold unique values. (In this case, the association between 
+  the weak entity and its owner entity will be specified in Step 6.) </p>
+
+<p>4. For each binary 1:1 relationship type R. Identify the tables S and T of 
+  the participating entity types. Choose S (preferably the one with total participation). 
+  Include as foreign key in S, the primary key of T. Include as Columns of S, 
+  all the simple attributes and simple components of the composite attributes 
+  of R. </p>
+
+<p>5. For each binary 1:N relationship type R. Identify the table S (at the N-side) 
+  and T of the participating entities. Include as a foreign key in S, the primary 
+  key of T. Include as columns of S, all the simple attributes and simple components 
+  of composite attributes of R. </p>
+
+<p><font size="3">6. For each N-ary relationship (including binary N:M relationship) 
+  type R. Create a new table T. Include as columns of T, all the simple attributes 
+  and simple components of composite attributes of R. Include as foreign keys, 
+  the primary keys of the participating (strong or weak) entity types. Specify 
+  as the primary key of T, the list of foreign keys. </font></p>
+
+<p><font size="3">7. For each multi-valued attribute A. Create a new table T. 
+  Include as columns of T, the simple attribute or simple components of the attribute 
+  A. In table T, include as foreign key, the primary key of the entity or relationship 
+  type that has A. Specify as the primary key of T, the foreign key and the columns 
+  corresponding to A. </font></p>
+
+<p><font size="3">8. For each specialization with disjoint subclasses. Create 
+  a new table Ti for each subclass Si. Include as columns of Ti, the simple attributes 
+  and simple component attributes of the superclass. Include as columns of Ti, 
+  the simple attributes and simple component attributes specific to Si. Identify 
+  the primary key. </font></p>
+
+<p><font size="3">9. For each specialization with overlapping subclasses. Create 
+  a new table O for the superclass. Include as columns of O, the simple attributes 
+  and the simple component attributes of the superclass. Identify its primary 
+  key and alternate keys. Create a new table Ti for each subclass Si. Include 
+  as columns of Ti, the simple attributes and simple component attributes specific 
+  to Si. Include as a foreign key in Ti (to be part of the primary key of Ti), 
+  the primary key of O. </font></p>
+
+</body>
+</html>

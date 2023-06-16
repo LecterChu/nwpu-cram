@@ -1,0 +1,78 @@
+1. primary key：TrackingNum
+
+
+2.FD1：TrackingNum -> OrderNo,EmpID,EmpName,ShipToAddr,ShippedDate
+   FD2：EmpID -> EmpName
+   FD3：OrderNo -> ShipToAddr
+
+
+3.①插入异常，在一名新员工处理订单之前，无法查询到关于他/她的信息。
+   例如：新来了一名叫做Jack的员工，其EmpID是5678，当我们希望向此表中插入时会发现TrackingNum是null，但
+   TrackingNum是主码，不可为空，这就导致了无法在表中插入Jack的信息。因此，Jack虽然已经被聘用但是却查询
+   不到他/她的信息。
+
+   ②删除异常，在删除某一个Shipment信息的时候可能会删除某一名员工的信息。
+   例如：表中第一行TrackingNum为12435678的Shipment已经被用户接收(或者已经被用户取消，或已经失效)，因为
+   希望删除这一行，但是如果Joe仅仅处理这一个TrackingNum为12345678的Shipment，那么Joe的信息会被完全删除
+   以至于看起来好像Joe已经被解雇了。
+
+   ③更新异常，
+   例如：一名Employee处理了k个订单，那么他的ID和Name都被存储了k次。更新时需要对这些行都进行更新。如果没
+   有全部更新就会产生异常。
+   或者当一名顾客需要修改他/她的收货地址，但是他/她的订单可能被分成了多个Shipment，这时就要对这些Shipment
+   的地址全部修改。如果没有全部修改，就会发生异常。
+
+   (Order中的插入异常，类似于①，在一个Order中的书都没有足够库存的情况下，表中无法查到此Order的信息，但实
+   际上这个Order在逻辑上已经存在
+   例如：一位用户买了两本《数据库系统概论》和三本《计算机网络》，但是现在《数据库系统概论》的库存只有一本，
+   《计算机网络》的库存只有两本，因此无法为这位用户发货，也就是说此Order（暂时）不会有对应的Shipment生成，
+   又由于TrackingNum是主键，没有Shipment就没有TrackingNum，因此表中便没有此已经存在的Order的信息。
+   Order中的删除异常，类似于②，在一个Order只对应一个Shipment的情况下，这个Shipment对应行的删除会导致此
+   Order信息丢失，但是这个Order可能是尚未完成的
+   例如：假设OrderNo为224(表中第二行)的Order只对应TrackingNum为21345678的这一个Shipment，当因为疫情原
+   因或者用户取消了订单等状况而迫使此Shipment要从表中删除时，这个未完成(用户没有拿到书)的Order的信息也被删
+   除了。)
+
+
+4. 是2NF  首先没有任何一个属性是多值属性(地址是复合属性)，则必定是1NF；
+	      又因为每一个非主属性(TrackingNum之外的属性)都完全依赖于候选码(本题给出的表中的候选码只有TrackingNum)，
+	      则必定是2NF;又由于存在传递依赖，EmpName完全依赖于EmpName，ShipToAddr完全依赖于OrderNo，
+	      故不是3NF，则更不可能是BCNF(因为是BCNF就必定是3NF)
+
+
+5.
+    1）	将Shipment进一步划分，遵从上课说的“一个表解决一个问题”的思想，也即将传递依赖于TrackingNum的属性
+	及其直接依赖的属性分
+	离出去构成一个新的表，并在Shipment中保留相应的外键。
+	①将EmpID和EmpName分离出去构成一个新表Employee，并在Shipment中保留外键EmpID
+	②将OrderNo、ShipToAddr离出去构成一个新表Order，并在Shipment中保留外键OrderNo
+	③Shipment中保留了四个属性，即TrackingNum、EmpID、OrderNo以及ShippedDate
+	这样就消除了传递依赖，成为3NF
+	
+    2） ①Shipment（EmpID，OrderNo，TrackingNum，ShippedDate）
+	 主键：TrackingNum
+	 外键：EmpID和OrderNo
+	 FD:TrackingNum -> EmpID,EmpName,ShippedDate
+	②Employee（EmpID，EmpName）
+	 主键：EmpID
+ 	 FD：EmpID -> EmpName
+	③Order（OrderNo，ShipToAddr）
+	 主键：OrderNo
+	 FD：OrderNo -> ShipToAddr
+
+    3） 这是3NF，因为从2NF的基础上经过上述步骤消除了非主属性对码的传递依赖。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="580.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <GridPane alignment="CENTER" layoutX="379.0" layoutY="14.0" prefHeight="90.0" prefWidth="346.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="89.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="149.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="3.0" prefWidth="105.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Username：" />
+            <Label text=" Password：" GridPane.rowIndex="1" />
+            <TextField fx:id="password" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="login" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" text="Login" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <Button fx:id="logout" mnemonicParsing="false" prefHeight="30.0" prefWidth="72.0" text="Logout" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <TextField fx:id="username" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <FlowPane layoutX="405.0" layoutY="149.0" prefHeight="29.0" prefWidth="99.0">
+         <children>
+            <Label fx:id="code" prefHeight="29.0" prefWidth="39.0" text="Code" />
+            <Label fx:id="codeText" prefHeight="29.0" prefWidth="54.0" />
+         </children>
+      </FlowPane>
+      <Label fx:id="title" layoutX="105.0" layoutY="38.0" prefHeight="27.0" prefWidth="182.0" scaleX="1.8" scaleY="1.2" text="Bright Fresh Milk System" />
+      <Label fx:id="products" layoutX="32.0" layoutY="119.0" text="Products" />
+      <ListView fx:id="productsList" layoutX="32.0" layoutY="145.0" prefHeight="191.0" prefWidth="308.0" />
+      <Label fx:id="currentOrder" layoutX="32.0" layoutY="350.0" prefHeight="20.0" prefWidth="107.0" text="Current Order" />
+      <ListView fx:id="orderList" layoutX="32.0" layoutY="379.0" prefHeight="127.0" prefWidth="308.0" />
+      <Button fx:id="addProduct" layoutX="602.0" layoutY="321.0" mnemonicParsing="false" text="Add to Order " />
+      <Label fx:id="currentProduct" layoutX="364.0" layoutY="119.0" prefHeight="20.0" prefWidth="120.0" text="Current Product" />
+      <Button fx:id="submit" layoutX="208.0" layoutY="526.0" mnemonicParsing="false" text="Submit Order" />
+      <TextArea fx:id="productText" layoutX="403.0" layoutY="179.0" prefHeight="127.0" prefWidth="319.0" AnchorPane.bottomAnchor="287.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="179.0">
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </TextArea>
+      <Label fx:id="totalText" layoutX="347.0" layoutY="483.0" prefHeight="29.0" prefWidth="74.0" />
+      <Button fx:id="removeProduct" layoutX="48.0" layoutY="526.0" mnemonicParsing="false" text="removeProduct" />
+      <ListView fx:id="salesList" layoutX="434.0" layoutY="392.0" prefHeight="134.0" prefWidth="272.0" />
+      <Label fx:id="orderHistory" layoutX="365.0" layoutY="350.0" prefHeight="20.0" prefWidth="99.0" text="Order History" />
+   </children>
+</AnchorPane>
