@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1617526148 source:c:\users\asus\desktop\高精度计算pi\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<iostream>
+

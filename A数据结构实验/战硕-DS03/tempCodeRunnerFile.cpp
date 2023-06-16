@@ -1,0 +1,1 @@
+cin>>huff[i]->data;
