@@ -1,0 +1,126 @@
+1. List the primary key. 
+  TrackingNum(PK)
+
+2. List all the FDs. 
+   TrackingNum -> EmpID
+   TrackingNum -> EmpName
+   TrackingNum -> OrderNo
+   TrackingNum -> ShipToAddr
+   TrackingNum -> ShippedDate
+   EmpID -> EmpName
+   OrderNo -> ShipToAddr
+
+3. List all the update anomalies and provide an example of each. 
+  1)insertion anomaly : when you insert a new employee,there is no TrackingNum of this new employee,
+    you have to update multiple record.
+    For example,when you want to insert the Name of 1234,because an EmpID may has 
+    multiple orderNo,you have to update multiple record about name.
+  2)modification anomaly : when you modify a EmpID,because an employee disposed an order,
+    you have to modificate all orders disposed by this employee.
+    For example,when you want to modify the EmpID "2134" ,the new ID is "5678",
+    ou have to modificate all orders disposed by "2134".
+  3)deletion anomaly : when you delete an order,you may delete all information of a employee.
+    because a employee may deals with one order or many orders.
+    For example,
+4. What normal form is the relation in? Explain 
+
+1)1NF: First Normal Form
+  1NF Definition: A relation schema is in 1NF, if the domain of every attribute allows a single atomic value. 
+  That is, every cell in the table contains one and only one value. 
+
+2)2NF: Second Normal Form
+  2NF Definition: A relation is in 2NF, if it is in 1NF and every non-primary-key attribute is fully functionally
+  dependent on the primary key. 
+  In other words, in a relation that is in 2NF there are no partial dependencies on the primary key.
+
+3)3NF: Third Normal Form
+ The 3NF is defined in terms of transitive dependencies and is associated with insertion and deletion anomalies. 
+ 3NF Definition: A relation is in 3NF, if it is in 2NF and does not contain a non-primary-key attribute that is
+ transitively dependent on the primary key.
+ 
+5. Apply normalization to it incrementally, bringing the relation to 3NF. That is, if the relation is unnormalized, bring it to first normal form, then bring the first normal form you've just created to second normal form, and then bring the second normal form to third normal form. 
+
+1)simple string
+  The relation is 2NF.
+  TrackingNum(PK)¡úEmpID
+  TrackingNum(PK)¡úOrderNo
+  TrackingNum(PK)¡úShippedDate
+  EmpID(PK)¡úEmpName
+  OrderNo(PK)¡úShipToAddr
+
+
+ Eliminate partial dependencies:
+ add new form
+ Employee,Order
+ 
+ Employee
+ (EmpID(PK),EmpName)
+ EmpID(PK)¡úEmpName
+
+ Order
+ (OrderNo(PK),ShipToAddr)
+ OrderNo(PK)¡úShipToAddr
+ 
+ Shipment 
+ (EmpID,OrderNo,ShippedDate,TrackingNum(PK))
+ TrackingNum(PK)¡úEmpID
+ TrackingNum(PK)¡úOrderNo
+ TrackingNum(PK)¡úShippedDate
+
+2)combinatorial attribute
+  The relation is not 1NF,it's unnormalized. 
+  add new attribute
+  ShipToAddr(state,city,street,bulding,num) TrackingNum(PK)
+ 
+FD:TrackingNum -> EmpID
+   TrackingNum -> EmpName
+   TrackingNum -> OrderNo
+   TrackingNum -> state
+   TrackingNum -> city
+   TrackingNum -> street
+   TrackingNum -> bulding
+   TrackingNum -> num
+   TrackingNum -> ShippedDate
+   EmpID -> EmpName
+   OrderNo -> state
+   OrderNo -> city
+   OrderNo -> street
+   OrderNo -> bulding
+   OrderNo -> num
+ now it is 2NF,but there be partial dependencies.
+ 2Nf¡ú3NF,add new form.
+  
+ Employee
+ (EmpID(PK),EmpName)
+ EmpID(PK)¡úEmpName
+
+ Order
+ (OrderNo(PK),state,city,street,bulding,num)
+ OrderNo(PK)¡ústate
+ OrderNo(PK)¡úcity
+ OrderNo(PK)¡ústreet
+ OrderNo(PK)¡úbulding
+ OrderNo(PK)¡únum
+ 
+ Shipment 
+ (EmpID,OrderNo,ShippedDate,TrackingNum(PK))
+ TrackingNum(PK)¡úEmpID
+ TrackingNum(PK)¡úOrderNo
+ TrackingNum(PK)¡úShippedDate
+ 
+now the relation is 3NF.
+
+ 
+
+
+
+
+
+
+   
+
+
+
+
+
+

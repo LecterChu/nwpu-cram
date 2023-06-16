@@ -1,0 +1,7 @@
+double类型的变量factor1或factor2的值是否相等，运算由于精度问题，可能会有误差
+不能直接用==比较，有以下两种比较方法
+
+1. if(Math.abs(factor1 + factor2)<1e-6) 
+
+2. if (Double.doubleToLongBits(factor1) 
+      != Double.doubleToLongBits(factor2))

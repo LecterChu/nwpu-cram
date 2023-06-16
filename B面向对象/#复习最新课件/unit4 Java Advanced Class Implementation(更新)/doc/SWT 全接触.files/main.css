@@ -1,0 +1,789 @@
+#print-masthead {
+	DISPLAY: none
+}
+.ibm-access {
+	LEFT: -3000px; WIDTH: 1px; POSITION: absolute
+}
+.cty-tou {
+	BACKGROUND: #2f4e6f; WHITE-SPACE: nowrap
+}
+.cty-tou-div {
+	COLOR: #293d6b; WHITE-SPACE: nowrap
+}
+.masthead-phone {
+	COLOR: #293d6b; WHITE-SPACE: nowrap
+}
+.spacer {
+	COLOR: #98b1c4; WHITE-SPACE: nowrap
+}
+.cty-tou-border {
+	BACKGROUND: #3c5f84
+}
+.mbbg {
+	BACKGROUND: #000
+}
+.country {
+	COLOR: #c8d7e3; WHITE-SPACE: nowrap
+}
+.upper-masthead-corner {
+	BACKGROUND-POSITION: 100% 100%; BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/t/upper-nav-cnr.gif); BACKGROUND-REPEAT: no-repeat
+}
+EM.caution {
+	FONT-WEIGHT: bold; TEXT-TRANSFORM: uppercase; FONT-STYLE: normal
+}
+A.ur-link:link {
+	COLOR: #c8d7e3; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.ur-link:visited {
+	COLOR: #c8d7e3; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.ur-link:hover {
+	COLOR: #c8d7e3; WHITE-SPACE: nowrap; TEXT-DECORATION: underline
+}
+.input {
+	BACKGROUND: #eee
+}
+.input-local {
+	BACKGROUND: #eee
+}
+TD.blbg {
+	BORDER-TOP: #99afc4 2px solid; BACKGROUND: #c8d7e3; BORDER-BOTTOM: #99afc4 1px solid; WHITE-SPACE: nowrap
+}
+A.masthead-mainlink:link {
+	COLOR: #293d6b; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.masthead-mainlink:visited {
+	COLOR: #293d6b; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.masthead-mainlink:hover {
+	COLOR: #293d6b; WHITE-SPACE: nowrap; TEXT-DECORATION: underline
+}
+#left-nav-angle {
+	BACKGROUND-POSITION: 100% 100%; BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/t/left-nav-angle.gif); BACKGROUND-REPEAT: no-repeat
+}
+.bbg {
+	WHITE-SPACE: nowrap; BACKGROUND-COLOR: #000
+}
+.dbg {
+	BACKGROUND-COLOR: #fff
+}
+.mbg {
+	PADDING-LEFT: 4px; BORDER-BOTTOM: white 1px solid; BACKGROUND-COLOR: #c8d7e3
+}
+TH.mbg {
+	PADDING-LEFT: 4px; BORDER-BOTTOM: white 1px solid; BACKGROUND-COLOR: #98b1c4
+}
+TH.mbg A.nav:link {
+	COLOR: #fff
+}
+TD.hil {
+	BORDER-BOTTOM: white 1px solid; BACKGROUND-COLOR: #fff
+}
+TH.hil {
+	PADDING-LEFT: 4px; BORDER-BOTTOM: white 1px solid; BACKGROUND-COLOR: #98b1c4
+}
+TH.hil A.nav:link {
+	COLOR: #fff
+}
+.hil {
+	PADDING-LEFT: 4px; BACKGROUND-COLOR: #fff
+}
+.lbg {
+	VERTICAL-ALIGN: top; BACKGROUND-COLOR: #c8d7e3
+}
+TD.left-nav {
+	VERTICAL-ALIGN: top; BACKGROUND-COLOR: #c8d7e3
+}
+TR.left-nav-child TD {
+	VERTICAL-ALIGN: top; BACKGROUND-COLOR: #c8d7e3
+}
+TR.left-nav-last {
+	VERTICAL-ALIGN: top; BACKGROUND-COLOR: #c8d7e3
+}
+.v14-graphic-tab-lblue-table {
+	VERTICAL-ALIGN: top; BACKGROUND-COLOR: #c8d7e3
+}
+TH.left-nav-overview {
+	BACKGROUND: #98b1c4
+}
+TD.left-nav-overview {
+	BACKGROUND: #98b1c4
+}
+.v14-graphic-tab-dblue-table {
+	BACKGROUND: #98b1c4
+}
+TD.left-nav-highlight {
+	BACKGROUND: #fff; VERTICAL-ALIGN: top
+}
+TR.left-nav-child-highlight TD {
+	BACKGROUND: #fff; VERTICAL-ALIGN: top
+}
+TD.left-nav {
+	BORDER-TOP: white 1px solid
+}
+TD.left-nav-highlight {
+	BORDER-TOP: white 1px solid
+}
+TR.left-nav-last TD {
+	BORDER-TOP: white 1px solid
+}
+TR.rlinks TD {
+	VERTICAL-ALIGN: top
+}
+A.rlinks:link {
+	COLOR: #666; TEXT-DECORATION: none
+}
+A.rlinks:visited {
+	COLOR: #666; TEXT-DECORATION: none
+}
+A.rlinks:hover {
+	COLOR: #666; TEXT-DECORATION: underline
+}
+A.rlinks-red:link {
+	COLOR: #f00; TEXT-DECORATION: none
+}
+A.rlinks-red:visited {
+	COLOR: #f00; TEXT-DECORATION: none
+}
+A.rlinks-red:hover {
+	COLOR: #f00; TEXT-DECORATION: underline
+}
+A.mainlink:link {
+	COLOR: #fff; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.mainlink:visited {
+	COLOR: #fff; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.mainlink:hover {
+	COLOR: #fff; WHITE-SPACE: nowrap; TEXT-DECORATION: underline
+}
+A.parent:link {
+	COLOR: #666; TEXT-DECORATION: none
+}
+A.parent:visited {
+	COLOR: #666; TEXT-DECORATION: none
+}
+A.parent:hover {
+	COLOR: #666; TEXT-DECORATION: underline
+}
+.left-nav-corner {
+	BACKGROUND-POSITION: 100% 100%; BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/t/left-nav-corner.gif); BACKGROUND-REPEAT: no-repeat
+}
+A.left-nav-overview:link {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+A.left-nav-overview:visited {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+A.left-nav-overview:hover {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+A.left-nav:link {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+A.left-nav:visited {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+A.left-nav:hover {
+	COLOR: #293d6b; TEXT-DECORATION: underline
+}
+A.nav:link {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+A.nav:visited {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+A.nav:hover {
+	COLOR: #293d6b; TEXT-DECORATION: underline
+}
+A.left-nav-child:link {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+A.left-nav-child:visited {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+A.left-nav-child:hover {
+	COLOR: #293d6b; TEXT-DECORATION: underline
+}
+TD.upper-masthead-divider {
+	BACKGROUND-POSITION: 50% 50%; BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/t/upper-masthead-divider.gif); BACKGROUND-REPEAT: no-repeat
+}
+TD.masthead-divider {
+	BACKGROUND-POSITION: 50% 60%; BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/t/masthead-divider.gif); BACKGROUND-REPEAT: no-repeat
+}
+TD.footer-divider {
+	BACKGROUND-POSITION: 50% 50%; BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/t/footer-divider.gif); BACKGROUND-REPEAT: no-repeat
+}
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: #fff; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #000; PADDING-TOP: 0px
+}
+FORM {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+TH {
+	TEXT-ALIGN: left
+}
+FIELDSET {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.nowrap {
+	WHITE-SPACE: nowrap
+}
+H2 {
+	COLOR: #666
+}
+B.related {
+	COLOR: #666
+}
+B.rlinks {
+	COLOR: #666
+}
+.fnt {
+	COLOR: #666
+}
+.greytextbld {
+	COLOR: #666
+}
+.greytext {
+	COLOR: #666
+}
+#v14-body-table P#subtitle {
+	COLOR: #666
+}
+#v14-pop-mast H1 {
+	BACKGROUND: #000; COLOR: #fff; WHITE-SPACE: nowrap
+}
+A:link {
+	COLOR: #5c81a7
+}
+A:visited {
+	COLOR: #969
+}
+A:hover {
+	COLOR: #5c81a7
+}
+.tbgc {
+	BACKGROUND-COLOR: #069
+}
+.gbg {
+	BACKGROUND-COLOR: #ccc
+}
+.lgray {
+	BACKGROUND-COLOR: #ccc
+}
+.bluebullet {
+	COLOR: #069
+}
+TD.bbl {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/bullets/bl-bullet.gif); WIDTH: 6px; BACKGROUND-REPEAT: no-repeat
+}
+TD.dbl {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/bullets/dbl-bullet.gif); WIDTH: 6px; BACKGROUND-REPEAT: no-repeat
+}
+TD.bkl {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/bullets/bk-bullet.gif); WIDTH: 6px; BACKGROUND-REPEAT: no-repeat
+}
+.dkgd {
+	BACKGROUND-COLOR: #996
+}
+.hdgd {
+	COLOR: #fff
+}
+.sth {
+	COLOR: #fff
+}
+.popup_title {
+	COLOR: #fff
+}
+.mdgd {
+	BACKGROUND: #cc9; COLOR: #663
+}
+.flgd {
+	BACKGROUND: #f7f7e7
+}
+.dgbg {
+	BACKGROUND-COLOR: #999
+}
+A.fbox:link {
+	COLOR: #5c81a7; TEXT-DECORATION: none
+}
+A.fbox:visited {
+	COLOR: #969; TEXT-DECORATION: none
+}
+A.fbox:hover {
+	COLOR: #5c81a7; TEXT-DECORATION: underline
+}
+A.bctl:link {
+	COLOR: #999; TEXT-DECORATION: none
+}
+A.bctl:visited {
+	COLOR: #999; TEXT-DECORATION: none
+}
+A.bctl:hover {
+	COLOR: #999; TEXT-DECORATION: underline
+}
+.tbdark {
+	BACKGROUND: #a3aab0
+}
+.tbwhite {
+	BACKGROUND: #fff; WHITE-SPACE: nowrap
+}
+.tbimage1 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v11/tabs/tbimage1.gif); WHITE-SPACE: nowrap
+}
+.tbimage2 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v11/tabs/tbimage2.gif)
+}
+A.tbmainlink:link {
+	COLOR: #333; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.tbmainlink:visited {
+	COLOR: #333; WHITE-SPACE: nowrap; TEXT-DECORATION: none
+}
+A.tbmainlink:hover {
+	COLOR: #333; WHITE-SPACE: nowrap; TEXT-DECORATION: underline
+}
+A.tablink:link {
+	COLOR: #333; TEXT-DECORATION: none
+}
+A.tablink:visited {
+	COLOR: #333; TEXT-DECORATION: none
+}
+A.tablink:hover {
+	COLOR: #333; TEXT-DECORATION: underline
+}
+A.tablinkblue:link {
+	TEXT-DECORATION: none
+}
+A.tablinkblue:visited {
+	TEXT-DECORATION: none
+}
+A.tablinkblue:hover {
+	TEXT-DECORATION: underline
+}
+A.texttabselectlink:link {
+	COLOR: #333; TEXT-DECORATION: none
+}
+A.texttabselectlink:visited {
+	COLOR: #333; TEXT-DECORATION: none
+}
+A.texttabselectlink:hover {
+	COLOR: #333; TEXT-DECORATION: underline
+}
+A.toclink:link {
+	TEXT-DECORATION: none
+}
+A.toclink:visited {
+	TEXT-DECORATION: none
+}
+A.toclink:hover {
+	TEXT-DECORATION: underline
+}
+A.tocselectlink:link {
+	COLOR: #333; TEXT-DECORATION: none
+}
+A.tocselectlink:visited {
+	COLOR: #333; TEXT-DECORATION: none
+}
+A.tocselectlink:hover {
+	COLOR: #333; TEXT-DECORATION: underline
+}
+.v14-graphic-tab-selected {
+	WHITE-SPACE: nowrap; BACKGROUND-COLOR: #c8d7e3
+}
+.v14-graphic-tab-unselected {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_dmpttn.gif); WHITE-SPACE: nowrap
+}
+TD.v14-tab-hlrt {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_hlrt.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #c8d7e3
+}
+TD.v14-tab-hlrt-end {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_hlrt_end.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #c8d7e3
+}
+TD.v14-tab-hllt {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_hllt.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #c8d7e3
+}
+TD.v14-tab-dmrt {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_dmrt.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #5c81a7
+}
+TD.v14-tab-dmrt-end {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_dmrt_end.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #5c81a7
+}
+.v14-graphic-tab-selected2 {
+	WHITE-SPACE: nowrap; BACKGROUND-COLOR: #c8d7e3
+}
+.v14-graphic-tab-unselected2 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_dmpttn2.gif); WHITE-SPACE: nowrap
+}
+TD.v14-tab-hlrt2 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_hlrt2.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #c8d7e3
+}
+TD.v14-tab-hlrt-end2 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_hlrt_end2.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #c8d7e3
+}
+TD.v14-tab-hllt2 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_hllt2.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #c8d7e3
+}
+TD.v14-tab-dmrt2 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_dmrt2.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #5c81a7
+}
+TD.v14-tab-dmrt-end2 {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/tabs/tab_dmrt_end2.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-COLOR: #5c81a7
+}
+.v14-ttd {
+	COLOR: #98b1c4
+}
+A.v14-tab-link-selected:link {
+	COLOR: #005077; BACKGROUND-COLOR: #c8d7e3; TEXT-DECORATION: none
+}
+A.v14-tab-link-selected:visited {
+	COLOR: #005077; BACKGROUND-COLOR: #c8d7e3; TEXT-DECORATION: none
+}
+A.v14-tab-link-selected:hover {
+	COLOR: #000; BACKGROUND-COLOR: #c8d7e3; TEXT-DECORATION: none
+}
+A.v14-tab-link-unselected:link {
+	COLOR: #fff; BACKGROUND-COLOR: #5c81a7; TEXT-DECORATION: none
+}
+A.v14-tab-link-unselected:visited {
+	COLOR: #fff; BACKGROUND-COLOR: #5c81a7; TEXT-DECORATION: none
+}
+A.v14-tab-link-unselected:hover {
+	COLOR: #dce8f2; BACKGROUND-COLOR: #5c81a7; TEXT-DECORATION: none
+}
+A.v14-text-tab-select-link:link {
+	COLOR: #000; TEXT-DECORATION: none
+}
+A.v14-text-tab-select-link:visited {
+	COLOR: #000; TEXT-DECORATION: none
+}
+A.v14-text-tab-select-link:hover {
+	COLOR: #000; TEXT-DECORATION: underline
+}
+A.v14-text-tab-unselect-link:link {
+	COLOR: #5c81a7; TEXT-DECORATION: none
+}
+A.v14-text-tab-unselect-link:visited {
+	COLOR: #5c81a7; TEXT-DECORATION: none
+}
+A.v14-text-tab-unselect-link:hover {
+	COLOR: #5c81a7; TEXT-DECORATION: underline
+}
+TD.v14-graphic-tab-lblue-table A.v14-text-tab-unselect-link:link {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+TR.v14-graphic-tab-lblue-table A.v14-text-tab-unselect-link:link {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+TD.v14-graphic-tab-lblue-table A.v14-text-tab-unselect-link:visited {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+TR.v14-graphic-tab-lblue-table A.v14-text-tab-unselect-link:visited {
+	COLOR: #293d6b; TEXT-DECORATION: none
+}
+TD.v14-graphic-tab-lblue-table A.v14-text-tab-unselect-link:hover {
+	COLOR: #293d6b; TEXT-DECORATION: underline
+}
+TR.v14-graphic-tab-lblue-table A.v14-text-tab-unselect-link:hover {
+	COLOR: #293d6b; TEXT-DECORATION: underline
+}
+.tblue {
+	BACKGROUND: #98b1c4; COLOR: #fff
+}
+.tdblue {
+	BACKGROUND: #3c5f84; COLOR: #fff
+}
+.tgray {
+	BACKGROUND: #999; COLOR: #fff
+}
+.tgreen {
+	BACKGROUND: #ccc; COLOR: #333
+}
+.medbluetitlebar {
+	COLOR: #fff; BACKGROUND-COLOR: #69c
+}
+.medgraytitlebar {
+	COLOR: #fff; BACKGROUND-COLOR: #999
+}
+.lightgraytitlebar {
+	COLOR: #666; BACKGROUND-COLOR: #eee
+}
+.whitetitlebar {
+	COLOR: #666; BACKGROUND-COLOR: #fff
+}
+.subtitle {
+	COLOR: #666
+}
+TD.v14-header-1 {
+	BACKGROUND: #3c5f84; COLOR: #fff
+}
+TH.v14-header-1 {
+	BACKGROUND: #3c5f84; COLOR: #fff
+}
+TD.v14-header-2 {
+	BACKGROUND: #98b1c4; COLOR: #fff
+}
+TH.v14-header-2 {
+	BACKGROUND: #98b1c4; COLOR: #fff
+}
+TD.v14-header-1-small {
+	BACKGROUND: #98b1c4; COLOR: #fff
+}
+TH.v14-header-1-small {
+	BACKGROUND: #98b1c4; COLOR: #fff
+}
+TD.v14-header-2-small {
+	BACKGROUND: #ccc; COLOR: #333
+}
+TH.v14-header-2-small {
+	BACKGROUND: #ccc; COLOR: #333
+}
+TD.v14-header-3 {
+	BACKGROUND: #999; COLOR: #fff
+}
+TH.v14-header-3 {
+	BACKGROUND: #999; COLOR: #fff
+}
+TD.v14-header-3-small {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid
+}
+TH.v14-header-3-small {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid
+}
+TD.v14-header-4 {
+	BACKGROUND: #ccc; COLOR: #333
+}
+TH.v14-header-4 {
+	BACKGROUND: #ccc; COLOR: #333
+}
+TD.v14-header-4-small {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BACKGROUND: #eee; BORDER-LEFT: #ccc 1px solid; COLOR: #000; BORDER-BOTTOM: #ccc 1px solid
+}
+TH.v14-header-4-small {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BACKGROUND: #eee; BORDER-LEFT: #ccc 1px solid; COLOR: #000; BORDER-BOTTOM: #ccc 1px solid
+}
+TD.v14-header-5 {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BACKGROUND: #eee; BORDER-LEFT: #ccc 1px solid; COLOR: #000; BORDER-BOTTOM: #ccc 1px solid
+}
+TH.v14-header-5 {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BACKGROUND: #eee; BORDER-LEFT: #ccc 1px solid; COLOR: #000; BORDER-BOTTOM: #ccc 1px solid
+}
+TD.gradient_bar {
+	BACKGROUND-POSITION: 100% 100%; BACKGROUND-IMAGE: url(//www.ibm.com/i/v14/rules/gradient_bar.gif); BACKGROUND-REPEAT: repeat-y
+}
+.small-price {
+	COLOR: #f60
+}
+.price {
+	COLOR: #f60
+}
+.error {
+	COLOR: #f00
+}
+EM.error {
+	FONT-STYLE: normal
+}
+EM.caution {
+	FONT-STYLE: normal
+}
+.graytext {
+	COLOR: #666
+}
+.smgraytext {
+	COLOR: #666
+}
+.lggraytitle {
+	COLOR: #666
+}
+.divider {
+	COLOR: #666
+}
+.bct {
+	COLOR: #ccc
+}
+.ast {
+	COLOR: #f30
+}
+.dgray {
+	BACKGROUND-COLOR: #999
+}
+.vlgray {
+	BACKGROUND-COLOR: #eee
+}
+.tvgray {
+	BACKGROUND: #eee; COLOR: #000
+}
+A.bs:link {
+	COLOR: #069; TEXT-DECORATION: none
+}
+A.bs:visited {
+	COLOR: #969; TEXT-DECORATION: none
+}
+A.bs:hover {
+	COLOR: #069; TEXT-DECORATION: underline
+}
+A.close:link {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+A.close:visited {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+A.close:hover {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+A.smallplainlink:link {
+	COLOR: #5c81a7; TEXT-DECORATION: none
+}
+A.smallplainlink:visited {
+	COLOR: #969; TEXT-DECORATION: none
+}
+A.smallplainlink:hover {
+	COLOR: #5c81a7; TEXT-DECORATION: underline
+}
+.dotted {
+	BACKGROUND-IMAGE: url(//www.ibm.com/i/dotted.gif); BACKGROUND-COLOR: #fff
+}
+.ibmSurveyCVM .v14-header-2-small {
+	BACKGROUND: #999; COLOR: #fff! important
+}
+.ibmSurveyCVM .no-padding {
+	BACKGROUND-COLOR: #ffc! important
+}
+.ibmSurveyCVM .smallplainlink {
+	COLOR: #666! important
+}
+.flashtext {
+	LEFT: -3000px; WIDTH: 500px; POSITION: absolute
+}
+TD.why-ibm {
+	BACKGROUND: url(//www.ibm.com/i/v14/mod/bg-why-ibm.gif) #fff repeat-y 100% 0%; BORDER-BOTTOM: #e8e8e8 1px solid
+}
+#v14-body-table TD.why-ibm P {
+	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; PADDING-BOTTOM: 10px; MARGIN: 0px; PADDING-TOP: 5px
+}
+#v14-body-table TD.why-ibm-rv P {
+	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; PADDING-BOTTOM: 10px; MARGIN: 0px; PADDING-TOP: 5px
+}
+#v14-body-table TD.why-ibm P.is-branding {
+	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; PADDING-BOTTOM: 8px; LINE-HEIGHT: 1.4em; PADDING-TOP: 5px
+}
+#v14-body-table TD.why-ibm-rv P.is-branding {
+	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; PADDING-BOTTOM: 8px; LINE-HEIGHT: 1.4em; PADDING-TOP: 5px
+}
+TD.why-ibm-rv {
+	BACKGROUND: #4b4b4b; BORDER-BOTTOM: #454545 1px solid
+}
+TD.why-ibm-rv P {
+	COLOR: #fff
+}
+TD.why-ibm-rv P A:link {
+	COLOR: #fff
+}
+TD.why-ibm-rv P A:visited {
+	COLOR: #fff
+}
+TD.why-ibm-rv P A:hover {
+	COLOR: #fff
+}
+TD.why-ibm H2 {
+	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #000; PADDING-TOP: 4px
+}
+TD.why-ibm-rv H2 {
+	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #000; PADDING-TOP: 4px
+}
+TD.why-ibm-rv H2 {
+	COLOR: #fff
+}
+TD.v14-header-1-small H2 {
+	COLOR: #fff
+}
+TD.scm-bg {
+	BACKGROUND: url(//www.ibm.com/i/v14/t/add-website-bg.gif) repeat-x
+}
+.gen-intfce-nvyblue {
+	COLOR: #293d6b
+}
+.gen-intfce-drkblue {
+	COLOR: #3c5f84
+}
+.gen-intfce-blue {
+	COLOR: #5c81a7
+}
+.gen-intfce-violet {
+	COLOR: #996699
+}
+.gen-intfce-mdblue {
+	COLOR: #98b1c4
+}
+.gen-intfce-plblue {
+	COLOR: #c8d7e3
+}
+.gen-intfce-blk {
+	COLOR: #000
+}
+.gen-intfce-drkestgry {
+	COLOR: #333
+}
+.gen-intfce-drkgry {
+	COLOR: #666
+}
+.gen-intfce-mdgry {
+	COLOR: #999
+}
+.gen-intfce-gry {
+	COLOR: #ccc
+}
+.gen-intfce-ltgry {
+	COLOR: #eee
+}
+.gen-intfce-white {
+	COLOR: #fff
+}
+.lu-red {
+	COLOR: #ff0000
+}
+.lu-brtorng {
+	COLOR: #ff3300
+}
+.lu-orng {
+	COLOR: #ff6600
+}
+TD.tbl-plblue {
+	COLOR: #c8d7e3
+}
+TD.tbl-ltblue {
+	COLOR: #dfe8ef
+}
+TD.tbl-smkwhite {
+	COLOR: #ebebeb
+}
+TD.tbl-ghstwhite {
+	COLOR: #f6f6f6
+}
+TD P.last-updated {
+	TEXT-ALIGN: right
+}
+FORM.ibm-column-form LABEL {
+	CLEAR: left; DISPLAY: block; FONT-WEIGHT: bold; FLOAT: left; WIDTH: 150px
+}
+FORM.ibm-column-form P SPAN {
+	DISPLAY: block; MARGIN-LEFT: 157px
+}
+FORM.ibm-column-form P SPAN.ast {
+	DISPLAY: inline; MARGIN-LEFT: 0px
+}
+FORM.ibm-column-form LABEL SPAN {
+	DISPLAY: inline; MARGIN: 0px
+}
+FORM.ibm-column-form .ibm-buttons-row P {
+	PADDING-LEFT: 157px; FLOAT: none
+}
+FORM.ibm-column-form .ibm-buttons-row P.ibm-first {
+	PADDING-LEFT: 157px
+}
+.ibm-buttons-row P.ibm-first {
+	FLOAT: left! important; WIDTH: 140px
+}
+.ibm-buttons-row P.ibm-second {
+	MARGIN-LEFT: 160px
+}

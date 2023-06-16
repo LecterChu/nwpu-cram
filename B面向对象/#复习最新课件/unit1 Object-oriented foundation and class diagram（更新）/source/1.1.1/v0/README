@@ -1,0 +1,35 @@
+
+Flex is a fast scanner generator, which is a part of UNIX tools.
+You can access flex manual on UNIX machine.
+%man flex
+Or, for quick reference for flex,
+% flex -h 
+
+input: lexical rule.
+output: lex.yy.c
+
+Usage:
+
+1. %make                      /* compile */
+
+- Flex object file is generated.
+ 
+2. %./flex err_file [options] input_file  /* run */
+
+- The flex is modified from original flex program for testing. 
+- To use flex, err_file name should be specified(any name is O.K).
+- You can find input_file samples in the in_out directory.
+  ---> ./in_out/exam_1[2,3].lex
+- After executing flex, lex.yy.c is generated.
+
+3. %cc lex.yy.c libfl.a -lfl 
+
+	
+4.1 %a.out < input >& output
+
+- You can fnd input samples for a.out in the in_out directory.
+  ---> ./in_out/tmp*
+
+Or just give a.out and standard input.
+4.2 %a.out 
+

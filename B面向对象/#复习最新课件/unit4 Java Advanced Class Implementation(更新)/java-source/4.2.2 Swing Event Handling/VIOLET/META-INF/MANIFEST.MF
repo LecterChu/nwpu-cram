@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: 1.4.2 (Sun Microsystems Inc.)
+Main-Class: com.horstmann.violet.UMLEditor
+

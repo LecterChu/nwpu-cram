@@ -1,0 +1,21 @@
+// Here is a very simple example of generic code:
+	public class GenericMethod{
+		public static <T> T aMethod(T anObject){
+			return anObject;
+		}
+		public static void main(String[] args){
+		String greeting = "Hi";
+		String reply = aMethod(greeting);
+		}
+
+}
+// The compiler would transform this into something equivalent to the following code:
+public class GenericMethod{
+	public static Object aMethod(Object anObject){
+	return anObject;
+	}
+public static void main(String[] args){
+	String greeting = "Hi";
+	String reply = (String)aMethod(greeting);
+	}
+}

@@ -1,0 +1,896 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0055)http://www.ibm.com/developerworks/cn/opensource/os-swt/ -->
+<HTML lang=zh-CN xml:lang="zh-CN" 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>SWT 全接触</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8"><!-- s-header-meta  for china -->
+<META http-equiv=PICS-Label 
+content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))'><LINK 
+href="http://purl.org/DC/elements/1.0/" rel=schema.DC><LINK 
+href="http://www.ibm.com/favicon.ico" rel="SHORTCUT ICON">
+<META content=dw@cn.ibm.com name=Owner>
+<META scheme=rfc1766 content=zh-CN name=DC.Language>
+<META content=cn name=IBM.Country>
+<META content=Public name=Security><!-- 5.8 0421 egd: Added IBM.Special.Purpose meta tag and the meta tag to suppress the WI login in the masthead -->
+<META content=SP001 name=IBM.SpecialPurpose>
+<META content=sid=109,100 name=IBM.PageAttributes>
+<META 
+content="Java 世界的人似乎一直都对 Java 的桌面应用程序十分不满，从 AWT 到 SWING，从默认的 Theme到第三方的产品，不是太难看（AWT）就是在某些平台有 BUG（SWING，Quaqua--一个Windows平台下的仿Mac的主题包），再不就是对中文支持不好（某些第三方 LookAndFeel）。于是，如果想要获得和本机平台一致的用户界面和比较稳定的性能，SWT就成了一个不可忽视的选择。SWT 是一个独立于平台的，可以脱离 Eclipse 框架单独使用的图形组件，用JNI技术提供与本机系统同样的用户界面组件的观感，较好的运行效率，稳定的平台表现。" 
+name=Abstract>
+<META 
+content="Java 世界的人似乎一直都对 Java 的桌面应用程序十分不满，从 AWT 到 SWING，从默认的 Theme到第三方的产品，不是太难看（AWT）就是在某些平台有 BUG（SWING，Quaqua--一个Windows平台下的仿Mac的主题包），再不就是对中文支持不好（某些第三方 LookAndFeel）。于是，如果想要获得和本机平台一致的用户界面和比较稳定的性能，SWT就成了一个不可忽视的选择。SWT 是一个独立于平台的，可以脱离 Eclipse 框架单独使用的图形组件，用JNI技术提供与本机系统同样的用户界面组件的观感，较好的运行效率，稳定的平台表现。f&#10;      " 
+name=Description>
+<META content="eclipse, swt, java 桌面开发, tttosca" name=Keywords>
+<META scheme=iso8601 content=2006-09-28 name=DC.Date>
+<META scheme=IBM_ContentClassTaxonomy content=CT316 name=DC.Type>
+<META scheme=IBM_SubjectTaxonomy content="" name=DC.Subject>
+<META content="Copyright (c) 2006 by IBM Corporation" name=DC.Rights>
+<META content=index,follow name=Robots>
+<META scheme=W3CDTF content=2006-09-28 name=IBM.Effective>
+<META content=17012007zoucl@cn.ibm.com name="Last update"><!-- STYLESHEETS/SCRIPTS --><!-- for tables --><LINK 
+media=screen,print href="SWT 全接触.files/table.css" type=text/css rel=stylesheet><!-- end for tables -->
+<SCRIPT language=JavaScript src="SWT 全接触.files/dwcss14.js" 
+type=text/javascript></SCRIPT>
+<LINK href="SWT 全接触.files/main.css" type=text/css rel=stylesheet><LINK media=all 
+href="SWT 全接触.files/screen.css" type=text/css rel=stylesheet><LINK media=print 
+href="SWT 全接触.files/print.css" type=text/css rel=stylesheet>
+<SCRIPT language=JavaScript src="SWT 全接触.files/detection.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT language=JavaScript src="SWT 全接触.files/dropdown.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT language=JavaScript src="SWT 全接触.files/grabtitle.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT language=JavaScript src="SWT 全接触.files/emailfriend2.js" 
+type=text/javascript></SCRIPT>
+<!--START RESERVED FOR FUTURE USE INCLUDE FILES-->
+<SCRIPT language=javascript src="SWT 全接触.files/ajax1.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT language=javascript src="SWT 全接触.files/searchcount.js" 
+type=text/javascript></SCRIPT>
+<!--END RESERVED FOR FUTURE USE INCLUDE FILES-->
+<SCRIPT language=JavaScript type=text/javascript>var emailAbstract = "Java 世界的人似乎一直都对 Java 的桌面应用程序十分不满，从 AWT 到 SWING，从默认的 Theme到第三方的产品，不是太难看（AWT）就是在某些平台有 BUG（SWING，Quaqua--一个Windows平台下的仿Mac的主题包），再不就是对中文支持不好（某些第三方 LookAndFeel）。于是，如果想要获得和本机平台一致的用户界面和比较稳定的性能，SWT就成了一个不可忽视的选择。SWT 是一个独立于平台的，可以脱离 Eclipse 框架单独使用的图形组件，用JNI技术提供与本机系统同样的用户界面组件的观感，较好的运行效率，稳定的平台表现。"; </SCRIPT>
+
+<META content="MSHTML 6.00.2900.3199" name=GENERATOR></HEAD>
+<BODY><!--MASTHEAD_BEGIN-->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR vAlign=top>
+    <TD class=bbg width=110><A href="http://www.ibm.com/cn/"><IMG height=52 
+      alt=IBM® src="SWT 全接触.files/ibm-logo.gif" width=110 border=0></A></TD>
+    <TD class=bbg><IMG height=1 alt="" src="SWT 全接触.files/c.gif" width=1 
+      border=0></TD>
+    <TD class=mbbg align=right width=650>
+      <TABLE cellSpacing=0 cellPadding=0 align=right border=0>
+        <TBODY>
+        <TR class=cty-tou>
+          <TD class=upper-masthead-corner width=17 rowSpan=2><A 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#main"><IMG 
+            height=1 alt=跳转到主要内容 src="SWT 全接触.files/c.gif" width=1 
+          border=0></A></TD>
+          <TD align=left>
+            <TABLE cellSpacing=0 cellPadding=0 align=left border=0>
+              <TBODY>
+              <TR>
+                <TD><SPAN class=spacer>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><B 
+                  class=country>中国</B><SPAN class=spacer>&nbsp;[</SPAN><A 
+                  class=ur-link 
+                  href="http://www.ibm.com/developerworks/cn/country/">选择</A><SPAN 
+                  class=spacer>]</SPAN></TD>
+                <TD class=upper-masthead-divider 
+                width=29>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+                <TD align=left><A class=ur-link 
+                  href="http://www.ibm.com/legal/cn/">使用条款</A></TD></TR></TBODY></TABLE></TD>
+          <TD width=40>&nbsp;</TD></TR>
+        <TR>
+          <TD class=cty-tou-border colSpan=2 height=1><IMG height=1 alt="" 
+            src="SWT 全接触.files/c.gif" width=1></TD></TR>
+        <TR>
+          <TD colSpan=3><IMG height=8 alt="" src="SWT 全接触.files/c.gif" 
+          width=1></TD></TR>
+        <TR>
+          <TD>&nbsp;</TD>
+          <TD align=middle colSpan=2>
+            <FORM id=form1 name=form1 
+            action=http://www-128.ibm.com/developerworks/search/searchResults.jsp 
+            method=get><INPUT type=hidden value=1 name=searchType><INPUT 
+            type=hidden value=dWChina name=searchSite><INPUT type=hidden 
+            value=zh name=pageLang><INPUT type=hidden value=UTF8 
+            name=langEncoding>
+            <TABLE cellSpacing=0 cellPadding=0 border=0>
+              <TBODY>
+              <TR>
+                <TD width=1><IMG height=1 alt="Select a scope:" 
+                  src="SWT 全接触.files/c.gif" width=1></TD>
+                <TD align=right><LABEL for=sq><SELECT class=input-scope id=sq 
+                  name=searchScope><OPTION value=dW selected>dW 
+                    全部内容</OPTION><OPTION 
+                    value=dW>-----------------</OPTION><OPTION 
+                    value=aixunix>&nbsp;&nbsp;AIX and UNIX</OPTION><OPTION 
+                    value=dmdd>&nbsp;&nbsp;Information 
+                    management</OPTION><OPTION 
+                    value=lotusdd>&nbsp;&nbsp;Lotus</OPTION><OPTION 
+                    value=rdd>&nbsp;&nbsp;Rational</OPTION><OPTION 
+                    value=tivolidd>&nbsp;&nbsp;Tivoli</OPTION><OPTION 
+                    value=wsdd>&nbsp;&nbsp;WebSphere</OPTION><OPTION 
+                    value=dW>-----------------</OPTION><OPTION 
+                    value=gridZ>&nbsp;&nbsp;Grid computing</OPTION><OPTION 
+                    value=javaZ>&nbsp;&nbsp;Java 技术</OPTION><OPTION 
+                    value=linuxZ>&nbsp;&nbsp;Linux</OPTION><OPTION 
+                    value=opensrcZ>&nbsp;&nbsp;Open source</OPTION><OPTION 
+                    value=securityZ>&nbsp;&nbsp;Security</OPTION><OPTION 
+                    value=webservZ>&nbsp;&nbsp;SOA &amp; Web 
+                    services</OPTION><OPTION value=webarchZ>&nbsp;&nbsp;Web 
+                    development</OPTION><OPTION 
+                    value=xmlZ>&nbsp;&nbsp;XML</OPTION><OPTION 
+                    value=dW>-----------------</OPTION><OPTION value=all>IBM 
+                    全部内容</OPTION></SELECT></LABEL></TD>
+                <TD align=right width=1><IMG height=1 alt="Search for:" 
+                  src="SWT 全接触.files/c.gif" width=1>&nbsp;&nbsp;</TD>
+                <TD align=right><INPUT class=input id=q maxLength=100 size=15 
+                  name=query></TD>
+                <TD width=7>&nbsp;</TD>
+                <TD><LABEL for=q><INPUT type=image alt=搜索 
+                  src="SWT 全接触.files/search.gif" value=搜索 
+name=Search></LABEL></TD>
+                <TD 
+      width=20>&nbsp;</TD></TR></TBODY></TABLE></FORM></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD class=blbg colSpan=3>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=0 border=0>
+              <TBODY>
+              <TR>
+                <TD><SPAN class=spacer>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></TD>
+                <TD><A class=masthead-mainlink 
+                  href="http://www.ibm.com/cn/">首页</A></TD>
+                <TD class=masthead-divider 
+width=27>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+                <TD><A class=masthead-mainlink 
+                  href="http://www.ibm.com/products/cn/">产品</A></TD>
+                <TD class=masthead-divider 
+width=27>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+                <TD><A class=masthead-mainlink 
+                  href="http://www.ibm.com/servicessolutions/cn/">服务与解决方案</A></TD>
+                <TD class=masthead-divider 
+width=27>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+                <TD><A class=masthead-mainlink 
+                  href="http://www.ibm.com/support/cn/">支持与下载</A></TD>
+                <TD class=masthead-divider 
+width=27>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+                <TD><A class=masthead-mainlink 
+                  href="http://www.ibm.com/account/cn/">个性化服务</A></TD>
+                <TD><SPAN 
+              class=spacer>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><!--
+<script src="//www.ibm.com/common/v14/pmh.js" language="JavaScript" type="text/javascript"></script>
+--><!-- end masthead dw liquid --><!--MASTHEAD_END--><!-- CMA ID for this content is: 163848 -->
+<TABLE id=v14-body-table cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR vAlign=top><!--LEFTNAV_BEGIN-->
+    <TD id=navigation width=150>
+      <TABLE cellSpacing=0 cellPadding=0 width=150 border=0>
+        <TBODY>
+        <TR>
+          <TD class=left-nav-spacer><A class=left-nav-overview 
+            href="http://www.ibm.com/developerworks/cn/">&nbsp;</A></TD></TR></TBODY></TABLE>
+      <TABLE cellSpacing=0 cellPadding=0 width=150 border=0>
+        <TBODY>
+        <TR>
+          <TD class=left-nav-overview colSpan=2><A class=left-nav-overview 
+            href="http://www.ibm.com/developerworks/cn/">developerWorks<BR>中国</A></TD></TR></TBODY></TABLE>
+      <TABLE cellSpacing=0 cellPadding=0 width=150 border=0>
+        <TBODY>
+        <TR>
+          <TD class=left-nav-highlight colSpan=2><A class=left-nav 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#">本文内容包括：</A></TD></TR>
+        <TR class=left-nav-child-highlight>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/cl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=left-nav-child 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#N10045">1．SWT简介</A></TD></TR>
+        <TR class=left-nav-child-highlight>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/cl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=left-nav-child 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#N10062">2． 
+            SWT起步</A></TD></TR>
+        <TR class=left-nav-child-highlight>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/cl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=left-nav-child 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#N1018D">3. 
+            用SWT绘制2D图形</A></TD></TR>
+        <TR class=left-nav-child-highlight>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/cl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=left-nav-child 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#N10423">4 
+            SWT与OpenGL编程</A></TD></TR>
+        <TR class=left-nav-child-highlight>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/cl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=left-nav-child 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#N104DF">5 
+            结束语</A></TD></TR>
+        <TR class=left-nav-child-highlight>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/cl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=left-nav-child 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#author">关于作者</A></TD></TR>
+        <TR class=left-nav-child-highlight>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/cl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=left-nav-child 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#rate">对本文的评价</A></TD></TR>
+        <TR class=left-nav-last>
+          <TD width=14><IMG class=display-img height=1 alt="" 
+            src="SWT 全接触.files/c.gif" width=14></TD>
+          <TD width=136><IMG class=display-img height=19 alt="" 
+            src="SWT 全接触.files/left-nav-corner.gif" 
+      width=136></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=0 width=150 border=0>
+        <TBODY>
+        <TR>
+          <TD class=related colSpan=2><B class=related>相关链接：</B></TD></TR>
+        <TR class=rlinks>
+          <TD><IMG height=8 alt="" src="SWT 全接触.files/rl-bullet.gif" 
+          width=2></TD>
+          <TD><A class=rlinks 
+            href="http://www.ibm.com/developerworks/cn/views/opensource/articles.jsp">Open 
+            source 技术文档库</A></TD></TR><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><!-- No content currently --><!--END RESERVED FOR FUTURE USE INCLUDE FILES-->
+        <TR>
+          <TD width=14><IMG class=display-img height=1 alt="" 
+            src="SWT 全接触.files/c.gif" width=14></TD>
+          <TD width=136><IMG class=display-img height=19 alt="" 
+            src="SWT 全接触.files/c.gif" width=136></TD></TR></TBODY></TABLE><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><!-- No content currently --><!--END RESERVED FOR FUTURE USE INCLUDE FILES--></TD><!--LEFTNAV_END-->
+    <TD width="100%">
+      <TABLE id=content-table cellSpacing=0 cellPadding=0 width="100%" 
+        border=0><TBODY>
+        <TR vAlign=top>
+          <TD width="100%">
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD><A name=main><IMG height=1 alt=跳转到主要内容 
+                  src="SWT 全接触.files/c.gif" width=592 
+            border=0></A></TD></TR></TBODY></TABLE>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR vAlign=top>
+                <TD width=10 height=18><IMG height=18 alt="" 
+                  src="SWT 全接触.files/c.gif" width=10></TD>
+                <TD width="100%"><IMG height=6 alt="" 
+                  src="SWT 全接触.files/c.gif" width=1><BR><A class=bctl 
+                  href="http://www.ibm.com/developerworks/cn/">developerWorks 
+                  中国</A><SPAN class=bct>&nbsp;&nbsp;&gt;&nbsp;&nbsp;</SPAN><A 
+                  class=bctl 
+                  href="http://www.ibm.com/developerworks/cn/opensource/">Open 
+                  source</A><SPAN class=bct>&nbsp;&nbsp;&gt;</SPAN><IMG height=1 
+                  alt="" src="SWT 全接触.files/c.gif" width=1><BR>
+                  <H1>SWT 全接触</H1><IMG class=display-img height=6 alt="" 
+                  src="SWT 全接触.files/c.gif" width=1></TD>
+                <TD class=no-print width=192><IMG height=18 alt=developerWorks 
+                  src="SWT 全接触.files/dw.gif" 
+        width=192></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR vAlign=top>
+          <TD width=10><IMG height=1 alt="" src="SWT 全接触.files/c.gif" 
+          width=10></TD>
+          <TD width="100%">
+            <TABLE class=no-print cellSpacing=0 cellPadding=0 width=160 
+            align=right border=0>
+              <TBODY>
+              <TR>
+                <TD width=10><IMG height=1 alt="" src="SWT 全接触.files/c.gif" 
+                  width=10></TD>
+                <TD>
+                  <TABLE cellSpacing=0 cellPadding=0 width=150 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=v14-header-1-small>文档选项</TD></TR></TBODY></TABLE>
+                  <TABLE class=v14-gray-table-border cellSpacing=0 cellPadding=0 
+                  border=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=no-padding width=150>
+                        <TABLE cellSpacing=0 cellPadding=0 width=143 
+                          border=0><IMG height=1 alt="" 
+                          src="SWT 全接触.files/c.gif" width=8>
+                          <FORM name=email 
+                          action=https://www.ibm.com/developerworks/secure/email-it.jsp><INPUT 
+                          type=hidden 
+                          value="Java 世界的人似乎一直都对 Java 的桌面应用程序十分不满，从 AWT 到 SWING，从默认的 Theme到第三方的产品，不是太难看（AWT）就是在某些平台有 BUG（SWING，Quaqua--一个Windows平台下的仿Mac的主题包），再不就是对中文支持不好（某些第三方 LookAndFeel）。于是，如果想要获得和本机平台一致的用户界面和比较稳定的性能，SWT就成了一个不可忽视的选择。SWT 是一个独立于平台的，可以脱离 Eclipse 框架单独使用的图形组件，用JNI技术提供与本机系统同样的用户界面组件的观感，较好的运行效率，稳定的平台表现。" 
+                          name=body><INPUT type=hidden value="SWT 全接触" 
+                          name=subject><INPUT type=hidden value=cn name=lang>
+                          <SCRIPT language=JavaScript type=text/javascript>
+<!--
+document.write('<tr valign="top"><td width="8"><img src="//www.ibm.com/i/c.gif" width="8" height="1" alt=""/></td><td width="16"><img src="//www.ibm.com/i/v14/icons/em.gif" height="16" width="16" vspace="3" alt="将此页作为电子邮件发送" /></td><td width="122"><p><a class="smallplainlink" href="javascript:document.email.submit();"><b>将此页作为电子邮件发送</b></a></p></td></tr>');
+//-->
+</SCRIPT>
+                          <NOSCRIPT>
+                          <TBODY>
+                          <TR vAlign=top>
+                            <TD width=8><IMG height=1 alt="" 
+                              src="SWT 全接触.files/c.gif" width=8></TD>
+                            <TD width=16><IMG height=16 alt="" 
+                              src="SWT 全接触.files/c.gif" width=16></TD>
+                            <TD class=small width=122>
+                              <P><SPAN class=ast>未显示需要 JavaScript 
+                              的文档选项</SPAN></P></TD></TR></NOSCRIPT></FORM></TBODY></TABLE></TD></TR></TBODY></TABLE><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><!-- this content will be automatically generated across all content areas --><BR><!--END RESERVED FOR FUTURE USE INCLUDE FILES--><BR></TD></TR></TBODY></TABLE>
+            <P>级别： 初级</P>
+            <P><A 
+            href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#author">薛 
+            笛</A> (<A 
+            href="mailto:jxuedi@gmail.com?subject=SWT 全接触">mailto:jxuedi@gmail.com?subject=SWT 
+            全接触</A>), 研究生，黑龙江大学信息技术研究所<BR></P>
+            <P>2006 年 9 月 28 日</P>
+            <BLOCKQUOTE>Java 世界的人似乎一直都对 Java 的桌面应用程序十分不满，从 AWT 到 SWING，从默认的 
+              Theme到第三方的产品，不是太难看（AWT）就是在某些平台有 
+              BUG（SWING，Quaqua--一个Windows平台下的仿Mac的主题包），再不就是对中文支持不好（某些第三方 
+              LookAndFeel）。于是，如果想要获得和本机平台一致的用户界面和比较稳定的性能，SWT就成了一个不可忽视的选择。SWT 
+              是一个独立于平台的，可以脱离 Eclipse 
+              框架单独使用的图形组件，用JNI技术提供与本机系统同样的用户界面组件的观感，较好的运行效率，稳定的平台表现。</BLOCKQUOTE><!--START RESERVED FOR FUTURE USE INCLUDE FILES--><!-- include java script once we verify teams wants to use this and it will work on dbcs and cyrillic characters --><!--END RESERVED FOR FUTURE USE INCLUDE FILES-->
+            <P>当然，虽然这个专题名叫"全接触"，但毕竟不可能面面俱到，在一篇文章中兼收并蓄SWT的全部内容也不现实。但不管怎么说，我都将尽力展示SWT的使用细节，希望能为那些对SWT感兴趣的人提供一些帮助。 
+            </P>
+            <P><A name=N10045><SPAN class=atitle>1．SWT简介</SPAN></A></P>
+            <P>SWT-"Standard Widget Toolkit"，它是一个Java平台下开放源码的Native 
+            GUI组件库，也是Eclipse平台的UI组件之一。从功能上来说，SWT与AWT/SWING是基本等价的。SWT以方便有效的方式提供了便携式的（即Write 
+            Once，Run Away）带有本地操作系统观感的UI组件：</P><BR><IMG height=100 alt="" 
+            src="SWT 全接触.files/image002.jpg" width=572 border=0> <BR>
+            <P>由于widget系统的固有复杂性以及平台之间微妙的差异，即使在理想情况下，能够达到工业标准的跨平台的widget类库也是很难编写和维护的。最早的AWT组件现在被认为是样貌丑陋的，而且存在很多问题；SWING组件虽然也是缺点多多，但是随着JDK版本的不断升高，它仍在不断进行着改进。我认为，SWT在功能上与AWT/SWING不相伯仲，但是组件更为丰富，平台表现稳定，BUG也相对较少。如果你的应用程序真的需要在多个平台上运行，需要更为美观的界面，又不那么依赖于其他基于AWT/SWING的图形库，那么SWT或许是一个比AWT/SWING更好的选择。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD><IMG height=1 alt="" src="SWT 全接触.files/blue_rule.gif" 
+                  width="100%"><BR><IMG height=6 alt="" 
+                  src="SWT 全接触.files/c.gif" width=8 
+border=0></TD></TR></TBODY></TABLE>
+            <TABLE class=no-print cellSpacing=0 cellPadding=0 align=right>
+              <TBODY>
+              <TR align=right>
+                <TD><IMG height=4 alt="" src="SWT 全接触.files/c.gif" 
+                  width="100%"><BR>
+                  <TABLE cellSpacing=0 cellPadding=0 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD vAlign=center><IMG height=16 alt="" 
+                        src="SWT 全接触.files/u_bold.gif" width=16 border=0><BR></TD>
+                      <TD vAlign=top align=right><A class=fbox 
+                        href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#main"><B>回页首</B></A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR><BR>
+            <P><A name=N10062><SPAN class=atitle>2． SWT起步</SPAN></A></P>
+            <P><A name=N10068><SPAN class=smalltitle>2.1 
+            SWT的HelloWorld</SPAN></A></P>
+            <P>一如介绍其他程序的起始，我们都需要来一个HelloWorld来帮助我们入门，SWT的HelloWorld如下：</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>import org.eclipse.swt.widgets.*;
+public class HelloWorld 
+{
+    public static void main(String[] args) 
+    {
+        Display display = new Display();
+		Shell shell = new Shell(display);
+		shell.setText("Hello World");
+		shell.setSize(200, 100);
+		shell.open();
+		while (!shell.isDisposed()) 
+{
+		    if (!display.readAndDispatch()) 
+			display.sleep ();
+		}
+		display.dispose ();
+   	 }
+}
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>运行这个程序就会得到如下结果：</P><BR><IMG height=105 alt="" 
+            src="SWT 全接触.files/image006.jpg" width=209 border=0> <BR>
+            <P>下面我讲逐一介绍这个程序所包含的内容。</P>
+            <UL>
+              <LI>Display<BR>这是一个顶层容器组件，类似于Container或Component的功能，它主要负责与底层的窗口系统之间的连接。在具体含义上，它代表"屏幕"。<BR>一个Display可以包含多个Shell（也是容器组件，下面会介绍到）。<BR>通常情况下，一个应用程序只含一个Display，即Display通常是一个单例组件（Singleton）。 
+
+              <LI>Shell<BR>它表示位于"屏幕"上面的"窗口"，是Composite组件和Control组件构成的组件树的根。<BR>在我们的HelloWorld程序中，我们可以设置标题（setText()），设置大小（setSize()），然后通过open()方法来显示这个窗口。怎么样，感觉很像JFrame吧？其实功能上差不多。 
+
+              <LI>Composite<BR>可以包含其它Composite和Control的容器 
+              <LI>Control<BR>这是一个重量级（HeavyWeight）系统对象。像按钮（Button），标签（Label），表格，工具栏和树形结构这些组件都是Control的子类，Conposite和Shell也不例外。 
+              </LI></UL>
+            <P><B>2.1.1 消息循环</B></P>
+            <P>我们可以看到，上面的代码中有这样的语句：</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>while (!shell.isDisposed()) 
+{
+    if (!display.readAndDispatch()) 
+		display.sleep ();
+}
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>如果你像我一样是由Java语言起步的，那么你会对这个消息循环的代码感到比较陌生，毕竟在SWING中我们主要利用事件驱动模型而不这样利用类似于Windows程序设计中的消息循环的方法来处理事件。但是这段代码意义还算简单明了，就是反复的读取和分派（dispatch）事件，并在没有事件的时候把控制权还给CPU。</P>
+            <P><B>2.1.2 资源的释放</B></P>
+            <P>最后一条语句是display.dispose 
+            ();，这告诉我们操作系统的资源是由程序员显示释放的。资源的释放遵循以下两条规则：</P>
+            <P>1. 如果你创建了某个资源，那么你就有责任释放它。</P>
+            <P>2. 释放父组件资源的同时也释放了其子组件的资源。</P>
+            <P><B>2.1.3 标准构造函数</B></P>
+            <P>窗口组件被创建的时候必须伴随一个他的上层组件，例如，我要建立一个按钮就可以采用如下方法：Button button = new 
+            Button(shell, SWT.PUSH);</P>
+            <P>其中，Button的父组件Shell是必不可少的，这样就限定了我们生成组件的顺序。</P>
+            <P>第二个参数被称为"Style Bit"，表示了这个组件的显示特性，每种特性占一位，如下例所示：</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>Text test=new Text(group, SWT.SINGLE|SWT.BORDER);
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>这条代码生成了一个单一的，有边框的文本框。这显然又与习惯了JavaBeans模型，总是用setXXX()来设置属性的我们不太适应--毕竟是IBM的东西啊，秉承了其产品不易上手的传统。</P>
+            <P><B>2.1.4 错误与异常</B></P><BR><IMG height=192 alt="" 
+            src="SWT 全接触.files/image008.jpg" width=304 border=0> <BR>
+            <P>SWTError指的是不能修复的错误，以及一些操作系统错误。</P>
+            <P>SWTException指的是一些可恢复的错误以及无效的线程访问之类的错误。</P>
+            <P>IllegalArgumentException指可修复的错误或参数为null之类的错误。</P>
+            <P><B>2.1.5 Item</B></P>
+            <P>Item类是一个轻量级的系统对象，总是作为基本的单位元素与其他一些类配合使用。比如Tree中的元素即为TreeItem，Table的单位元素则是TableItem，而MenuItem就是Menu的基本单位元素了。</P>
+            <P><B>2.1.6 SWT的类阶层体系结构</B></P><BR><IMG height=306 alt="" 
+            src="SWT 全接触.files/image010.jpg" width=572 border=0> <BR>
+            <P>最后让我们来整体认识一下整个SWT窗口组件的层次结构，如下所示：以上的部分给我们以整体的认识，即一个SWT引用程序应该怎么创建，其基本的运行规则和相关类的体系结构。我想我就不用再对每一个控件的API或使用方面费唇舌了，熟悉这些东西是体力劳动，而网上有很多例子可供参考。下面一节我将详细介绍有关SWT布局的相关知识。</P>
+            <P><A name=N10124><SPAN class=smalltitle>2.2 SWT的布局管理</SPAN></A></P>
+            <P>相信对于组件的布局（Layout）大家都不会太陌生，它的存在就是提供给我们一种可以在组件位置移动或更改大小时重新绘制组件的机制。设置组件的布局我们可以采用Composite.setLayout()方法来实现。</P>
+            <P>每种布局都有其相应的数据（Layout 
+            Data），可以通过Control.setLayoutData()方法来进行关联。以下是一些布局类及其显示效果:</P>
+            <UL>
+              <LI>FillLayout:让所有子组件等大小的"填满"整个面板空间。<BR>FillLayout是最简单的一个布局类，它将所有窗口组件放置到一行或一列中，并强制他们的大小也相等。FillLayout不能外覆（wrap），也不能定制边框和距离。很显然这样的限制让这个布局类最适合作类似于计算器面板的布局，或者为Taskbar和Toolbar上面的按钮作布局使用。<BR><IMG 
+              height=109 alt="" src="SWT 全接触.files/image012.jpg" width=209 
+              border=0> 
+              <LI>RowLayout：类似于AWT中的FlowLayout，让所有组件按行排列，一行排不下就放到下一行。<BR>RowLayout比FillLayout用得更广泛一些，原因很简单，就是RowLayout支持FillLayout所部支持的功能，例如能够外覆，能够修改边框和间距等等。另外，每一个位于RowLayout中的窗口组件都可以通过设定一个RowData类来指定其在RowLayout中的宽度和高度。<BR><IMG 
+              height=140 alt="" src="SWT 全接触.files/image014.jpg" width=228 
+              border=0> 
+              <LI>GridLayout： 
+              GridLayout是3个标准布局类中最有用的，但同时也是最复杂的--没办法，强大的功能必定伴随着一定程度的复杂性。通过GridLayout，一个Composite的子窗口组件被放置在一个网格（Grid）之中。GridLayout有很多配置字段，并且和RowLayout一样，每一个布局于其中的窗口组件都可以有一个与之相关联的布局数据类，称为GridData。GridLayout的强大功能是通过对于每一个窗口组件的GridData的灵活控制来实现的。<BR>鉴于GridLayout的复杂性（原本我就怀疑它根本就不是为手工书写代码而设计的），我并不建议各位直接手动书写GridData，最好借助可视化的工具（如VI）来帮助我们完成用GridLayout进行的界面设计。这样我们只需要书写少量控制代码，就可以获得复杂的界面布局了。<BR><IMG 
+              height=157 alt="" src="SWT 全接触.files/image016.jpg" width=299 
+              border=0> 
+              <LI>FormLayout:如图所示<BR><IMG height=180 alt="" 
+              src="SWT 全接触.files/image018.jpg" width=173 border=0> 
+              <LI>StackLayout:几乎完全等同于CardLayout的功能。<BR><IMG height=58 alt="" 
+              src="SWT 全接触.files/image020.jpg" width=515 border=0> </LI></UL>
+            <P>在SWT中，位置和大小的变化并非自动发生的。应用程序既可以在Composite子类的构造函数中指定初始位置和大小，也可以在一个改变窗口大小的监听器中用布局类来定位和改变Composite子类的大小。</P>
+            <P>下面的一幅图包含了我们将要讨论的有关布局的大部分细节。一个Composite类的可显示区域分为三个部分，分别是Location，clientArea和trim。Composite的大小就是clientArea和trim的区域之和。一个布局类（Layout）的主要功能就是管理Composite子组件的大小和位置。通过布局类，我们可以管理子组件之间的距离-即间距（Spaceing），子组件与布局边缘之间的距离-即边距（margin）。布局的大小同时也是Composite的clientArea的大小。</P><BR><IMG 
+            height=275 alt="" src="SWT 全接触.files/image022.jpg" width=505 
+            border=0> <BR>
+            <P>至此，关于SWT的基础部分就告一段落，希望能够给大家以一个对于SWT的总体认识。下面的部分将主要介绍SWT的弱项-绘图。JGraph的一个作者就表达了对SWT/JFace/Draw2D的不满，认为SWT在执行效率上并没有什么改善，而且缺乏一些有用的API实现。话虽如此，但SWT的基本绘图功能还是不错的，如果有足够的时间和耐心的话还是可以绘出想要的图形的。下面就让我们看看SWT如何绘制2D和3D图形。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD><IMG height=1 alt="" src="SWT 全接触.files/blue_rule.gif" 
+                  width="100%"><BR><IMG height=6 alt="" 
+                  src="SWT 全接触.files/c.gif" width=8 
+border=0></TD></TR></TBODY></TABLE>
+            <TABLE class=no-print cellSpacing=0 cellPadding=0 align=right>
+              <TBODY>
+              <TR align=right>
+                <TD><IMG height=4 alt="" src="SWT 全接触.files/c.gif" 
+                  width="100%"><BR>
+                  <TABLE cellSpacing=0 cellPadding=0 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD vAlign=center><IMG height=16 alt="" 
+                        src="SWT 全接触.files/u_bold.gif" width=16 border=0><BR></TD>
+                      <TD vAlign=top align=right><A class=fbox 
+                        href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#main"><B>回页首</B></A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR><BR>
+            <P><A name=N1018D><SPAN class=atitle>3. 用SWT绘制2D图形</SPAN></A></P>
+            <P>用SWT绘图通常由两种方法，一种是借助Graphics Context，另一种是利用Draw2D。然而Draw2D是一个基于SWT 
+            Composite的轻量级组件，于是在效率上，它无法体现出SWT的Native 
+            Code的速度优势。故其虽然强大，但仅适用于绘图工作不是系统瓶颈的应用程序。所以我在这里只介绍第一种方法。</P>
+            <P><A name=N10196><SPAN class=smalltitle>3.1 Graphics 
+            Context</SPAN></A></P>
+            <P>我们可以在任何实现了org.eclipse.swt.graphics.Drawable接口的类上绘制图形，这包括一个控件，一幅图像，一个显示设备或一个打印设备。类org.eclipse.swt.graphics.GC是一个封装了所有可执行的绘图操作的图形上下文（Graphics 
+            Context）。两种使用GC的方式我们已经在本节前言中提过，稍后会作详细说明。</P>
+            <P><A name=N1019F><SPAN class=smalltitle>3.2 
+            在一幅图像上绘制图形</SPAN></A></P>
+            <P>下面一段代码创建了一个带有图像的GC并在上面绘制了两条线：</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>Image image = new Image(display,"C:/music.gif"); 
+GC gc = new GC(image); 
+Rectangle bounds = image.getBounds(); 
+gc.drawLine(0,0,bounds.width,bounds.height); 
+gc.drawLine(0,bounds.height,bounds.width,0); 
+gc.dispose(); 
+image.dispose();
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=104 alt="" 
+            src="SWT 全接触.files/image024.jpg" width=244 border=0> <BR>
+            <P>一旦你创建了一个GC，你就有责任通过它的dispose方法释放它的资源。一个由应用程序创建的GC需要立即被绘制，然后尽快释放掉。这是因为每个GC都需要一个底层的系统资源，而在某些操作系统中这些资源是稀缺的，像Win98就只允许同时创建五个GC对象。</P>
+            <P><A name=N101C5><SPAN class=smalltitle>3.3 
+            在Control上绘图</SPAN></A></P>
+            <P>类org.eclipse.swt.widgets.Control是可绘制的，所以你可以用像在图像上一样的方式来绘制图形。而和在图像上绘制所不同的是，如果你使用GC在一个Control上绘制图形，你需要知道当操作系统自身要绘制这个control的时候，它将覆盖掉你的改动。所以在一个Control上绘制图形的正确方法是加入其绘制事件的监听器。监听器类为org.eclipse.swt.events.PaintListener，其回调函数的参数是一个org.eclipse.swt.events.PaintEvent类的实例。这个PaintEvent实例中包含一个GC的引用，你可以向这个GC发送消息。下面的代码示例说明了如何建立这种类型的绘图：</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>Shell shell = new Shell(display); 
+shell.addPaintListener(new PaintListener(){ 
+        public void paintControl(PaintEvent e){ 
+            Rectangle clientArea = shell.getClientArea(); 
+            e.gc.drawLine(0,0,clientArea.width,clientArea.height); 
+        } 
+    }); 
+shell.setSize(150,150)
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=180 alt="" 
+            src="SWT 全接触.files/image026.jpg" width=256 border=0> <BR>
+            <P><A name=N101E8><SPAN class=smalltitle>3.4 
+            剪切（Clipping）</SPAN></A></P>
+            <P>GC的剪切域是可见绘图发生的部分。在缺省情况下，一个GC是一个被构造的可视部分边界。改变一个GC的剪切域可以让我们构造出各种图形效果。其中的一个例子是如果你想填充一个缺失了边缘的矩形。一种方法是绘制多边形矩形来组成所需要的图形，另一种方法就是剪切GC，然后对其剪切部分进行填充。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>shell.addPaintListener(new PaintListener() { 
+        public void paintControl(PaintEvent e) { 
+            Rectangle clientArea = shell.getClientArea(); 
+            int width = clientArea.width; 
+            int height = clientArea.height; 
+            e.gc.setClipping(20,20,width - 40, height - 40); 
+            e.gc.setBackground(display.getSystemColor(SWT.COLOR_CYAN)); 
+            e.gc.fillPolygon(new int[] {0,0,width,0,width/2,height}); 
+        } 
+    });
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>这段代码在Shell上的显示的过程效果如下：</P><BR><IMG height=171 alt="" 
+            src="SWT 全接触.files/image028.jpg" width=539 border=0> <BR>
+            <P><A name=N1020E><SPAN class=smalltitle>3.5 
+            画板（Canvas）</SPAN></A></P>
+            <P>虽然任何Control都可以通过自身的paintEvent来绘制图形，但其子类org.eclipse.swt.widgets.Canvas是专门被设计用来进行图形操作的特殊的绘图类。我们既可以使用一个Canvas，再加入一个绘图监听器来实现绘图，也可以通过继承来建立一个可重用的自定义Control。Canvas有很多style 
+            bit，可以在绘图发生时产生作用。</P>
+            <P><A name=N10217><SPAN class=smalltitle>3.6 绘制直线和图形</SPAN></A></P>
+            <P>我们有很多方法可以在一个GC上画线，包括在两点之间，一系列离散的点之间或一个预定义的图形上都可以。直线是以GC的前景色来绘制的，我们可以通过GC绘制拥有不同厚度的各式直线。对于一个Paint事件，GC有着与Control组件一样的属性，即激发事件且缺省的直线样式固定为1个像素宽。</P>
+            <P>GC.drawLine(int x1, int y1, int x2, int 
+            y2);这条语句在可绘制的面板上的两点间花了一条直线，起始点为(x1,y1)，终止点为(x2，y2)。终止点包含在画好的直线中。如果起始点等于终止点的话，将会有一个独立的象素点被绘制出来。</P>
+            <P>GC.drawPolyline(int[] 
+            pointArray);这条语句绘制了一系列互相连接的线段，作为参数的数组用于描述点的位置。语句gc.drawPolyline(new 
+            int[] { 25,5,45,45,5,45 })；绘制了如下的图形：</P><BR><IMG height=92 alt="" 
+            src="SWT 全接触.files/image030.jpg" width=160 border=0> <BR>
+            <P>GC.drawPolygon(int[] 
+            pointArray);与drawPolyline(int[])是类似的，唯一区别在于最后一个点和低一个点是连接的。gc.drawPolygon(new 
+            int[] { 25,5,45,45,5,45 });将会获得与上图一样的结果。</P>
+            <P><B>GC.drawRectangle(int x, int y, int width, int 
+            height);</B>这条语句从左上角的（X，Y）点，用参数中的宽和高画出了一个矩形。gc.drawRectangle(5,5,90,45);将会绘制出如下图形：</P><BR><IMG 
+            height=94 alt="" src="SWT 全接触.files/image032.jpg" width=172 
+            border=0> <BR>
+            <P><B>GC.drawRoundedRectangle(int x,int y,int width,int height,int 
+            arcWidth,int 
+            arcHeight);</B>一个圆矩形与标准矩形的区别就在于其四个角是圆的。圆矩形的每一个角都可以被想象成为1/4个椭圆，并且arcWidth和arcHeight由完整的椭圆的宽和高决定。gc.drawRoundedRectangle(5,5,90,45,25,15);绘制了一个左上角位置为5.5的圆矩形，右边的图形是放大后的效果：</P><BR><IMG 
+            height=138 alt="" src="SWT 全接触.files/image034.jpg" width=445 
+            border=0> <BR>
+            <P><B>GC.drawOval(int x, int y, int width, int 
+            height);</B>一个椭圆是由其相对应的矩形的左上角的位置（x，y）来确定绘制位置的，其宽和高即为对应矩形的宽和高。对于圆形来说，只需要另宽和高相等即可。</P><BR><IMG 
+            height=98 alt="" src="SWT 全接触.files/image036.jpg" width=150 
+            border=0> <BR>
+            <P><B>GC.drawArc(int x, int y, int width, int height, int 
+            startAngle, int 
+            endAngle);</B>曲线的绘制也是与一个相应的矩形有关，即其左上角的位置与宽和高都是相应矩形的属性。StartAntle是从横向的X开始计算的，所以0度指向的是东而不是北。曲线的绘制是从StartAngle到endAngle以逆时针方向执行。gc.drawArc(5,5,90,45,90,200);所绘制的图形如下：</P><BR><IMG 
+            height=98 alt="" src="SWT 全接触.files/image038.jpg" width=154 
+            border=0> <BR>
+            <P><B>GC.setLineStyle(int 
+            style);</B>可以设置所绘制曲线的样式，下面列出了一些曲线样式常量（在org.eclipse.swt.SWT中定义）和与之对应的曲线的图像：</P><BR><IMG 
+            height=116 alt="" src="SWT 全接触.files/image040.jpg" width=464 
+            border=0> <BR>
+            <P><B>GC.setLineWidth(int 
+            width);</B>可以用于指定所要绘制的曲线的宽度。缺省情况下的曲线宽度为1个像素。</P><BR><IMG height=50 
+            alt="" src="SWT 全接触.files/image042.jpg" width=420 border=0> <BR>
+            <P>由于直线的样式和宽度挥作用到所有的绘图操作上，所以我们可以作出如点矩形或粗线椭圆这样的图形：</P><BR><IMG 
+            height=89 alt="" src="SWT 全接触.files/image044.jpg" width=162 
+            border=0> <BR>
+            <P><A name=N102D2><SPAN class=smalltitle>3.7 绘制文本</SPAN></A></P>
+            <P>文本可以被绘制在一个GC上， 
+            字形是用GC的前景色和字体来绘制的，并且它所占用的区域是用GC背景色绘制的。要绘制文本，你需要定义要绘制文本的左上角，宽度和高度。有两组方法可以用来绘制文本，第一组方法的名字里都带有一个Text，并将会处理直线定界符和制表符。第二组API方法集的名字里都带有String，它们没有制表符或回车的处理，并主要用于控制像Eclipse的Java编辑器StyledText这样复杂的Control。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>GC.drawText(String text, int x, int y);
+Font font = new Font(display,"Arial",14,SWT.BOLD | SWT.ITALIC); 
+// ... 
+gc.drawText("Hello World",5,5); 
+gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE)); 
+gc.setFont(font); 
+gc.drawText("Hello\tThere\nWide\tWorld",5,25); 
+// ... 
+font.dispose();
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=107 alt="" 
+            src="SWT 全接触.files/image046.jpg" width=196 border=0> <BR>
+            <P>drawText API将控制字符\t处理为制表符，将\n处理为回车符。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>GC.drawString(String text, int x, int y);
+Font font = new Font(display,"Arial",14,SWT.BOLD | SWT.ITALIC); 
+// ... 
+gc.drawString("Hello World",5,5); 
+gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE)); 
+gc.setFont(font); 
+gc.drawString("Hello\tThere\nWide\tWorld",5,25); 
+// ... 
+font.dispose()
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=97 alt="" 
+            src="SWT 全接触.files/image048.jpg" width=285 border=0> <BR>
+            <P>当使用drawString时，制表符和回车符将不会被处理。</P>
+            <P>在一个GC上绘制字符的时候，一个字符串所占用的大小取决于它的内容以及GC的字体。想要确定一个字符串在被绘制之后所占用的区域可以使用方法：GC.stringExtent(String 
+            text), 或 GC.textExtent(String 
+            text)。这两个方法都返回一个Point类，这个Point的X和Y是渲染参数字符串所需要的宽和高。</P>
+            <P><A name=N10318><SPAN class=smalltitle>3.8 图形填充</SPAN></A></P>
+            <P>直线是用GC前景色绘制的，而图形的填充用的是GC的背景色。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>GC.fillPolygon(int[]);
+gc.setBackground(display.getSystemColor(SWT.COLOR_BLUE)); 
+gc.fillPolygon(new int[] { 25,5,45,45,5,45 }) 
+ 
+GC.fillRectangle(int x, int y, int width, int height);
+gc.fillRectangle(5,5,90,45); 
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=96 alt="" 
+            src="SWT 全接触.files/image049.gif" width=164 border=0> <BR><BR><IMG 
+            height=98 alt="" src="SWT 全接触.files/image050.gif" width=165 
+            border=0> <BR>
+            <P>需要注意的是，当一个矩形被填充的时候，右面和下面的边缘是不被包括在内的。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>GC.fillRoundedRectangle(int x, int y, int width, int height, int arcWidth, int arcHeight);
+gc.fillRoundRectangle(5,5,90,45,25,15);
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=92 alt="" 
+            src="SWT 全接触.files/image052.jpg" width=149 border=0> <BR>
+            <P>像GC.fillRectangle(...)方法一样，右面和下面的边缘不被包含在内，于是右下角的坐标为（94，49）而不是（95，50）。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>GC.fillOval(int x, int y, int width, int height);
+gc.fillOval(5,5,90,45); 
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=92 alt="" 
+            src="SWT 全接触.files/image054.jpg" width=148 border=0> <BR><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>GC.fillArc(int x, int y, int widt4h., int height, int startAngle, int endAngle);
+gc.fillArc(5,5,90,45,90,200);
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=75 alt="" 
+            src="SWT 全接触.files/image056.jpg" width=147 border=0> <BR>
+            <P>fillArc()的参数和drawArc()的参数是类似的，偏移量是从右面的轴开始填充，然后沿逆时针方向旋转给定的角度（endAngle-startAngle）。</P>
+            <P><B>GC.fillGradientRectangle(int x, int y, int width. int height, 
+            vertical boolean);</B></P>
+            <P>这个方法让我们可以指定图形在填充时所用的颜色可以从GC的前景色按梯度变化（渐变）到背景色。梯度既可以是横向的也可以是纵向的。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>gc.setBackgrouind(display,getSystemColor(SWT.COLOR_BLUE)); 
+gc.fillGradientRectangle(5,5,90,45,false); 
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>上面两条语句建立了一个使用黑色背景的从左至右的横向梯度填充。和其他填充方法一样，左面和下面的边缘不被包括在内，所以由下角的位置缩小一个像素。</P><BR><IMG 
+            height=93 alt="" src="SWT 全接触.files/image058.jpg" width=119 
+            border=0> <BR><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>gc.setBackground(display.getSystemColor(SWT.COLOR_BLUE)); 
+gc.setForeground(display.getSystemColor(SWT.COLOR_CYAN)); 
+gc.fillGradientRectangle(5,5,90,45,true); 
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>上面这3行代码的含义为在纵向自顶向下用前cyan（景色）开始，并以蓝色（背景色）结束的填充。</P><BR><IMG 
+            height=94 alt="" src="SWT 全接触.files/image060.jpg" width=144 
+            border=0> <BR>
+            <P><A name=N103E4><SPAN class=smalltitle>3.9 异或（XOR）</SPAN></A></P>
+            <P>如果你设置了GC的XOR模式为true的话，将会发生如下情况：对于每一个像素点，原来被显示的红，绿，蓝的值将被已存在的红，绿，蓝色进行异或操作，所得结果既作为新的目标像素。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>shell.setBackground(display.getSystemColor(SWT.COLOR_WHITE)); 
+// ... 
+gc.setBackground(display.getSystemColor(SWT.COLOR_BLUE)); 
+gc.fillRectangle(5,5,90,45); 
+gc.setXORMode(true); 
+gc.setBackground(display.getSystemColor(SWT.COLOR_WHITE)); 
+gc.fillRectangle(20,20,50,50); 
+gc.setBackground(display.getSystemColor(SWT.COLOR_RED)); 
+gc.fillOval(80,20,50,50);
+</PRE></TD></TR></TBODY></TABLE><BR><BR><IMG height=111 alt="" 
+            src="SWT 全接触.files/image062.jpg" width=237 border=0> <BR>
+            <P><A name=N10407><SPAN class=smalltitle>3.10 绘制图像（Draw 
+            Image）</SPAN></A></P>
+            <P>类org.eclipse.swt.graphics.Image被用来表示准备要在像打印机，显示器这样的设备上显示的图形。建立一个图像最简单的方法就是从组织好的文件格式中装载它。SWT所支持的图像格式有：GIF，BMP，JGP，PNG和TIFF。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD class=code-outline><PRE class=displaycode>Image image = new Image(display,"C:/eclipse_lg.gif"); 
+GC.drawImage(Image image, int x, int y);
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>每幅图像都有用其边界决定的尺寸。例如，图象eclipse_lg.gif的大小为115*164，我们可以通过image.getBounds()方法来进行设定。当一幅图像被绘制的时候，它将会以自身定义的边界作为显示之后的宽和高。<CODE>gc.drawImage(image,5,5);</CODE> 
+            </P>
+            <P>至此，SWT在2D绘图方面的讲解告一段落，上面所提到的内容涵盖了SWT的大部分绘图功能，并在每个部分都给出了要注意的细节。至于具体实现就要靠各位的聪明才智了。下面让我们进入最后的部分-SWT的3D绘图。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD><IMG height=1 alt="" src="SWT 全接触.files/blue_rule.gif" 
+                  width="100%"><BR><IMG height=6 alt="" 
+                  src="SWT 全接触.files/c.gif" width=8 
+border=0></TD></TR></TBODY></TABLE>
+            <TABLE class=no-print cellSpacing=0 cellPadding=0 align=right>
+              <TBODY>
+              <TR align=right>
+                <TD><IMG height=4 alt="" src="SWT 全接触.files/c.gif" 
+                  width="100%"><BR>
+                  <TABLE cellSpacing=0 cellPadding=0 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD vAlign=center><IMG height=16 alt="" 
+                        src="SWT 全接触.files/u_bold.gif" width=16 border=0><BR></TD>
+                      <TD vAlign=top align=right><A class=fbox 
+                        href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#main"><B>回页首</B></A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR><BR>
+            <P><A name=N10423><SPAN class=atitle>4 SWT与OpenGL编程</SPAN></A></P>
+            <P>相较于Java3D 
+            API来说，SWT以前在3D图形绘制方面一直没有什么好的表现。OpenGL的加入会不会使SWT在3D领域有所作为还尚未可知，不过起码IBM的程序员们给了SWT机会。当大家了解了这个正处于试验阶段的组合之后，我们在SWT上绘制3D图形就不再是噩梦。</P>
+            <P>OpenGL是一个为创建高性能2D，3D图形而设计的多平台的标准。其硬件和软件的实现存在于多个系统之中，包括Windows，Linux和MacOS。OpenGL可以用于渲染简单的2D图形或复杂的3D游戏图形（OpenGL最主要的应用领域就是游戏）。作为一个正在处于事件阶段的Eclipse插件，我将在下面的小节中介绍如何在SWT窗口组件上用SWT绘制图形。在Eclipse最新的3.2版中，对OpenGL的支持被集成到org.eclipse.swt项目中，所以我们在实现的时候即可以选择以插件方式进行，也可以直接利用已经集成好的组件来进行图形操作。在本节，我们将以插件方式为例对代码进行说明。</P>
+            <P><A name=N1042F><SPAN class=smalltitle>4.1 SWT 
+            OpenGL插件</SPAN></A></P>
+            <P>SWT实现了OpenGL1.1全部功能。包括三个核心类和一个数据类。核心类为GLContext，GL和GLU。GLContext架起了SWT和OpenGL之间的桥接。一个Context必须用Drawable，通常是用Canvas来创建，OpenGL可以在Drawable上渲染场景。需要注意的是，当context不再被使用的时候就应该将它释放掉。同样，一旦某个context被释放掉之后，就不应该再次试图去渲染它。每次Drawable改变大小的时候，context都需要通过调用其resize方法在通知这一事件。这个方法的调用让context调整自己的view 
+            port和视图参数。在下一节中将描述一个处理这一部分任务的类。</P>
+            <P>当context可用的时候，我们就可以通过定义在GL和GLU的一系列方法调用来绘制场景。一个GL类大概有超过330条命令。在GL和GLU中定义的这些函数和他们的Native实现几乎是一一对应的。下图给出了一个绘制矩形的例子，我们可以看到用C写成的API和SWT 
+            OpenGL API是何其相似：</P><BR><IMG height=222 alt="" 
+            src="SWT 全接触.files/image064.jpg" width=572 border=0> <BR>
+            <P><A name=N1044C><SPAN class=smalltitle>4.2 SWT 
+            OpenGL编程基础</SPAN></A></P>
+            <P>在下面的小节中，我将描述一个显示四幅3D图像的应用程序。应用程序采用了GLSense，这是一个用于显示OpenGL场景的工具类。它和SWT的Canvas很像，所区别的是它所展现的内容是用OpenGL命令渲染的，而不是使用GC来绘制。要做到这一点，我们需要将一个GLContext类和一个SWT 
+            Canvas相关联，并且无论何时，当前上下文中的内容都应该是由在drawScene中定义的命令来渲染的。</P><BR><IMG 
+            height=323 alt="" src="SWT 全接触.files/image066.jpg" width=560 
+            border=0> <BR>
+            <P>在构造函数中，一个SWT 
+            Canvas被创建出来。这就是那个要和一个GLContext相关联的Canvas实例。紧接着，这个Canvas又注册了两个监听器。第一个监听器的作用是确保这个Canvas无论何时被改变大小，其相应的GLContex也会收到通知并适当的改变大小。第二个监听器主要用于确保一旦Canvas被释放之后，其相对应的GLContext的也同时被释放。为了确保渲染区域是一个非零大小的区域，父组件的客户矩形区被取出来用于设置该Canvas的初始大小。这个初始大小可以在稍后用布局管理器或用户Action来修改。</P><BR><IMG 
+            height=176 alt="" src="SWT 全接触.files/image068.jpg" width=511 
+            border=0> <BR>
+            <P>GLScene将Canvas的全部区域用于绘图。无论Canvas何时调整其尺寸，我们都要获取客户区并将新的宽度和高度传递给Contex，而context将根据新的宽度和高度适当的调整视图。</P><BR>
+            <TABLE border=1>
+              <TBODY>
+              <TR>
+                <TD style="COLOR: #ff0000">XML error: The image is not 
+                  displayed because the width is greater than the maximum of 572 
+                  pixels. Please decrease the image 
+            width.</TD></TR></TBODY></TABLE><BR>
+            <P>GLScene被分割为两个部分：初始化Context和初始化OpenGL的状态机。对于Context来说，我们只是简单的建立一个新的GLContext并使它成为当前被使用的Context。OpenGL的渲染总是在当前的context上进行绘制，因此如果你有超过一个活动的GLScene，很重要的一点是要在所有绘制动作发生之前将它的Context设置为当前的Context。initGL方法最开始提供清除颜色缓存颜色，随后建立了一个深度缓存（depth 
+            buffer）.第47行指出了深度值如何进行比较。这一比较函数主要用于拒绝或接受正在引用的像素。GL.GL_LEQUAL选项指定接受那些在视图上更接近或有相同距离的像素。第48行启动了深度测试（depth 
+            test），紧接的一行设定阴影模型为GL.GL_SMOOTH，这一设定的效果是如果表面上的两个顶点颜色不同的话，系统将对颜色进行插值。最后，第50行要求渲染引擎在计算颜色和纹理协调插值运算的时候起到关键的作用。</P><BR>
+            <TABLE border=1>
+              <TBODY>
+              <TR>
+                <TD style="COLOR: #ff0000">XML error: The image is not 
+                  displayed because the width is greater than the maximum of 572 
+                  pixels. Please decrease the image 
+            width.</TD></TR></TBODY></TABLE><BR>
+            <P>GLScene类的最后两个方法用于处理重绘和场景绘制。当场景何时需要重绘的时候，第一个方法为其他类提供重绘操作的接口。第二个方法主要用于让继承GLScene的子类覆写。其缺省实现只是简单的清除了颜色和深度缓存，通过装在鉴别矩阵（identify 
+            matrix）重新恢复调整系统。</P>
+            <P><A name=N104A5><SPAN class=smalltitle>4.3 3D Chart</SPAN></A></P>
+            <P>利用上一节的准备，我们已经将主应用程序进行了划分。这个图像显示了4组数据。每一组数据都是由相同的固定点所组成，每个点都是从0.0到10.0之间的一个正值。</P>
+            <P>示例程序运行在一个非常简单的Eclipse 
+            view上，唯一值得注意的是Refresher，这个线程将强迫OpenGL场景被周期性的重绘。通过这种方法，当视图被移动或旋转的时候，component总能进行有效的更新渲染效果。run()方法调用的时间间隔为100毫秒，所以理论上的图像速度能达到每秒10帧。</P><BR><IMG 
+            height=259 alt="" src="SWT 全接触.files/image074.jpg" width=533 
+            border=0> <BR>
+            <P>每个数据集合的点的值是用圆柱体来表示的。通过执行3个GLU调用，我们就能够绘制圆柱体：其中的两个用于渲染圆柱体两头的圆盘部分，另外一个用于渲染圆柱体的四周。例如，要渲染两个单元高的圆柱体，你可以用下面的代码来实现：</P><BR><IMG 
+            height=148 alt="" src="SWT 全接触.files/image076.jpg" width=470 
+            border=0> <BR>
+            <P>第一行申请了绘制圆盘和圆柱所需的二次曲面。然后整个场景被逆时针旋转了90度，以便圆柱体可以被垂直绘制。下一步，底部的圆盘被渲染，然后是圆柱体的四周。在我们能够绘制顶部圆盘的时候，通过场景转换（scene 
+            translation），我们可以在Z轴移动两个单元。最后一个圆盘随后被绘制出来，调整系统通过向回移动两个单元来进行恢复。最后，由第一行申请的二次曲面被释放掉。</P>
+            <P>按照上述方法运行程序是很费时间的。当仅绘制一个圆柱体的时候，效率低下不是一个很严重的问题，但如果要绘制成百个对象的话就会严重影响程序的执行性能。对于这种情况，OpenGL给出了一个解决这个问题的技巧，就是使用显示列表（display 
+            list）。</P>
+            <P>一个显示列表是一组已编译的OpenGL命令。定义命令集合的列表被放在glNewList(int list, int mode) 和 
+            glEndList()方法调用之间。第一个参数必须是一个正整数，可以用来唯一的表示一个被创建的显示列表。你可以让GL用glGenLists(int 
+            n)方法为你生成多个列表标识符。第二个参数用于指定列表是否被编译或编译之后立即被执行。大多数情况下你都需要编译这个列表。然后，你可以使用glCallList(int 
+            list)方法来显示整个列表。</P><BR>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD><IMG height=1 alt="" src="SWT 全接触.files/blue_rule.gif" 
+                  width="100%"><BR><IMG height=6 alt="" 
+                  src="SWT 全接触.files/c.gif" width=8 
+border=0></TD></TR></TBODY></TABLE>
+            <TABLE class=no-print cellSpacing=0 cellPadding=0 align=right>
+              <TBODY>
+              <TR align=right>
+                <TD><IMG height=4 alt="" src="SWT 全接触.files/c.gif" 
+                  width="100%"><BR>
+                  <TABLE cellSpacing=0 cellPadding=0 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD vAlign=center><IMG height=16 alt="" 
+                        src="SWT 全接触.files/u_bold.gif" width=16 border=0><BR></TD>
+                      <TD vAlign=top align=right><A class=fbox 
+                        href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#main"><B>回页首</B></A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR><BR>
+            <P><A name=N104DF><SPAN class=atitle>5 结束语</SPAN></A></P>
+            <P>至此，有关于SWT与OpenGL图形有关的粗略功能就介绍完了，有鉴于3D图形对象和OpenGL的复杂性，一篇这样篇幅的文章肯定不能覆盖其每一个角落，我只能给各位一个动手尝试机会。希望整篇专题没有让你枯燥得睡着，并因此有了一个不错的SWT的基础，我的目的就达到了。</P><BR><BR>
+            <P><A name=author><SPAN class=atitle>关于作者</SPAN></A></P>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD colSpan=3><IMG height=5 alt="" src="SWT 全接触.files/c.gif" 
+                  width="100%"></TD></TR>
+              <TR vAlign=top align=left>
+                <TD>
+                  <P></P></TD>
+                <TD><IMG height=5 alt="" src="SWT 全接触.files/c.gif" width=4></TD>
+                <TD width="100%">
+                  <P>薛笛，是黑龙江大学研究生。他目前在黑龙江大学信息技术研究所工作，从事传感器网络和分布式数据库的研究，对Java技术特别感兴趣。可以通过 
+                  <A 
+                  href="mailto:jxuedi@gmail.com?cc=">mailto:jxuedi@gmail.com?cc=</A> 
+                  与他联系。</P></TD></TR></TBODY></TABLE><BR><BR><BR>
+            <P class=no-print><SPAN class=atitle><A 
+            name=rate>对本文的评价</A></SPAN></P><SPAN class=no-print>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR vAlign=top>
+                <TD>
+                  <FORM 
+                  action=https://www.ibm.com/developerworks/secure/cnratings.jsp 
+                  method=get><INPUT type=hidden value="SWT 全接触" 
+                  name=ArticleTitle><INPUT type=hidden value="Open source" 
+                  name=Zone><INPUT type=hidden 
+                  value=http://www.ibm.com/developerworks/cn/thankyou/ 
+                  name=RedirectURL><INPUT type=hidden value=china 
+name=localsite>
+                  <SCRIPT language=javascript>document.write('<input type="hidden" name="url" value="'+location.href+'" />');</SCRIPT>
+
+                  <TABLE cellSpacing=0 cellPadding=0 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD><IMG height=8 alt="" src="SWT 全接触.files/c.gif" 
+                        width=100 border=0></TD></TR>
+                    <TR vAlign=top>
+                      <TD><INPUT type=radio value=1 name=Rating>太差！ (1)</TD></TR>
+                    <TR vAlign=top>
+                      <TD><INPUT type=radio value=2 name=Rating>需提高 (2)</TD></TR>
+                    <TR vAlign=top>
+                      <TD><INPUT type=radio value=3 name=Rating>一般；尚可 
+(3)</TD></TR>
+                    <TR vAlign=top>
+                      <TD><INPUT type=radio value=4 name=Rating>好文章 (4)</TD></TR>
+                    <TR vAlign=top>
+                      <TD><INPUT type=radio value=5 
+                    name=Rating>真棒！(5)</TD></TR></TBODY></TABLE><BR><B>建议？</B><BR><TEXTAREA id=Comments name=Comments rows=5 wrap=virtual cols=60>&nbsp;</TEXTAREA><BR><BR><INPUT type=submit value=反馈意见></FORM></TD></TR>
+              <TR vAlign=top>
+                <TD bgColor=#ffffff><IMG height=8 alt="" 
+                  src="SWT 全接触.files/c.gif" width=100 
+            border=0></TD></TR></TBODY></TABLE></SPAN><SPAN class=no-print>
+            <TABLE cellSpacing=0 cellPadding=0 align=right>
+              <TBODY>
+              <TR align=right>
+                <TD><IMG height=8 alt="" src="SWT 全接触.files/c.gif" 
+                  width="100%"><BR>
+                  <TABLE cellSpacing=0 cellPadding=0 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD vAlign=center><IMG height=16 alt="" 
+                        src="SWT 全接触.files/u_bold.gif" width=16 border=0><BR></TD>
+                      <TD vAlign=top align=right><A class=fbox 
+                        href="http://www.ibm.com/developerworks/cn/opensource/os-swt/#main"><B>回页首</B></A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR><BR></SPAN></TD>
+          <TD width=10><IMG height=1 alt="" src="SWT 全接触.files/c.gif" 
+          width=10></TD></TR></TBODY></TABLE><SPAN class=small>IBM 公司保留在 
+      developerWorks 网站上发表的内容的著作权。未经IBM公司或原始作者的书面明确许可，请勿转载。如果您希望转载，请通过 <A 
+      href="https://www.ibm.com/developerworks/secure/reprintreq.jsp?domain=dwchina">提交转载请求表单</A> 
+      联系我们的编辑团队。</SPAN></TD></TR></TBODY></TABLE><!--FOOTER_BEGIN--><!-- IBM FOOTER -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD class=bbg height=19>
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD><SPAN class=spacer>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A 
+            class=mainlink href="http://www.ibm.com/cn/ibm/index.shtml">关于 
+            IBM</A></TD>
+          <TD class=footer-divider width=27>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          <TD><A class=mainlink 
+            href="http://www.ibm.com/cn/ibm/privacy/index.shtml">隐私条约</A></TD>
+          <TD class=footer-divider width=27>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          <TD><A class=mainlink href="http://www.ibm.com/contact/cn/">联系 
+            IBM</A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><!-- end footer -->
+<SCRIPT language=JavaScript1.2 src="SWT 全接触.files/stats.js" 
+type=text/javascript></SCRIPT>
+<NOSCRIPT><IMG height=1 alt="" src="" width=1 border=0></NOSCRIPT><!--FOOTER_END--><!--XSLT stylesheet used to transform this file:  dw-document-html-5.8.xsl--></BODY></HTML>
