@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/java/Experiment2/BB4TSP.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Experiment2/Back4TSP.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Experiment3/GAOperations.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/test/Experiment2/Back4TSPTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/test/Experiment2/testBB4TSP.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/main/test/Experiment3/GATest.java" charset="GBK" />
+  </component>
+</project>

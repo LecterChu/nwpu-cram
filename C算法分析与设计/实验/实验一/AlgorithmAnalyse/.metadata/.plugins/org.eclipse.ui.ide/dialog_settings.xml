@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="D:\百度云同步盘\E盘\工作相关\算法分析与设计课程\算法分析与设计课件\PPT-罗建超\实验"/>
+	</list>
+	<section name="ExternalProjectImportWizard">
+		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="D:\百度云同步盘\E盘\工作相关\算法分析与设计课程\算法分析与设计课件\PPT-罗建超\实验\给学生的试验手册和工程文件\实验一\AlgorithmAnalyse"/>
+			<item value="E:\百度云同步盘\E盘\工作相关\算法分析与设计课程\算法分析与设计课件\PPT-罗建超\实验\实验一\AlgorithmAnalyse"/>
+			<item value="D:\百度云同步盘\E盘\工作相关\算法分析与设计课程\算法分析与设计课件\PPT-罗建超\实验\实验一\AlgorithmAnalyse"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+</section>

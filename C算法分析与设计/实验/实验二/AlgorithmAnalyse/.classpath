@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="D:/百度云同步盘/E盘/工作相关/算法分析与设计课程/算法分析与设计课件/PPT-罗建超/实验/给学生的试验手册和工程文件/实验一/junit4.12测试依赖的包/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/百度云同步盘/E盘/工作相关/算法分析与设计课程/算法分析与设计课件/PPT-罗建超/实验/给学生的试验手册和工程文件/实验一/junit4.12测试依赖的包/hamcrest-library-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/百度云同步盘/E盘/工作相关/算法分析与设计课程/算法分析与设计课件/PPT-罗建超/实验/给学生的试验手册和工程文件/实验一/junit4.12测试依赖的包/junit-4.12.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
