@@ -1,0 +1,97 @@
+RMI示例：
+	远程接口 IRemoteMath.java
+	import java.rmi.Remote;
+	import java.rmi.RemoteException;
+	
+	/**
+	* 必须继承Remote类
+	* 所有参数和返回类型必须序列化（implements Serializable）（因为要网络传输）
+	* 任意远程对象必须实现此接口
+	* 只有远程接口中指定的方法可以被调用
+	*/
+	public interface IRemoteMath extends Remote{
+		
+		// 所有方法必须抛出RemoteException
+		public double add(double a, double b) throws RemoteException;
+	}
+	----------------------------------------------------------------
+	远程接口实现类 RemoteMath.java
+	import java.rmi.RemoteException;
+	import java.rmi.UnicastRemoteObject;
+	
+	/**
+	* 服务器端实现远程接口
+	* 必须继承UnicastRemoteObject，以允许JVM创建远程的代理
+	*/
+	public class RemoteMath extends UnicastRemoteObject implements IRemoteMath{
+		
+		@Override
+		public double add(double a, double b) throws RemoteException{
+			return a+b;
+		}
+	}
+	----------------------------------------------------------------
+	服务器端 RMIServer.java
+	import java.rmi.registry.LocateRegistry;
+	import java.rmi.registry.Registry;
+	
+	/**
+	* 创建RemoteMath类的实例，并在rmiregistry中注册
+	*/
+	public class RMIServer{
+		public static void main(String[] args){
+			try{
+				// 注册远程对象，向客户端提供远程对象服务
+				// 远程对象是在远程服务上创建的，你无法确切地知道远程服务器上的对象的名称
+				// 但是，将远程对象注册到rmi registry之后
+				// 客户端就可以通过rmi registry请求到该远程对象的stub
+				// 利用stub代理就可以访问远程对象了
+				IRemoteMath remoteMath = new RemoteMath();
+				LocateRegistry.createRegistry(1099);
+				Registry registry = LocateRegistry.getRegistry();
+				registry.bind("Compute", remoteMath);
+				// 如果不想再让对象被继续调用，使用下面这行
+				// UnicastRemoteObject.unexportObject(remoteMath, false);
+			}catch(Exception e){}
+		}
+	}
+	----------------------------------------------------------------
+	客户端 MathClient.java
+	import java.rmi.registry.LocateRegistry;
+	import java.rmi.registry.Registry;
+	import java.rmi.Naming;
+	
+	public class MathClient{
+		public static void main(String[] args){
+			try{
+				// 如果RMI Registry就在本地，URL就是：rmi://localhost:1099/Compute
+				// 否则，URL就是：rmi://RMIService_IP:1099/Compute
+				Registry registry = LocateRegistry.getRegistry("localhost");
+				// 从Registry中检索远程对象的代理
+				IRemoteMath remoteMath = (IRemoteMath)registry.lookup("Compute");
+				// 获取代理的另一种方法
+				// IRemoteMath remoteMath = (IRemoteMath)Naming.lookup("rmi://localhost:1099/Compute");
+				// 调用远程对象的方法
+				double res = remoteMath.add(5.0, 3.0);
+			}catch(Exception e){}
+		}
+	}
+
+RMI体系结构（P348）：
+	RMI应用程序由服务器和客户端组成，都包括3层抽象：
+		桩/骨架层（Stub/Skeleton）
+		远程调用层（Remote Reference Layer）
+		传输层（Transport）
+	RMI和RPC的区别：
+		RMI只允许使用Java、RMI是针对面向对象编程、支持对象的传递
+		RPC是传统意义上的过程调用
+	RMI的主要的三部分：
+		RMI客户端：可以调用远程对象的方法
+		RMI服务器：对外提供远程对象
+		Rmiregistry：jdk提供的一个可以独立运行的程序，在bin目录下
+	RMI工作流程：
+		1. 远程对象注册与名字绑定
+		2. 客户按名字查找远程对象
+		3. 注册器返回远程对象接口
+		4. 客户从codebase请求stub类
+		5. http服务器返回远程对象的stub类

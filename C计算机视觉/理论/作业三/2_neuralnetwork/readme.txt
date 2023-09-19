@@ -1,0 +1,2 @@
+FullyConnected_networks.ipynb里是模型的一种代码的实现（包含了使用不同的优化器以及dropout等）
+nn_with_different_learningrate.py里是计算随着学习率变化模型性能如何变化的代码

@@ -1,0 +1,128 @@
+IDL和java数据类型的转换（不同的）：
+	java:  Int    Long         Java.lang.String
+	IDL :  long   long long    string/wstring
+IDL接口：
+	接口定义描述远程对象以及该对象的方法和成员变量，由关键字interface描述。
+	interface JobManager{
+		readonly attribute string FirstName;
+		attribute string status;
+		string QueryJobStatus(				// 操作参数包括参数名、参数的数据类型、参数的传送方向 
+			in long Number,					// 传送方向in表示参数由客户提供
+			out string property);			// 传送方向out表示参数由对象实现返回
+											// inout表示由客户传送，经过对象实现修改，返回给客户
+		void setStatus(in string status);   // 没有返回值out，可以使用关键字void指明
+	};
+	CORBA支持接口的继承，用冒号表示继承，一个接口可以继承多个接口：
+		Interface Book: Product{}
+	不能在CORBA接口里面设定变量，对象的数据表示是实现方法的组成部分，
+	而IDL没有解决它的实现方法的问题。
+IDL模块：
+	为了方便将逻辑上相关接口组合在一起的一种便捷方式。
+	Module AccountTypes {
+		interface UserAccount{};
+		interface UserId{};
+	};
+IDL特点：
+	是一种规范语言
+	看上去像C语言
+	目的是定义接口和精简分布式对象的过程
+	分离对象的接口与其实现
+	剥离了编程语言和硬件的依赖性
+	隐藏实现细节
+	提供通用的数据类型
+IDL属性转化为Java表示：
+	interface Book{
+		attribute string isbn;
+	};
+	在java中的等价接口是一对get和set方法：
+	String isbn();  
+	Void isbn(String _isbn);   // 如果该属性为readonly，则不生成这个set方法
+IDL操作：
+	IDL操作是模式定义中最重要的部分，可以远程调用这些操作，执行所需的简单或复杂任务。
+	操作是可以在结束时返回值并接受参数的函数
+	IDL操作的三种参数：in、out、inout
+	IDL不支持方法的重载，必须为每个方法配备不同的名字。
+IDL异常操作：
+	在CORBA中，异常不可以为子类。
+	可以在一个模块中定义多个异常，可以在一个操作中抛出多个异常，用raises关键字
+	module BankingSystem{
+		exception AccountInactive{
+			String reason;
+		};
+		exception AccountOverdrawn{
+			String reason;
+		};
+		interface BankAccount{
+			double withdrawMoney(in double amount) raises
+			(AccountInactive);
+			double withdrawMoney2(in double amount) raises
+			(AccountInactive, AccountOverdrawn);
+		}
+	}
+	
+把IDL映射到java：
+	idlj编译器就是一个ORB，可以用来在java中定义、实现和访问CORBA对象。
+	1. 指定生成文件的路径：
+		idlj [-td C:\]cal.idl
+	2. 生成客户端的类：
+		idlj -fclient cal.idl
+	3. 生成服务器端的类：
+		idlj -fserver cal.idl
+	4. 生成客户端和服务器端的类
+		idlj -fall cal.idl
+	CORBA Holder类：
+		由于java没有out和inout的对应物，所以要提供一些附加的机制来支持值传递（并返回结果）
+		映射定义Holder类，这些holder类在java中实现附加的参数传递模式。
+			对每一个out或者inout参数，客户必须实例化一个适当的holder类的实例。
+	生成文件：
+		cal.java:
+			接口标记文件，提供类型标记，使该接口可以用于其他接口的方法声明
+		calOperations.java：
+			Java公共接口，接口标记文件可扩展该接口
+		calHelper.java：
+			提供辅助功能，负责读写数据类型到CORBA流，以及插入和提取数据类型
+		calHolder.java：
+			一个专门化类，是为了需要通过引用来传递参数的任意数据类型而生成的。
+		calPOA.java：
+			服务器Skeleton
+		calStub.java：
+			客户端Stub
+	CORBA属性：
+		结构类型：
+			Sequence（序列）：一个可变大小的一维元素序列，其中元素可以是
+				任何idl的类型，可以限制最大长度
+			Struct（结构）：可以使用结构将多种类型的命名字段组装在一起，每个
+				Struct有2个构造函数，一个是默认的空构造函数，一个是把结构
+				字段作为参数并初始化每个字段
+			Union（联合）：用于在任何给定的时间只引用几个数据成员中的一个（
+				任何时间，内存中只能有一个成员）
+			Any：是一个保留其类型的自描述数据结构，可以在运行时用类型安全的
+				转换函数提取和插入预定义的idl类型的值。Any可以指定一个属性值、
+				参数或者返回类型，该类型包含一个在运行时而不是在编译时确定的
+				任意类型，可以使用any传递任何东西
+	服务端完成的任务：
+		- 启动ORB
+		- 查找并启动可移植的根对象适配器（POA）
+		- 建立服务器的实现代码
+		- 使用POA，将服务器的引用转换为CORBA对象的引用
+		- 获取IOR
+		- 将服务器的实现代码连接到命名服务程序
+		- 等待客户端的调用
+	客户的操作步骤：
+		- 启动ORB
+		- 检索一个对“NameService”的初始引用，并且将它的范围缩小为NamingContext的引用，
+			以便找到该命名服务程序
+		- 将对象和描述符组合起来，并且调用NamingContext类的resolve方法，找到
+			想要调用的其方法的对象
+		- 将返回的对象范围缩小为正确的类型，并且调用你的方法
+	运行：
+		编译：
+			javac *.java
+		运行服务端程序：
+			启动名字服务器：
+				tnameserv [-ORBInitialPort port] // port是ORB名字服务器的端口号，默认900
+			启动服务程序：
+				java server [-ORBInitialHost host] [-ORBInitialPost post]
+		运行客户端程序：
+			java client [-ORBInitialHost host] [-ORBInitialPost post]
+	
