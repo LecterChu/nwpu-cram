@@ -1,0 +1,7 @@
+module space{
+	module inner{
+		struct A{
+			short i1=10;
+		};
+	};
+};

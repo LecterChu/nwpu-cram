@@ -1,0 +1,23 @@
+module space{
+	struct A{
+		short i1=10;
+		int16 i2=10;
+		long i3=100;
+		int32 i4=100;
+		long long i5=1000;
+		int64 i6=1000;
+		unsigned short i7=10;
+		uint16 i8=10;
+		unsigned long i9=100;
+		uint32 i10=100;
+		unsigned long long i11=1000;
+		uint64 i12=1000;
+		char c0='a';
+		string c1="abc";
+		boolean c2=true;
+		float c3=10.901f;
+		double c4=23.234d;;
+		long double c5=12.23456432235d;;
+		short arr[10]={0,1,2,3,4,5,6,7,8,9};
+	};
+};
