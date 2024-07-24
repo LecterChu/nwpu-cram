@@ -1,0 +1,1 @@
+[{"pid": 1, "pname": "apple", "price": 5, "num": 100, "pdate": "2020-1-1"}, {"pid": 2, "pname": "banana", "price": 3, "num": 200, "pdate": "2020-1-2"}, {"pid": 3, "pname": "orange", "price": 4, "num": 150, "pdate": "2020-1-3"}, {"pid": "4", "pname": "114514", "price": "111", "num": "514", "pdate": "30-231-4"}]
