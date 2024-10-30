@@ -1,0 +1,6 @@
+module example1 {
+    struct Person {
+        string name;
+        int age;
+    };
+};

@@ -1,0 +1,3 @@
+struct A{
+	short a=100000;
+};

@@ -1,0 +1,11 @@
+server:
+  port: 8030 # 指定该Eureka实例的端口号
+eureka:
+  instance:
+    prefer-ip-address: true  # 是否显示主机的IP
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # 指定Eureka服务端地址
+spring:
+  application:
+    name: microservice-eureka-user-hystrix # 指定应用名称

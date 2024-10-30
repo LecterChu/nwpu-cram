@@ -1,0 +1,47 @@
+specification(
+    definition(
+        module( 
+            ID:example3
+            definition(
+                struct( 
+                    ID:Address
+                    member( 
+                        string
+                        ID:street
+                        )
+                    member( 
+                        string
+                        ID:city
+                        )
+                    member( 
+                        string
+                        ID:zip
+                        )
+                     ) 
+                )
+            
+            definition(
+                struct( 
+                    ID:Employee
+                    member( 
+                        string
+                        ID:name
+                        )
+                    member( 
+                        namespace( 
+                            Address
+                             ) 
+                        ID:address
+                        )
+                    member( 
+                        namespace( 
+                            int
+                             ) 
+                        ID:employeeId
+                        )
+                     ) 
+                )
+             ) 
+        )
+    )
+

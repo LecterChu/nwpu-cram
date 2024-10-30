@@ -1,0 +1,27 @@
+specification(
+    definition(
+        module( 
+            ID:example2
+            definition(
+                struct( 
+                    ID:Circle
+                    member( 
+                        float
+                        =( 
+                            ID:radius
+                            1.0
+                             ) 
+                        )
+                    member( 
+                        float
+                        =( 
+                            ID:area
+                            3.14159
+                             ) 
+                        )
+                     ) 
+                )
+             ) 
+        )
+    )
+

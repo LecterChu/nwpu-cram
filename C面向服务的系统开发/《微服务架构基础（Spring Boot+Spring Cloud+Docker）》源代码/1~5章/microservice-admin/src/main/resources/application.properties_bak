@@ -1,0 +1,12 @@
+#DB Configuration
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/microservice
+spring.datasource.username=root
+spring.datasource.password=root
+#logging
+logging.level.com.itheima.springboot=debug
+#Redis
+spring.redis.host=192.168.2.100
+spring.redis.port=6379
+#ActiveMQ
+spring.activemq.broker-url=tcp://192.168.2.100:61616

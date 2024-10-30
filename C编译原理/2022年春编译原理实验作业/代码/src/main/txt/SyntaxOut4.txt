@@ -1,0 +1,20 @@
+specification(
+    definition(
+        module( 
+            ID:example4
+            definition(
+                struct( 
+                    ID:Vector
+                    member( 
+                        float
+                        array( 
+                            ID:data
+                            3
+                             ) 
+                        )
+                     ) 
+                )
+             ) 
+        )
+    )
+

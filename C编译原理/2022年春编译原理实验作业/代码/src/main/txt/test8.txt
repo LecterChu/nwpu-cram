@@ -1,0 +1,16 @@
+module example8 {
+
+    struct Engine {
+         int horsepower = 0;
+         int displacement = 0;
+         int cylinders = 4;
+    };
+
+    struct Car {
+        string make;
+        string model;
+        int year;
+        Engine engine;
+        float fuel_capacity = 60.0;
+    };
+};

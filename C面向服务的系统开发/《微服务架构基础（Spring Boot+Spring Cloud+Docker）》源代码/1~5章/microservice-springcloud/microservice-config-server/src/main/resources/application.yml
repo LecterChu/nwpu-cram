@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: microservice-config-server
+#  profiles:
+#    active: native   # 使用本地文件系统的存储方式来保存配置信息
+  cloud:
+    config:
+      server:
+        git: # 使用git的方式
+          uri: https://gitee.com/secret8/microservice-study-config.git  
+server:
+  port: 8888

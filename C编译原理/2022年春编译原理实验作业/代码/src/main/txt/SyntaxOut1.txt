@@ -1,0 +1,23 @@
+specification(
+    definition(
+        module( 
+            ID:example1
+            definition(
+                struct( 
+                    ID:Person
+                    member( 
+                        string
+                        ID:name
+                        )
+                    member( 
+                        namespace( 
+                            int
+                             ) 
+                        ID:age
+                        )
+                     ) 
+                )
+             ) 
+        )
+    )
+

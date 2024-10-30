@@ -1,0 +1,5 @@
+module example7 {
+    struct a{
+    int64 b = 3>>2<<1;
+};
+};

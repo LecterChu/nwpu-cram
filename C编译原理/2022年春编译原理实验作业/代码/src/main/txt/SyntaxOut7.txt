@@ -1,0 +1,26 @@
+specification(
+    definition(
+        module( 
+            ID:example7
+            definition(
+                struct( 
+                    ID:a
+                    member( 
+                        int64
+                        =( 
+                            ID:b
+                            >>( 
+                                3
+                                <<( 
+                                    2
+                                    1
+                                     ) 
+                                 ) 
+                             ) 
+                        )
+                     ) 
+                )
+             ) 
+        )
+    )
+

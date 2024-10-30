@@ -1,0 +1,29 @@
+specification(
+    definition(
+        module( 
+            ID:example5
+            definition(
+                struct( 
+                    ID:a
+                    member( 
+                        namespace( 
+                            std
+                            space1
+                            space2
+                             ) 
+                        ID:b
+                        )
+                    member( 
+                        namespace( 
+                            std
+                            space3
+                            space4
+                             ) 
+                        ID:c
+                        )
+                     ) 
+                )
+             ) 
+        )
+    )
+

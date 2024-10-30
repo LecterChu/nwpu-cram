@@ -1,0 +1,9 @@
+module space{
+	struct A{
+		short i1=10;
+	};
+	struct B{
+		long i2=100;
+		A i3;
+	};
+};

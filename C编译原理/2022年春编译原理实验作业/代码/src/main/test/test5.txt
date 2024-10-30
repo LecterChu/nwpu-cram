@@ -1,0 +1,11 @@
+module space1{
+	struct B{
+   		int a;
+	};
+};
+module space2{
+   	struct A{
+		short a;
+		B b;
+	};
+};

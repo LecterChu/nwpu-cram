@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户信息</title>
+<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
+<script type="text/javascript" src="ui/jquery.min.js"></script>
+<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
+	$(function(){		
+		$('#grid').datagrid({
+			url:'user/userList',
+			fit:true,
+			columns:[[
+			  {field:'id',title:'编号',width:50},    
+			  {field:'username',title:'姓名',width:200},    
+			  {field:'address',title:'地址',width:200}
+			]]		
+		});		
+	});
+</script>
+</head>
+<body>
+<table id="grid"></table>
+</body>
+</html>

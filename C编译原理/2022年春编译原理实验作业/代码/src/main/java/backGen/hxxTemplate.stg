@@ -1,0 +1,171 @@
+headerTemplate(fileName)
+::= <<
+/*
+WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
+
+This file was generated from <fileName>.idl using "idltoc".
+The idltoc tool is part of the RTI Data Distribution Service distribution.
+For more information, type 'idltoc -help' at a command shell
+or consult the RTI Data Distribution Service manual.
+*/
+
+#ifndef <fileName>_h
+#define <fileName>_h
+
+#ifndef rti_me_cpp_hxx
+#include "rti_me_cpp.hxx"
+#endif
+
+#ifdef NDDS_USER_DLL_EXPORT
+#if (defined(RTI_WIN32) || defined(RTI_WINCE))
+/* If the code is building on Windows, start exporting symbols. */
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __declspec(dllexport)
+#endif
+#else
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport
+#endif
+>>
+
+bodyTemplate(structs) ::= <<
+<structs:{item|<structTemplate(item)>};separator="\n">
+>>
+
+structTemplate(struct) ::= <<
+
+struct <struct.name>Seq;
+class <struct.name>TypeSupport;
+class <struct.name>DataWriter;
+class <struct.name>DataReader;
+
+class <struct.name>
+{
+public:
+    typedef struct <struct.name>Seq Seq;
+    typedef <struct.name>TypeSupport TypeSupport;
+    typedef <struct.name>DataWriter DataWriter;
+    typedef <struct.name>DataReader DataReader;
+
+    <struct.members:{item|CDR_<item.type> <item.name><if(item.isArray)>[<item.valNum>]<endif><if((!struct.hasScoped)&&(item.hasVal))> = <item.val><endif>;};separator="\n">
+    <if(struct.hasScoped)><struct.scopeMembers:{item|<item.type> <item.name>;};separator="\n"><endif>
+};
+
+extern const char *<struct.name>TYPENAME;
+
+REDA_DEFINE_SEQUENCE_STRUCT(<struct.name>Seq, <struct.name>);
+
+REDA_DEFINE_SEQUENCE_IN_C(<struct.name>Seq, <struct.name>);
+
+<if(struct.hasScoped)>
+
+NDDSUSERDllExport extern <struct.name>()
+{
+    <struct.members:{item|this-\><item.name><if(item.hasVal)> = <item.val><endif>;};separator="\n">
+    <struct.scopeMembers:{item|<scopedmemberTemplate(item)>};separator=";\n">
+}
+
+<endif>
+
+NDDSUSERDllExport extern RTI_BOOL
+<struct.name>_initialize(<struct.name> *sample)
+{
+    <struct.members:{item|
+    <if((!item.isArray)&&(!item.isString))>
+CDR_Primitive_init_<item.type>(&sample-\><item.name>);
+    <elseif((item.isString)&&(!item.isArray))>
+    if (!CDR_String_initialize(&sample-\><item.name>, (255)))
+    {
+        return RTI_FALSE;
+    \}
+    <elseif((item.isArray)&&(!item.isString))>
+CDR_Primitive_init_Array(
+            sample-\><item.name>, ((<item.valNum>) * CDR_<item.upperType>_SIZE));
+    <elseif((item.isArray)&&(item.isString))>
+CDR_Primitive_init_Array(
+                sample-\><item.name>, ((<item.valNum>) * CDR_<item.upperType>_SIZE));
+    {
+        for(RTI_UINT32 i = 0; i \< (<item.valNum>); i++)
+        {
+            if (!CDR_String_initialize(&sample-\><item.name>[i], (255)))
+            {
+                return RTI_FALSE;
+            \}
+        \}
+    \}
+    <endif>
+    };separator="\n">
+    <if(struct.hasScoped)>
+    <struct.scopeMembers:{item|
+    if (!<item.type>_initialize(&sample-\><item.name>))
+    {
+        return RTI_FALSE;
+    \}
+    };separator="\n">
+    <endif>
+    return RTI_TRUE;
+}
+
+NDDSUSERDllExport extern RTI_BOOL
+<struct.name>_finalize(<struct.name> *sample)
+{
+    UNUSED_ARG(sample);
+    <if(struct.hasScoped)>
+    <struct.scopeMembers:{item|
+<item.type>_finalize(&sample-\><item.name>);
+    };separator="\n">
+    <endif>
+
+    <struct.members:{item|
+    <if((item.isString)&&(!item.isArray))>
+    CDR_String_finalize(&sample-\><item.name>);
+    <elseif((item.isArray)&&(!item.isString))>
+    {
+            RTI_UINT32 i;
+
+            for (i = 0; i \< (<item.valNum>); i++)
+            {
+                if (!CDR_<item.type>_copy(&dst-\><item.name>[i],
+                                    &src-\><item.name>[i]))
+                {
+                    return RTI_FALSE;
+                \}
+            \}
+    \}
+    <elseif((item.isArray)&&(item.isString))>
+    {
+            RTI_UINT32 i;
+
+            for (i = 0; i \< (<item.valNum>); i++)
+            {
+                CDR_String_finalize(&sample-\><item.name>[i]);
+                if (!CDR_String_copy(&dst-\><item.name>[i], &src-\><item.name>[i]))
+                {
+                    return RTI_FALSE;
+                \}
+            \}
+    \}
+    <endif>
+    };separator="\n">
+    return RTI_TRUE;
+
+\}
+>>
+
+footerTemplate(fileName)
+::= <<
+#ifdef NDDS_USER_DLL_EXPORT
+#if (defined(RTI_WIN32) || defined(RTI_WINCE))
+/* If the code is building on Windows, stop exporting symbols. */
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport
+#endif
+#endif
+
+#endif /* <fileName> */
+>>
+
+scopedmemberTemplate(scopedmember)
+::= <<
+    <scopedmember.members:{item|this-\><scopedmember.name>.<item.name><if(item.hasVal)> = <item.val><endif>;};separator="\n">
+>>

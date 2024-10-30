@@ -1,0 +1,5 @@
+server:
+  port: 8031 # 指定该Eureka实例的端口号
+spring:
+  application:
+    name: microservice-hystrix-dashboard # 指定应用名称

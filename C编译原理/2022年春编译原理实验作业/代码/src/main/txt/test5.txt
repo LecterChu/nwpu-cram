@@ -1,0 +1,6 @@
+module example5 {
+struct a{
+std::space1::space2 b;
+std::space3::space4 c;
+};
+};
