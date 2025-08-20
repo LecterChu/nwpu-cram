@@ -1,0 +1,302 @@
+ /* 基本样式重置 */
+ * {
+ 	margin: 0;
+ 	padding: 0;
+ 	box-sizing: border-box;
+ }
+
+ /* 去除列表默认样式 */
+ ul,
+ ol {
+ 	list-style: none;
+ }
+
+ /* 去除默认的倾斜效果 */
+ em,
+ i {
+ 	font-style: normal;
+ }
+
+ /* 去除a标签默认下划线，并设置默认文字颜色 */
+ a {
+ 	text-decoration: none;
+ 	color: #333;
+ 	transition: color 0.3s ease;
+ }
+
+ a:hover {
+ 	color: #27ba9b;
+ }
+
+ /* 设置img的垂直对齐方式为居中对齐，去除img默认下间隙 */
+ img {
+ 	vertical-align: middle;
+ 	max-width: 100%;
+ 	height: auto;
+ }
+
+ /* 去除input默认样式 */
+ input {
+ 	border: none;
+ 	outline: none;
+ 	color: #333;
+ 	font-size: 16px;
+ 	padding: 10px;
+ 	transition: all 0.3s ease;
+ }
+
+ input:focus {
+ 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+ }
+
+ /* 左浮动和右浮动 */
+ .fl {
+ 	float: left;
+ }
+
+ .fr {
+ 	float: right;
+ }
+
+ /* 双伪元素清除法 */
+ .clearfix::before,
+ .clearfix::after {
+ 	content: "";
+ 	display: table;
+ }
+
+ .clearfix::after {
+ 	clear: both;
+ }
+
+ /* 版心的公共块 */
+ .container {
+ 	width: 1200px;
+ 	margin: 0 auto;
+ 	padding: 0 15px;
+ }
+
+ /* 快捷菜单模块xtx-shortcut */
+
+ .xtx-shortcut {
+ 	height: 52px;
+ 	background: #333333;
+ }
+
+ .xtx-shortcut .container {
+ 	height: 52px;
+ }
+
+ .xtx-shortcut ul li {
+ 	float: left;
+ 	line-height: 52px;
+ 	color: #dcdcdc;
+ }
+
+ .xtx-shortcut a {
+ 	margin: 0 16px;
+ 	color: #dcdcdc;
+ 	font-size: 14px;
+ }
+
+ .xtx-shortcut li:last-child a {
+ 	margin-right: 0;
+ }
+
+ .xtx-shortcut li:last-child a::before {
+ 	content: '';
+ 	display: inline-block;
+ 	width: 11px;
+ 	height: 16px;
+ 	margin-top: -3px;
+ 	margin-right: 8px;
+ 	vertical-align: middle;
+ }
+
+ /* 主导航模块xtx-main-nav - 改回白底黑字 */
+ .xtx-main {
+ 	height: 60px;
+ 	background: #ffffff;
+ 	/* 导航栏背景改为白色 */
+ 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ 	/* 添加阴影效果 */
+ }
+
+ .xtx-main-nav {
+ 	margin-left: 240px;
+ }
+
+ .xtx-main-nav li {
+ 	float: left;
+ 	height: 70px;
+ 	margin-right: 48px;
+ 	line-height: 70px;
+ }
+
+ .xtx-main-nav a {
+ 	font-size: 16px;
+ 	font-weight: 500;
+ 	color: #333333;
+ 	/* 文字颜色改为黑色 */
+ }
+
+ .xtx-main-nav a:hover {
+ 	color: #27ba9b;
+ 	border-bottom: 1px solid #27ba9b;
+ 	padding-bottom: 7px;
+ }
+
+
+ .container {
+ 	width: 100%;
+ 	max-width: 1200px;
+ 	margin: 0 auto;
+ 	padding: 0 15px;
+ }
+
+
+
+ .cart-container {
+ 	background-color: rgba(255, 255, 255, 0.9);
+ 	/* 添加透明度 */
+ 	padding: 20px;
+ 	margin-top: 20px;
+ 	border-radius: 5px;
+ 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+
+ .cart-title {
+ 	font-size: 24px;
+ 	margin-bottom: 20px;
+ 	color: #333;
+ 	text-align: center;
+ }
+
+ .cart-item {
+ 	display: flex;
+ 	align-items: center;
+ 	padding: 15px 0;
+ 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+ 	/* 添加透明度 */
+ }
+
+ .cart-item-img {
+ 	width: 100px;
+ 	height: 100px;
+ 	margin-right: 15px;
+ 	object-fit: cover;
+ 	border-radius: 5px;
+ }
+
+ .cart-item-info {
+ 	flex: 1;
+ }
+
+ .cart-item-name {
+ 	font-size: 16px;
+ 	margin-bottom: 5px;
+ 	color: #333;
+ }
+
+ .cart-item-price {
+ 	font-size: 14px;
+ 	color: #fc9135;
+ 	margin-bottom: 5px;
+ }
+
+ .cart-item-actions {
+ 	display: flex;
+ 	align-items: center;
+ }
+
+ .cart-item-quantity {
+ 	display: flex;
+ 	align-items: center;
+ 	margin-right: 15px;
+ }
+
+ .quantity-btn {
+ 	width: 30px;
+ 	height: 30px;
+ 	background-color: rgba(240, 240, 240, 0.9);
+ 	/* 添加透明度 */
+ 	border: none;
+ 	border-radius: 5px;
+ 	cursor: pointer;
+ 	font-size: 16px;
+ }
+
+ .quantity-input {
+ 	width: 40px;
+ 	height: 30px;
+ 	text-align: center;
+ 	margin: 0 5px;
+ 	border: 1px solid rgba(0, 0, 0, 0.2);
+ 	/* 添加透明度 */
+ 	border-radius: 3px;
+ }
+
+ .cart-item-remove {
+ 	color: #999;
+ 	cursor: pointer;
+ 	font-size: 14px;
+ }
+
+ .cart-total {
+ 	display: flex;
+ 	justify-content: flex-end;
+ 	padding: 20px 0;
+ 	border-top: 1px solid rgba(0, 0, 0, 0.1);
+ 	/* 添加透明度 */
+ }
+
+ .cart-total-label {
+ 	font-size: 16px;
+ 	font-weight: bold;
+ 	color: #333;
+ 	margin-right: 10px;
+ }
+
+ .cart-total-amount {
+ 	font-size: 16px;
+ 	font-weight: bold;
+ 	color: #fc9135;
+ }
+
+ .cart-buttons {
+ 	display: flex;
+ 	justify-content: flex-end;
+ }
+
+ .cart-button {
+ 	padding: 10px 20px;
+ 	margin-left: 10px;
+ 	border: none;
+ 	border-radius: 5px;
+ 	cursor: pointer;
+ 	font-size: 14px;
+ }
+
+ .continue-shopping {
+ 	background-color: rgba(240, 240, 240, 0.9);
+ 	/* 添加透明度 */
+ 	color: #333;
+ }
+
+ .checkout-button {
+ 	background-color: #fc9135;
+ 	color: white;
+ }
+ /* 尾部样式 */
+.footer {
+	background-color: #f5f5f5;
+	padding: 30px 0;
+	margin-top: 100px;
+}
+
+.footer p {
+	text-align: center;
+	color: #666;
+	font-size: 14px;
+}
+
