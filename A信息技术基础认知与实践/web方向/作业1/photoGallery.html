@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+    </style>
+	<script>
+	        let currentPhoto = 1;
+	        const totalPhotos = 5;
+	
+	        function nextPhoto() {
+	            if (currentPhoto < totalPhotos) {
+	                currentPhoto++;
+	                updatePhoto();
+	            }
+	        }
+	
+	        function prevPhoto() {
+	            if (currentPhoto > 1) {
+	                currentPhoto--;
+	                updatePhoto();
+	            }
+	        }
+	
+	        function updatePhoto() {
+	            const photoElement = document.getElementById('photo');
+	            photoElement.src = `img/${currentPhoto}.jpg`;
+	        }
+	    </script>
+</head>
+<body>
+    <div class="gallery-container">
+        <div class="logo">
+            <h1>相册</h1>
+        </div>
+        
+        <div class="gallery">
+                <div class="photo-container">
+                    <img src="img/1.jpg" alt="Photo 1" class="photo" id="photo">
+                </div>
+                <div class="pagination">
+                    <button id="prev-btn" class="btn" onclick="prevPhoto()">上一页</button>
+                    <button id="next-btn" class="btn" onclick="nextPhoto()">下一页</button>
+                </div>
+            </div>
+	<div class="backLink">
+	    <a href="index.html">点击这里返回</a>
+	</div>
+	<div class="copyright">
+	    copyright:西工大版权所有&copy;
+	</div>
+</body>
+</html>

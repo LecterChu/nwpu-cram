@@ -1,0 +1,180 @@
+{
+	margin: 0;
+	padding: 0;
+}
+body{
+	font-size: 16px;
+}
+/*这是主文档部分*/
+.logo{
+	width: 100%;
+	text-align: center;
+	margin: 20px 0;
+	border-bottom: 1px solid black;
+}
+.logo h1{
+	font-size: 35px;
+	letter-spacing: 2px;
+}
+.logo p{
+	font-size: 16px;
+}
+.logo h1:hover{
+	color: #ce8460;
+}
+.navigater{
+	width: 100%;
+	border-bottom: 1px solid black;	
+}
+.navigater ul{
+	display: flex;
+	justify-content: center;
+	padding: 20px 0;
+}
+.navigater ul li{
+	font-size: 20px;
+	list-style: none; /*清除点*/
+	margin: 0 30px;
+}
+.navigater ul li a{
+	color: #333;
+	text-decoration:none;
+}
+.navigater ul li a:hover{
+	cursor: pointer;
+	color: #ce8460;
+}
+.banner{
+	text-align: center;
+}
+
+.ABOUT{
+	width: 800px;
+	margin: 0 440px 0 440px;
+}
+
+.ABOUT h2:hover{
+	color: #ce8460;
+}
+
+.copyright {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #000;
+        color: white;
+        text-align: center;
+        padding: 5px 0;
+    }
+
+/*这是鹳雀楼和绝句部分*/
+
+.content {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+        color: #333;
+    }
+.backLink {
+        margin-top: 20px;
+        text-align: center;
+    }
+.backLink {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .backLink a {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+		margin-bottom: 50px
+    }
+
+    .backLink a:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+    }
+
+    .backLink a:active {
+        transform: translateY(0);
+    }
+/*这是相册部分*/
+.gallery {
+    text-align: center;
+}
+.gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+.photo-container {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.photo {
+            width: 800px;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 8px;
+			object-fit: contain;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+.photo:hover {
+            transform: scale(1.05);
+        }
+        
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/*这是三味书屋部分*/
+.bscontent{
+	font-family: Arial, sans-serif;
+	font-family: "SimSun", "宋体", serif;
+	            line-height: 1.8;
+	            max-width: 800px;
+	            margin: 0 auto;
+	            padding: 20px;
+	            background-color: #f9f5e9;
+	            color: #333;
+}
