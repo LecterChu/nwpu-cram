@@ -1,0 +1,112 @@
+#main {
+	background-color: rgba(255, 255, 255, 0.9);
+	width: 800px;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+	color: #333;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	margin-bottom: 30px;
+	font-size: 36px;
+	font-weight: bold;
+	text-align: center;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td {
+	padding: 15px;
+}
+
+label {
+	font-weight: bold;
+	color: #444;
+}
+
+.textinpput {
+	width: 100%;
+	height: 40px;
+	padding: 8px 15px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+	font-size: 16px;
+}
+
+.textinpput:focus {
+	outline: none;
+	border-color: #4a90e2;
+	box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+select {
+	width: 100%;
+	height: 40px;
+	padding: 8px 15px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+	box-sizing: border-box;
+	background-color: white;
+}
+
+select:focus {
+	outline: none;
+	border-color: #4a90e2;
+}
+
+textarea {
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 15px;
+	font-size: 16px;
+	margin-top: 10px;
+	background-color: white;
+}
+
+textarea:focus {
+	outline: none;
+	border-color: #4a90e2;
+	box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+input[type="radio"],
+input[type="checkbox"] {
+	margin-right: 10px;
+}
+
+tr:last-child td {
+	text-align: center;
+	padding-top: 30px;
+}
+
+.btn {
+	padding: 12px 30px;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+	background-color: #4a90e2;
+	color: white;
+	cursor: pointer;
+	font-weight: bold;
+	margin: 0 10px;
+	transition: background-color 0.3s;
+}
+
+.btn:hover {
+	background-color: #3a7bc8;
+}
+
+.reset-btn {
+	background-color: #aaa;
+}
+
+.reset-btn:hover {
+	background-color: #999;
+}

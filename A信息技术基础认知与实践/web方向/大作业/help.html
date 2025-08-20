@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>帮助中心</title>
+    <!-- 引入 FontAwesome 图标库 -->
+	<link rel="stylesheet" href="css/help.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <style>
+        
+        body {
+            background-color: #f5f5f5;
+            background-image: url('img/slider/slider_bg01.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- 头部模块 -->
+    <header>
+        <!-- 快捷菜单模块 -->
+        <div class="xtx-shortcut">
+            <div class="container">
+                <ul class="fr">
+                    <li><a href="register.html">免费注册</a>|</li>
+                    <li><a href="index.html">首页</a>|</li>
+                    <li><a href="order_detail.html">我的订单</a>|</li>
+                    <li><a href="member_center.html">会员中心</a>|</li>
+                    <li><a href="help.html">帮助中心</a>|</li>
+                    <li><a href="service.html">在线客服</a>|</li>
+                    <li><a href="log.html">登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体内容 -->
+    <div class="container">
+        <div class="help-center">
+            <div class="help-header">
+                <h1 class="help-title">帮助中心</h1>
+                <p class="help-intro">在这里您可以找到常见问题的答案，或提交您的咨询请求。我们的客服团队将竭诚为您服务。</p>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="搜索您需要的帮助...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="help-content">
+                <div class="help-sidebar">
+                    <h3 class="sidebar-title">帮助目录</h3>
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active"><i class="fas fa-shopping-cart"></i> 购物指南</a></li>
+                        <li><a href="#"><i class="fas fa-truck"></i> 配送方式</a></li>
+                        <li><a href="#"><i class="fas fa-undo"></i> 退换货政策</a></li>
+                        <li><a href="#"><i class="fas fa-money-bill-wave"></i> 支付方式</a></li>
+                        <li><a href="#"><i class="fas fa-gift"></i> 会员福利</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> 客服中心</a></li>
+                    </ul>
+                </div>
+                
+                <div class="help-main">
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <span>如何注册成为会员？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>您可以通过点击网站右上角的"免费注册"按钮进行注册。填写必要的个人信息后，点击"提交注册"按钮即可完成注册。注册成功后，您将收到一封验证邮件，请点击邮件中的链接激活您的账户。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>如何查询订单状态？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>您可以在"我的订单"页面查看所有订单的状态。登录后，点击顶部导航栏中的"我的订单"，在订单列表中找到您需要查询的订单，点击订单号即可查看详细状态信息。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>如何申请退换货？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>如果您需要申请退换货，请在"我的订单"页面找到相应的订单，点击"申请退换货"按钮。填写退换货原因和相关信息后提交申请。我们的客服团队会在24小时内审核您的申请，并与您联系确认后续步骤。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>如何修改收货地址？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>您可以在"会员中心"修改收货地址。登录后，点击顶部导航栏中的"会员中心"，然后在左侧菜单中选择"收货地址"。在这里您可以添加、编辑或删除收货地址。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>支付方式有哪些？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>我们支持多种支付方式，包括但不限于：微信支付、支付宝、银联卡支付、信用卡支付等。在结算页面，您可以根据自己的需求选择合适的支付方式。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="help-form">
+                <h3 class="sidebar-title">联系客服</h3>
+                <form id="help-form">
+                    <div class="form-group">
+                        <label for="help-topic">咨询主题</label>
+                        <select id="help-topic" name="help-topic">
+                            <option value="order">订单问题</option>
+                            <option value="product">商品咨询</option>
+                            <option value="delivery">配送问题</option>
+                            <option value="payment">支付问题</option>
+                            <option value="return">退换货问题</option>
+                            <option value="other">其他问题</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="help-message">咨询内容</label>
+                        <textarea id="help-message" name="help-message" placeholder="请详细描述您的问题或需求..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">提交咨询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // FAQ 折叠功能
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+        
+        // 表单提交
+        document.getElementById('help-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('您的咨询已提交，我们的客服团队将尽快与您联系！');
+            this.reset();
+        });
+        
+        // 搜索框功能
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-input').value.trim();
+            if (searchTerm) {
+                alert(`您正在搜索: ${searchTerm}\n搜索功能正在开发中，敬请期待！`);
+            } else {
+                alert('请输入搜索内容');
+            }
+        });
+    </script>
+</body>
+</html>

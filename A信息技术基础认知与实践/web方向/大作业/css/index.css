@@ -1,0 +1,286 @@
+/* 基本样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 去除列表默认样式 */
+ul, ol {
+    list-style: none;
+}
+
+/* 去除默认的倾斜效果 */
+em, i {
+    font-style: normal;
+}
+
+/* 去除a标签默认下划线，并设置默认文字颜色 */
+a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #27ba9b;
+}
+
+/* 设置img的垂直对齐方式为居中对齐，去除img默认下间隙 */
+img {
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+}
+
+/* 去除input默认样式 */
+input {
+    border: none;
+    outline: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 左浮动和右浮动 */
+.fl { float: left; }
+.fr { float: right; }
+
+/* 双伪元素清除法 */
+.clearfix::before, .clearfix::after {
+    content: "";
+    display: table;
+}
+.clearfix::after { clear: both; }
+
+/* 版心的公共块 */
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* 快捷菜单模块xtx-shortcut */
+
+.xtx-shortcut {
+    height: 52px;
+    background: #333333;
+}
+
+.xtx-shortcut .container {
+    height: 52px;
+}
+
+.xtx-shortcut ul li {
+    float: left;
+    line-height: 52px;
+    color: #dcdcdc;
+}
+
+.xtx-shortcut a {
+    margin: 0 16px;
+    color: #dcdcdc;
+    font-size: 14px;
+}
+
+.xtx-shortcut li:last-child a {
+    margin-right: 0;
+}
+
+.xtx-shortcut li:last-child a::before {
+    content: '';
+    display: inline-block;
+    width: 11px;
+    height: 16px;
+    margin-top: -3px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+/* 主导航模块xtx-main-nav - 改回白底黑字 */
+.xtx-main {
+    height: 60px;
+    background: #ffffff; /* 导航栏背景改为白色 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 添加阴影效果 */
+}
+.xtx-main-nav {
+    margin-left: 240px;
+}
+.xtx-main-nav li { float: left; height: 70px; margin-right: 48px; line-height: 70px; }
+.xtx-main-nav a {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333333; /* 文字颜色改为黑色 */
+}
+.xtx-main-nav a:hover {
+    color: #27ba9b;
+    border-bottom: 1px solid #27ba9b;
+    padding-bottom: 7px;
+}
+
+/* 中部样式 */
+.central {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+/* 图1样式 - 添加背景图片 */
+.central-img {
+    background-image: url('../img/bg/shop_discount_bg.jpg'); /* 添加横幅的背景图片 */
+    background-size: cover;
+    background-position: center;
+    height: 275px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+}
+.central-p { padding: 45px 100px 40px; }
+.central-p span { font-size: 24px; color: #757474; margin-bottom: 4px; display: block; }
+.central-p .title { font-size: 26px; color: #222222; line-height: 1.16; margin-bottom: 10px; }
+.central-p p { font-size: 16px; line-height: 1.3; margin-bottom: 25px; font-family: var(--font-family-heading); color: #282828; }
+.central-p .btn { background: #fff; color: #fc9135; font-size: 14px; font-weight: 700; padding: 12px 24px; box-shadow: 0 3px 27px 0 rgba(52, 52, 52, 0.06); transition: all 0.5s ease 0s; border-radius: 50px; cursor: pointer; }
+
+/* 过滤器样式 */
+.guo {
+    margin-bottom: 30px;
+    clear: both; /* 清除前面的浮动影响 */
+}
+.guo-left { float: left; }
+.fa-bars:before { font-style: normal; margin-right: 10px; }
+.guo ul { display: flex; }
+.guo ul li a { display: inline-flex; align-items: center; font-size: 14px; font-weight: 600; text-transform: uppercase; color: #222222; line-height: 1; padding: 5px 0; }
+.guo ul li+li::before { content: ""; position: absolute; left: -2px; top: 50%; transform: translateY(-50%); width: 1px; height: 16px; background: #dbdbdb; }
+.guo ul li+li { margin-left: 30px; color: #282828; padding-left: 20px; position: relative; }
+.guo-right { float: right; }
+.guo-right select { border: none; outline: none; color: #282828; font-size: 18px; padding: 5px; }
+
+/* 图2样式 - 均匀分布商品列表 */
+.shop-central {
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* 左对齐商品项 */
+}
+.shop-central-item {
+    width: calc(25% - 15px); /* 计算每个商品项的宽度，留出间距 */
+    margin-right: 15px; /* 右间距 */
+    margin-bottom: 30px; /* 底部间距 */
+    border: 1px solid #ddd;
+    padding: 12px;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.shop-central-item:nth-child(4n) {
+    margin-right: 0; /* 第四个商品项不添加右边距 */
+}
+.shop-central-item:hover { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); transform: translateY(-5px); }
+.shop-central-img { padding: 32px 15px 0; position: relative; }
+.shop-central-p { padding: 25px 40px 25px; }
+.shop-central-p .title { text-align: center; }
+.shop-central-img .orange { background: #fc9135; }
+.batch { position: absolute; top: 25px; right: 15px; border-radius: 4px; text-transform: uppercase; font-size: 12px; font-weight: 700; background: #4eb92d; color: #fff; padding: 6px 6px; min-width: 45px; text-align: center; z-index: 1; line-height: 1; }
+.rating { color: #fc9135; font-size: 10px; letter-spacing: -.5px; margin-bottom: 4px; text-align: center; }
+.shop-central-p .title { font-size: 16px; font-weight: 700; color: #515457; line-height: 1.4; margin-bottom: 7px; }
+.shop-central-p .product-status { display: block; text-transform: uppercase; font-size: 13px; font-weight: 900; color: #4eb92d; padding: 5px 0; text-align: center; } /* 有货文字居中 */
+.shop-central-p p { text-align: center; margin-bottom: 0; font-size: 14px; color: #515457; font-weight: 700; text-transform: uppercase; line-height: 1; }
+
+/* 分页导航样式 - 居中显示 */
+.pagination-wrap {
+    height: 45px;
+    float: left;
+    width: 1080px;
+}
+
+.pagination-wrap ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: transparent;
+    padding: 0;
+}
+
+.pagination-wrap ul li.prev {
+    margin-right: 20px;
+}
+
+.pagination-wrap ul li {
+    margin: 10px 5px 0;
+}
+
+.pagination-wrap ul li a {
+    display: block;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: transparent;
+    border-radius: 50%;
+    color: #222222;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    cursor: pointer; /* 添加指针动效 */
+    transition: background-color 0.3s, color 0.3s; /* 添加过渡效果 */
+}
+
+.pagination-wrap ul li a:hover {
+    background-color: #f0f0f0; /* 悬停时的背景颜色 */
+    color: #4eb92d; /* 悬停时的文字颜色 */
+}
+
+.pagination-wrap ul li.active a {
+    background: #4eb92d;
+    color: #fff;
+}
+/* 尾部样式 */
+.footer {
+    width: 100%;
+    background-color: #eaeaea;
+    height: 100px;
+}
+.foot {
+    padding: 40px 0;
+    text-align: center;
+    color: #515457;
+    font-size: 14px;
+}
+.foot p {
+    margin-bottom: 10px;
+}
+ .shopping-cart-btn {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-color: #fc9135;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        
+        .shopping-cart-btn:hover {
+            background-color: #ff5500;
+        }
+        
+        .fa-shopping-cart {
+            font-size: 48px;
+        }

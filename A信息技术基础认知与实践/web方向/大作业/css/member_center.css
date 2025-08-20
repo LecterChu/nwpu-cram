@@ -1,0 +1,337 @@
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+/* 基本样式重置 */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* 去除列表默认样式 */
+ul,
+ol {
+	list-style: none;
+}
+
+/* 去除默认的倾斜效果 */
+em,
+i {
+	font-style: normal;
+}
+
+/* 去除a标签默认下划线，并设置默认文字颜色 */
+a {
+	text-decoration: none;
+	color: #333;
+	transition: color 0.3s ease;
+}
+
+a:hover {
+	color: #27ba9b;
+}
+
+/* 设置img的垂直对齐方式为居中对齐，去除img默认下间隙 */
+img {
+	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
+}
+
+/* 去除input默认样式 */
+input {
+	border: none;
+	outline: none;
+	color: #333;
+	font-size: 16px;
+	padding: 10px;
+	transition: all 0.3s ease;
+}
+
+input:focus {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 左浮动和右浮动 */
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+/* 双伪元素清除法 */
+.clearfix::before,
+.clearfix::after {
+	content: "";
+	display: table;
+}
+
+.clearfix::after {
+	clear: both;
+}
+
+/* 版心的公共块 */
+.container {
+	width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+/* 快捷菜单模块xtx-shortcut */
+
+.xtx-shortcut {
+	height: 52px;
+	background: #333333;
+}
+
+.xtx-shortcut .container {
+	height: 52px;
+}
+
+.xtx-shortcut ul li {
+	float: left;
+	line-height: 52px;
+	color: #dcdcdc;
+}
+
+.xtx-shortcut a {
+	margin: 0 16px;
+	color: #dcdcdc;
+	font-size: 14px;
+}
+
+.xtx-shortcut li:last-child a {
+	margin-right: 0;
+}
+
+.xtx-shortcut li:last-child a::before {
+	content: '';
+	display: inline-block;
+	width: 11px;
+	height: 16px;
+	margin-top: -3px;
+	margin-right: 8px;
+	vertical-align: middle;
+}
+
+/* 主导航模块xtx-main-nav - 改回白底黑字 */
+.xtx-main {
+	height: 60px;
+	background: #ffffff;
+	/* 导航栏背景改为白色 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	/* 添加阴影效果 */
+}
+
+.xtx-main-nav {
+	margin-left: 240px;
+}
+
+.xtx-main-nav li {
+	float: left;
+	height: 70px;
+	margin-right: 48px;
+	line-height: 70px;
+}
+
+.xtx-main-nav a {
+	font-size: 16px;
+	font-weight: 500;
+	color: #333333;
+	/* 文字颜色改为黑色 */
+}
+
+.xtx-main-nav a:hover {
+	color: #27ba9b;
+	border-bottom: 1px solid #27ba9b;
+	padding-bottom: 7px;
+}
+
+/* 会员中心样式 */
+.member-center {
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 30px;
+	margin-top: 30px;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.member-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.member-avatar {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	margin-right: 20px;
+	object-fit: cover;
+	border: 3px solid #fc9135;
+}
+
+.member-info {
+	flex: 1;
+}
+
+.member-name {
+	font-size: 24px;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.member-level {
+	font-size: 16px;
+	color: #fc9135;
+	margin-bottom: 10px;
+}
+
+.member-points {
+	font-size: 14px;
+	color: #666;
+}
+
+.member-stats {
+	display: flex;
+	margin-bottom: 30px;
+}
+
+.stat-box {
+	flex: 1;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	text-align: center;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+	margin: 0 10px;
+}
+
+.stat-box:first-child {
+	margin-left: 0;
+}
+
+.stat-box:last-child {
+	margin-right: 0;
+}
+
+.stat-value {
+	font-size: 28px;
+	font-weight: bold;
+	color: #fc9135;
+	margin-bottom: 5px;
+}
+
+.stat-label {
+	font-size: 14px;
+	color: #666;
+}
+
+.member-menu {
+	display: flex;
+	margin-bottom: 30px;
+}
+
+.menu-column {
+	flex: 1;
+	text-align: center;
+}
+
+.menu-icon {
+	width: 60px;
+	height: 60px;
+	margin: 0 auto 15px;
+	background-color: #fc9135;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 24px;
+}
+
+.menu-title {
+	font-size: 14px;
+	color: #333;
+}
+
+.member-content {
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.content-title {
+	font-size: 20px;
+	margin-bottom: 20px;
+	color: #333;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 10px;
+}
+
+.order-history {
+	margin-bottom: 30px;
+}
+
+.order-item {
+	display: flex;
+	padding: 15px 0;
+	border-bottom: 1px solid #eee;
+}
+
+.order-info {
+	flex: 1;
+}
+
+.order-id {
+	font-size: 14px;
+	color: #666;
+	margin-bottom: 5px;
+}
+
+.order-date {
+	font-size: 14px;
+	color: #999;
+}
+
+.order-status {
+	padding: 5px 10px;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	font-size: 12px;
+	color: #666;
+}
+
+.status-paid {
+	background-color: #e8f5e9;
+	color: #4caf50;
+}
+
+.status-shipped {
+	background-color: #e3f2fd;
+	color: #2196f3;
+}
+
+.status-delivered {
+	background-color: #fff8e1;
+	color: #ff9800;
+}
+
+/* 装饰元素 */
+.decoration {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: -1;
+	opacity: 0.1;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九宫格相册</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+        .logo {
+                    text-align: center;
+                    margin: 20px 0;
+                    width: 100%;
+                    max-width: 900px; /* 与九宫格宽度一致 */
+                    border-bottom: 1px solid #333;
+        			padding-top: 35px;
+                    padding-bottom: 15px;
+                }
+                
+                .logo h1 {
+                    font-size: 35px;
+                    letter-spacing: 2px;
+                    color: #333;
+                    margin: 0;
+                }
+                
+                .logo h1:hover {
+                    color: #088bc8;
+                    transition: color 0.3s ease;
+                }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 15px;
+            width: 900px;
+            height: 900px;
+            background-color: white;
+            padding: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .photo-item {
+            display: block;
+            text-decoration: none;
+            overflow: hidden;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保持宽高比，超出部分不显示 */
+            display: block; /* 去除默认图片下方的间隙 */
+            transition: transform 0.3s ease; /* 添加图片悬停效果 */
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.05); /* 图片悬停时轻微放大 */
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <h1>我的相册</h1>
+    </div>
+    
+    <div class="photo-grid">
+        <!-- 第一行 -->
+        <a href="img/1.jpg" target="_blank" class="photo-item">
+            <img src="img/1.jpg" alt="图片1">
+        </a>
+        <a href="img/2.jpg" target="_blank" class="photo-item">
+            <img src="img/2.jpg" alt="图片2">
+        </a>
+        <a href="img/3.jpg" target="_blank" class="photo-item">
+            <img src="img/3.jpg" alt="图片3">
+        </a>
+        
+        <!-- 第二行 -->
+        <a href="img/4.jpg" target="_blank" class="photo-item">
+            <img src="img/4.jpg" alt="图片4">
+        </a>
+        <a href="img/5.jpg" target="_blank" class="photo-item">
+            <img src="img/5.jpg" alt="图片5">
+        </a>
+        <a href="img/6.jpg" target="_blank" class="photo-item">
+            <img src="img/6.jpg" alt="图片6">
+        </a>
+        
+        <!-- 第三行 -->
+        <a href="img/7.jpg" target="_blank" class="photo-item">
+            <img src="img/7.jpg" alt="图片7">
+        </a>
+        <a href="img/8.jpg" target="_blank" class="photo-item">
+            <img src="img/8.jpg" alt="图片8">
+        </a>
+        <a href="img/9.jpg" target="_blank" class="photo-item">
+            <img src="img/9.jpg" alt="图片9">
+        </a>
+    </div>
+	<div class="copyright">
+	    copyright:西工大版权所有&copy;
+		<a href="mailto:2691829552@qq.com">联系我们</a>
+	</div>
+</body>
+</html>

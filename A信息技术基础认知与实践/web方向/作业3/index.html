@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户注册</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+<style>
+	body {
+		font-family: 'Arial', sans-serif;
+		background-image: url(img/background.jpg);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+	}
+	</style>
+	<body>
+		<div id="main">
+			<h1>用户注册</h1>
+			<form action="javascript:alert('提交成功');" name="regfrm" method="post">
+				<table>
+					<tr>
+						<td><label for="uname">账号:</label></td>
+						<td><input type="text" name="uname" id="uname" class="textinpput" placeholder="请输入账号"
+								required /></td>
+					</tr>
+					<tr>
+						<td><label for="passwd">密码:</label></td>
+						<td><input type="password" name="passwd" id="passwd" class="textinpput" placeholder="请输入密码"
+								required /></td>
+					</tr>
+					<tr>
+						<td><label>性别:</label></td>
+						<td>
+							<input type="radio" name="gender" id="gender0" value="男" checked="checked" />男
+							<input type="radio" name="gender" id="gender1" value="女" />女
+						</td>
+					</tr>
+					<tr>
+						<td><label for="address">地址:</label></td>
+						<td><input type="text" name="address" id="address" class="textinpput" placeholder="请输入地址" />
+						</td>
+					</tr>
+					<tr>
+						<td><label for="birthday">生日:</label></td>
+						<td><input type="date" name="birthday" id="birthday" value="2001-01-01" class="textinpput" />
+						</td>
+					</tr>
+					<tr>
+						<td><label for="edu">学历:</label></td>
+						<td>
+							<select name="edu" id="edu">
+								<option value="高中" selected="selected">高中</option>
+								<option value="大专">大专</option>
+								<option value="本科">本科</option>
+								<option value="研究生">研究生</option>
+								<option value="博士">博士</option>
+								<option value="博士后">博士后</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td><label>爱好:</label></td>
+						<td>
+							<input type="checkbox" name="hoby" id="hoby1" value="足球" />足球
+							<input type="checkbox" name="hoby" id="hoby2" value="篮球" />篮球
+							<input type="checkbox" name="hoby" id="hoby3" value="网球" />网球
+							<input type="checkbox" name="hoby" id="hoby4" value="排球" />排球
+							<input type="checkbox" name="hoby" id="hoby5" value="台球" />台球
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><textarea name="note" id="note" cols="60" rows="5" class="textinpput"
+								placeholder="请在此处添加备注信息"></textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<button type="submit" class="btn">提交</button>
+							<button type="reset" class="btn reset-btn">重置</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>跑马灯效果</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            overflow: hidden;
+            flex-direction: column; /* 垂直排列 */
+        }
+        .marquee-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .marquee {
+			display: inline-block;
+            white-space: nowrap;
+            animation: marquee 5s linear infinite;
+            font-family: SimSun, "宋体";
+            font-size: 24px;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(-300%); }
+            100% { transform: translateX(100%); }
+        }
+        .marquee img {
+            vertical-align: middle;
+            margin: 0 10px;
+            width: 50%;
+            height: auto;
+            max-height: 50vh;
+        }
+        .marquee p {
+            display: inline-block;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo">
+        <h1>滚动效果</h1>
+    </div>
+    <div class="marquee-container">
+        <div class="marquee">
+            <p>你好，西工大软件学院！</p>
+            <img src="img/1.jpg" title="勇攀天途" alt="勇攀天途">
+            <img src="img/2.jpg" title="瑞典风情" alt="瑞典风情">
+            <img src="img/3.jpg" title="曲径通幽" alt="曲径通幽">
+            <img src="img/4.jpg" title="戴莉奥本" alt="戴莉奥本">
+        </div>
+    </div>
+	<div class="copyright">
+	    copyright:西工大版权所有&copy;
+		<a href="mailto:2691829552@qq.com">联系我们</a>
+	</div>
+</body>
+</html>

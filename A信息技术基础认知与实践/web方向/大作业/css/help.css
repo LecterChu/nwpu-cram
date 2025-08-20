@@ -1,0 +1,352 @@
+/* 基本样式重置 */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* 去除列表默认样式 */
+ul,
+ol {
+	list-style: none;
+}
+
+/* 去除默认的倾斜效果 */
+em,
+i {
+	font-style: normal;
+}
+
+/* 去除a标签默认下划线，并设置默认文字颜色 */
+a {
+	text-decoration: none;
+	color: #333;
+	transition: color 0.3s ease;
+}
+
+a:hover {
+	color: #27ba9b;
+}
+
+/* 设置img的垂直对齐方式为居中对齐，去除img默认下间隙 */
+img {
+	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
+}
+
+/* 去除input默认样式 */
+input {
+	border: none;
+	outline: none;
+	color: #333;
+	font-size: 16px;
+	padding: 10px;
+	transition: all 0.3s ease;
+}
+
+input:focus {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 左浮动和右浮动 */
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+/* 双伪元素清除法 */
+.clearfix::before,
+.clearfix::after {
+	content: "";
+	display: table;
+}
+
+.clearfix::after {
+	clear: both;
+}
+
+/* 版心的公共块 */
+.container {
+	width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+/* 快捷菜单模块xtx-shortcut */
+
+.xtx-shortcut {
+	height: 52px;
+	background: #333333;
+}
+
+.xtx-shortcut .container {
+	height: 52px;
+}
+
+.xtx-shortcut ul li {
+	float: left;
+	line-height: 52px;
+	color: #dcdcdc;
+}
+
+.xtx-shortcut a {
+	margin: 0 16px;
+	color: #dcdcdc;
+	font-size: 14px;
+}
+
+.xtx-shortcut li:last-child a {
+	margin-right: 0;
+}
+
+.xtx-shortcut li:last-child a::before {
+	content: '';
+	display: inline-block;
+	width: 11px;
+	height: 16px;
+	margin-top: -3px;
+	margin-right: 8px;
+	vertical-align: middle;
+}
+
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+/* 快捷菜单模块 */
+.xtx-shortcut {
+	height: 52px;
+	background: #333333;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.xtx-shortcut .container {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.xtx-shortcut ul {
+	display: flex;
+	height: 100%;
+	list-style: none;
+}
+
+.xtx-shortcut li {
+	height: 100%;
+	line-height: 52px;
+	color: #dcdcdc;
+	font-size: 14px;
+}
+
+.xtx-shortcut a {
+	color: #dcdcdc;
+	font-size: 14px;
+	transition: color 0.3s ease;
+}
+
+.xtx-shortcut a:hover {
+	color: #ffffff;
+}
+
+/* 帮助中心样式 */
+.help-center {
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 30px;
+	margin-top: 30px;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.help-header {
+	margin-bottom: 30px;
+}
+
+.help-title {
+	font-size: 28px;
+	margin-bottom: 10px;
+	color: #333;
+	text-align: center;
+}
+
+.help-intro {
+	font-size: 16px;
+	color: #666;
+	text-align: center;
+	line-height: 1.6;
+}
+
+.search-box {
+	display: flex;
+	margin-bottom: 30px;
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.search-input {
+	flex: 1;
+	padding: 12px 15px;
+	border: 1px solid #ddd;
+	border-radius: 4px 0 0 4px;
+	font-size: 14px;
+}
+
+.search-btn {
+	background-color: #fc9135;
+	color: white;
+	border: none;
+	padding: 0 20px;
+	border-radius: 0 4px 4px 0;
+	cursor: pointer;
+}
+
+.help-content {
+	display: flex;
+	gap: 30px;
+}
+
+.help-sidebar {
+	flex: 0 0 250px;
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-title {
+	font-size: 18px;
+	margin-bottom: 15px;
+	color: #333;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.sidebar-menu {
+	list-style: none;
+}
+
+.sidebar-menu li {
+	margin-bottom: 10px;
+}
+
+.sidebar-menu a {
+	display: block;
+	padding: 8px 10px;
+	border-radius: 4px;
+	color: #333;
+	text-decoration: none;
+	transition: background-color 0.3s;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+	background-color: #f0f0f0;
+	color: #fc9135;
+}
+
+.sidebar-menu i {
+	margin-right: 8px;
+	color: #fc9135;
+}
+
+.help-main {
+	flex: 1;
+}
+
+.faq-item {
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.faq-question {
+	font-size: 18px;
+	color: #333;
+	margin-bottom: 10px;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.faq-question i {
+	color: #fc9135;
+	transition: transform 0.3s;
+}
+
+.faq-answer {
+	font-size: 14px;
+	color: #666;
+	line-height: 1.6;
+	display: none;
+	padding-top: 15px;
+	border-top: 1px solid #eee;
+}
+
+.faq-item.active .faq-answer {
+	display: block;
+}
+
+.faq-item.active .faq-question i {
+	transform: rotate(180deg);
+}
+
+.help-form {
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 20px;
+	margin-top: 30px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 600;
+	color: #333;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.form-group textarea {
+	height: 120px;
+	resize: vertical;
+}
+
+.form-group button {
+	background-color: #fc9135;
+	color: white;
+	border: none;
+	padding: 12px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+	background-color: #e55400;
+}
