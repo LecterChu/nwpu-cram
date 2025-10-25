@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>购物车</title>
+	<link rel="stylesheet" href="css/cart.css">
+    <style>
+      body {
+          background-color: #f5f5f5;
+          /* 添加背景图片 */
+          background-image: url('img/slider/slider_bg01.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+      }  
+    </style>
+</head>
+<body>
+    <header>
+        <!-- 快捷菜单模块 -->
+        <div class="xtx-shortcut">
+            <div class="container">
+                <ul class="fr">
+                    <li><a href="register.html">免费注册</a>|</li>
+                    <li><a href="index.html">首页</a>|</li>
+                    <li><a href="order_detail.html">我的订单</a>|</li>
+                    <li><a href="member_center.html">会员中心</a>|</li>
+                    <li><a href="help.html">帮助中心</a>|</li>
+                    <li><a href="service.html">在线客服</a>|</li>
+                    <li><a href="log.html">登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="cart-container">
+            <h1 class="cart-title">购物车</h1>
+            
+            <div id="cart-items">
+                <!-- 商品1 -->
+                <div class="cart-item">
+                    <img src="img/product/bdw_products01.png" alt="黄桃果汁" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">黄桃果汁</div>
+                        <div class="cart-item-price">¥15.90</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                            <input type="text" value="1" class="quantity-input" readonly>
+                            <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="cart-item-remove" onclick="removeItem(this)">删除</div>
+                    </div>
+                </div>
+                
+                <!-- 商品2 -->
+                <div class="cart-item">
+                    <img src="img/product/bdw_products03.png" alt="恰巴塔面包" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">恰巴塔面包</div>
+                        <div class="cart-item-price">¥12.50</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                            <input type="text" value="1" class="quantity-input" readonly>
+                            <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="cart-item-remove" onclick="removeItem(this)">删除</div>
+                    </div>
+                </div>
+                
+                <!-- 商品3 -->
+                <div class="cart-item">
+                    <img src="img/product/bdw_products02.png" alt="酸菜" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">酸菜</div>
+                        <div class="cart-item-price">¥8.90</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                            <input type="text" value="1" class="quantity-input" readonly>
+                            <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="cart-item-remove" onclick="removeItem(this)">删除</div>
+                    </div>
+                </div>
+                
+                <!-- 商品4 -->
+                <div class="cart-item">
+                    <img src="img/product/bdw_products04.png" alt="格兰诺拉麦片" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">格兰诺拉麦片</div>
+                        <div class="cart-item-price">¥25.80</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                            <input type="text" value="1" class="quantity-input" readonly>
+                            <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="cart-item-remove" onclick="removeItem(this)">删除</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cart-total">
+                <div class="cart-total-label">总计:</div>
+                <div class="cart-total-amount" id="cart-total">¥63.10</div>
+            </div>
+            
+            <div class="cart-buttons">
+                <button class="cart-button continue-shopping">继续购物</button>
+                <button class="cart-button checkout-button">结算</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 更新商品数量和总价
+        function updateQuantity(button, change) {
+            // 找到对应的输入框
+            const input = button.parentElement.querySelector('.quantity-input');
+            let quantity = parseInt(input.value);
+            quantity += change;
+            
+            if (quantity < 1) {
+                quantity = 1;
+            }
+            
+            input.value = quantity;
+            
+            // 计算并更新总价
+            updateTotal();
+        }
+        
+        // 删除商品
+        function removeItem(button) {
+            // 找到对应的商品项并删除
+            const item = button.closest('.cart-item');
+            item.remove();
+            
+            // 计算并更新总价
+            updateTotal();
+        }
+        
+        // 计算总价
+        function updateTotal() {
+            const prices = {
+                '黄桃果汁': 15.90,
+                '恰巴塔面包': 12.50,
+                '酸菜': 8.90,
+                '格兰诺拉麦片': 25.80
+            };
+            
+            let total = 0;
+            
+            document.querySelectorAll('.cart-item').forEach(item => {
+                const name = item.querySelector('.cart-item-name').textContent;
+                const input = item.querySelector('.quantity-input');
+                const quantity = parseInt(input.value);
+                
+                if (quantity > 0) {
+                    total += prices[name] * quantity;
+                }
+            });
+            
+            document.getElementById('cart-total').textContent = `¥${total.toFixed(2)}`;
+        }
+        
+        // 继续购物按钮点击事件
+        document.querySelector('.continue-shopping').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+        
+        // 结算按钮点击事件
+        document.querySelector('.checkout-button').addEventListener('click', function() {
+            alert('即将跳转到结算页面');
+            window.location.href = 'order.html'
+        });
+    </script>
+</body>
+</html>
