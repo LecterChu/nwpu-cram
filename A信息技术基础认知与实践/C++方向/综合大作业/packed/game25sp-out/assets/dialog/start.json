@@ -1,0 +1,342 @@
+{
+  "speakers": [
+    {
+      "id": 0,
+      "name": "玩家",
+      "color": "#00F0F0",
+      "portrait": "assets/image/character0.png",
+      "portrait_scaling_factor": [
+        0.4,
+        0.4
+      ],
+      "texture_rect": [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    },
+    {
+      "id": 1,
+      "name": "自称开发者的家伙",
+      "color": "#E88504",
+      "portrait": "assets/image/character1.png",
+      "portrait_scaling_factor": [
+        0.35,
+        0.35
+      ],
+      "texture_rect": [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    },
+    {
+      "id": 2,
+      "name": "???",
+      "color": "#E88504",
+      "portrait": "assets/image/character1.png",
+      "portrait_scaling_factor": [
+        0.35,
+        0.35
+      ],
+      "texture_rect": [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    },
+    {
+      "id": 3,
+      "name": "「旁白」",
+      "color": "#777777",
+      "portrait": "",
+      "portrait_scaling_factor": [
+        1.0,
+        1.0
+      ],
+      "texture_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "speaker_id": 3,
+      "text": "按 [Space] 读取下一行对话。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "什么状况？"
+    },
+    {
+      "speaker_id": 2,
+      "text": "什么什么状况？"
+    },
+    {
+      "speaker_id": 0,
+      "text": "卧槽！！你谁啊！？"
+    },
+    {
+      "speaker_id": 2,
+      "text": "我谁——你又是哪位啊？"
+    },
+    {
+      "speaker_id": 2,
+      "text": "莫名其妙蹦出来，还在这瞎叫唤——"
+    },
+    {
+      "speaker_id": 0,
+      "text": "不是你到底是哪位啊"
+    },
+    {
+      "speaker_id": 2,
+      "text": "我是开发者哦，而且你有必要对我是谁这件事这么耿耿于怀吗，我是谁对你来说很重要吗？要我说差不多得了，别在这闹了，谢谢您嘞。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "——至于具体是什么开发者嘛……有点不想说呢……但是如果你非要问的话，告诉你也无妨。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "哪里来那么多过场！有话就说，有——"
+    },
+    {
+      "speaker_id": 3,
+      "text": "说着，玩家就要去打那个自称开发者的家伙。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "那个叫旁白的麻烦闭嘴——我靠，好好说话别动手！"
+    },
+    {
+      "speaker_id": 3,
+      "text": "好打。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "投降喵，我的学号是 2024303504，李梓萌，U14M21090.02。这下满意了不？"
+    },
+    {
+      "speaker_id": 0,
+      "text": "哦。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "我自爆了实名和学号，然后你就“哦”一声？这是不是太敷衍了？"
+    },
+    {
+      "speaker_id": 0,
+      "text": "首先，并不是我主观上要“哦”的，我现在可能很想说各种话，然而你这个搞笑的对话系统居然连个选项功能都没有。该反思的是我吗？我并不这么认为。首先你既然实现了对话系统，你就应该把选项功能也一并做了，最好还可以点一点什么的，现在只能用键盘控制是几个意思？要我说你也差不多得了。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "没错没错，我没有做选项功能，但是我做了简单的文本排版处理。之所以让你刚才说那么一长段废话就是为了演示这个功能。当然西文换行和标点处理的不太好，还有一些神秘的 Unicode 字符估计是不支持的。但这确实怪不了我，因为我用的 Noto Sans SC，就是那个能在 Google Fonts 上面下载的开源中文字体——"
+    },
+    {
+      "speaker_id": 0,
+      "text": "喂。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "——然后你知道这个打字机动画是怎么做的吗？你不会以为我真的会在某个地方手动维护一个时钟和打字的状态吧？当然我不是说这样不行，就是不太美观。你懂的，美观非常重要——"
+    },
+    {
+      "speaker_id": 0,
+      "text": "喂……"
+    },
+    {
+      "speaker_id": 1,
+      "text": "——请不要打断我，谢谢。如我刚才所说，美观非常重要，所以写了一个 Tween 组件。这种东西一般可以拿来给动画做插值什么的。然后我拿这个做打字机动画，虽然因为插值是浮点数所以说有时候会有谜之问题，毕竟字符串的长度是离散的。不过影响不是很大——"
+    },
+    {
+      "speaker_id": 0,
+      "text": "喂！"
+    },
+    {
+      "speaker_id": 1,
+      "text": "干什么！能不能等我介绍完。我说句实话，你要真的急可以按 [LCtrl] 快进。好的我继续说了，有必要指出，做一个小游戏是很简单的，但是实现的方式是很多的。具体说来，我可以把这个写的 C-ish 的批爆，然后现代 C++ 特性完全不用，这没啥问题，而且显然做的出来。不过嘛维护起来就有点麻烦啦——"
+    },
+    {
+      "speaker_id": 0,
+      "text": "……其实我不关心你用了什么神秘的架构的……"
+    },
+    {
+      "speaker_id": 1,
+      "text": "——哦说到架构，用传统面向对象可能差点意思——都什么年代了还在用传统 OOP？——所以我用的 ECS 架构。这个架构内有三个东西，分别是实体、组件和系统。组件之间没有继承关系或者之类的什么包含关系。实体由组件组合而成。系统不关心具体的实体，系统只关心组件。说起组合，你知道有个说法叫做组合优于继承——"
+    },
+    {
+      "speaker_id": 0,
+      "text": "我觉得这句话有失偏颇。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "确实，这种事情都要具体案例具体分析。但是既然这是学生作业那做做实验我觉得也没啥。然后我用的 EnTT，不得不说真好用啊，短小精悍。本项目用到的第三方库还包括 SFML 和 nlohmann::json 等。至少我写这段话的时候只用到这些。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "……好吧。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "不过比较尴尬的是 SFML 依赖的几个库是 FetchContent 拉取下来的，网络环境有问题会失败。我倒是用的 git 子模块。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "尬聊结束了吗？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……不好意思。说起来你是怎么打开这个游戏的？是 cmake 构建的，还是直接开的我发过来的目标文件？"
+    },
+    {
+      "speaker_id": 0,
+      "text": "少废话。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "那么让我们介绍一下玩法吧，如你将要看到的，会有一些怪出来。怪会追着你发射子弹，你只要躲子弹就是了。上下左右走用方向键就是了，如果你嫌太快可以按住 [LShift] 减慢引擎的时间尺度。这绝对不是因为我自己都玩不过自己做的游戏才加进去的。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "嗯。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……按 [Z] 释放普攻，按 [X] 可以开大。按 [M] 可以打开小地图。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "当心卡输入法，所以建议先切成英文或者把大写锁定打开。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "嗯。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……攻击有充能 CD 时间，但是能保证绝对打到敌人。充能进度以蓝色字悬浮在你的角色右侧。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "没看见有啊。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "废话，现在当然没有，你觉得我有勤快到给你立绘做差分，好在这里把那个字显示出来的程度么。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "……"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……血量以红色字显示，同样在你角色的右侧。你有在听吗？"
+    },
+    {
+      "speaker_id": 0,
+      "text": "按 [LCtrl] 跳过了——能不能再说一遍？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "不行。自己重启游戏。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "回退对话进度实现起来很难吗？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……"
+    },
+    {
+      "speaker_id": 1,
+      "text": "总之……"
+    },
+    {
+      "speaker_id": 1,
+      "text": "总之，每局会刷出随机数量的敌人，你需要把他们悉数消灭。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "然后呢？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "然后会显示酷炫的动画。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "然后呢？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "然后会刷出敌人。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "有完没完？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "答案是没完——哦其实是有完，你似了游戏就结束了。"
+    },
+    {
+      "speaker_id": 0,
+      "text": "这做的是什么鬼啊！？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "不知道呢。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "对了，你不妨看看我的渲染管线设计。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……你有在听吗？"
+    },
+    {
+      "speaker_id": 0,
+      "text": "……"
+    },
+    {
+      "speaker_id": 1,
+      "text": "好吧。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "speaker_id": 0,
+      "text": "？？？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "我在测试排版。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "……你快去玩吧。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "哦，对了，按 [F1] 可以开调试模式。其实就是开挂。"
+    },
+    {
+      "speaker_id": 1,
+      "text": "别的就没什么了。"
+    }
+  ]
+}
