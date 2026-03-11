@@ -1,0 +1,82 @@
+{
+  "speakers": [
+    {
+      "id": 0,
+      "name": "玩家",
+      "color": "#00F0F0",
+      "portrait": "assets/image/character0.png",
+      "portrait_scaling_factor": [
+        0.4,
+        0.4
+      ],
+      "texture_rect": [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    },
+    {
+      "id": 1,
+      "name": "自称开发者的家伙",
+      "color": "#E88504",
+      "portrait": "assets/image/character1.png",
+      "portrait_scaling_factor": [
+        0.35,
+        0.35
+      ],
+      "texture_rect": [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    },
+    {
+      "id": 2,
+      "name": "???",
+      "color": "#E88504",
+      "portrait": "assets/image/character1.png",
+      "portrait_scaling_factor": [
+        0.35,
+        0.35
+      ],
+      "texture_rect": [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    },
+    {
+      "id": 3,
+      "name": "「旁白」",
+      "color": "#777777",
+      "portrait": "",
+      "portrait_scaling_factor": [
+        1.0,
+        1.0
+      ],
+      "texture_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "speaker_id": 1,
+      "text": "诶你怎么似了？"
+    },
+    {
+      "speaker_id": 0,
+      "text": "你能不能闭嘴？"
+    },
+    {
+      "speaker_id": 1,
+      "text": "可以，现在我要关掉这个窗口了。"
+    }
+  ]
+}
