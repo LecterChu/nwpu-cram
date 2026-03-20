@@ -1,0 +1,46 @@
+Take Assessment: Exercise 3
+1.主键：TrackingNum
+2. F={TrackingNum -> OrderNo, EmpID, EmpName, ShipToAddr, ShippedDate;
+     EmpID -> EmpName;
+     OrderNo -> ShipToAddr}
+3.
+（1）Employee表异常
+① 插入异常，在一位新入职员工着手处理订单前，系统无法检索到其相关信息。
+   例如：新入职一名叫 Tom 的员工，其 EmpID 为 0009，当尝试将 Tom 的信息插入表中时发现 TrackingNum 为 null，而 TrackingNum 是主键不允许，为空，这就导致了无法将 Tom 的数据插入表中。因而，尽管 Tom 已被正式录用，但就是无法查询到相关他的信息。
+② 删除异常，在移除某条 Shipment 记录时可能会误删员工的信息。
+   例如：表中第一行 TrackingNum 为 12435678 的 Shipment 已被客户签收（或取消，或已过期），因要删除该行数据。但若 Joe 仅处理了这一个 TrackingNum 为 12435678 的 Shipment，那么 Joe 的全部信息将会被删除，使得看起来 Joe 好似已经离职。
+③ 数据冗余，同一员工被多次存储
+   例如：一名 employee 参与了 m 个订单处理，他的 EmpId 与 EmpName 被重复存储了 m 次。更新时需对所有相关行都进行修改。若未能全部更新，就会引发异常。
+   当一位客户要变更收货地址，其订单可能关联了多个 Shipment，这时就得把相关 Shipment 的ShipToAddr全部更新。若存在遗漏，就会导致异常。
+（2）Order表异常
+① 插入异常，当一个 Order 中所含的书都没有达到足够库存时，表中无法检索到该 Order 的信息，但实际上该 Order 在理论上是存在的。
+   例如：一位顾客购入两本《数据结构与算法》和三本《人工智能导论》，然而，《数据结构与算法》的库存只剩一本，《人工智能导论》的库存仅剩两本，所以无法给该顾客发货，又因 TrackingNum 是主键，没有 Shipment 就没有 TrackingNum，所以表里就没有这个已经存在的 order 的信息。
+②删除异常，当一个 Order 仅对应一个 Shipment 时，删除该 Shipment 对应行会导致 Order 信息丢失，但该 Order 可能尚未完成。
+   例如：假设 OrderNo 为 224（表中第二行）的 Order 仅对应 TrackingNum 为 21345678 的 Shipment，当由于某些原因而不得不从表中删除该 Shipment 时，这个尚未完成（用户未收到书）的 Order 信息也随之被删除了。
+③数据冗余，同一地址（如4615 Forbes Ave）被重复存储，增加存储开销且易引发不一致。
+例如：若该地址需更新，需修改所有相关订单记录，否则部分地址未更新。
+4. 2NF  
+首先，该表不存在多值属性（注意，地址属于复合属性），因此必然符合第一范式（1NF）；
+又因为每一个非主属性(TrackingNum之外的属性)都完全依赖于候选码(本题给出的表中的候选码只有TrackingNum)，则必定是2NF;
+又由于存在传递依赖，EmpName完全依赖于EmpId，ShipToAddr完全依赖于OrderNo，故不是3NF；
+更不可能是BCNF，因为是BCNF就必定是3NF。
+5.
+（1）将Shipment进一步划分，将传递依赖于TrackingNum的属性及其直接依赖的属性分离出去构成一个新的表，并在Shipment中保留相应的外键。
+① 拆分 EmpID 和 EmpName 来构成一个新的 Employee 表，同时在 Shipment 表中保留外键 EmpID。
+② 拆分 OrderNo 和 ShipToAddr 来构成一个新的 Order 表，同时在 Shipment 表中保留外键 OrderNo。 
+③ Shipment 表仅保留 TrackingNum、EmpID、OrderNo 和 ShippedDate 四个属性。通过这样操作，消除了传递依赖，使得该表符合第三范式（3NF）。
+（2）
+①Shipment(EmpID, OrderNo, TrackingNum, ShippedDate)
+主键:TrackingNum
+外键:EmpID和OrderNo
+FD:TrackingNum -> EmpID, EmpName, ShippedDate   
+②Employee(EmpID, EmpName)
+主键:EmpID
+FD:EmpID -> EmpName
+③Order(OrderNo, ShipToAddr)
+主键:OrderNo
+FD:OrderNo -> ShipToAddr
+（3）
+ 这是3NF，因为从2NF的基础上经过上述步骤消除了非主属性对码的传递依赖。
+
+
