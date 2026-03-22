@@ -1,0 +1,227 @@
+马梓洋
+2023303588
+1.对于每个强实体E，创建一个新表
+
+Ticket(TicketID, TicketType, StartTime, EndTime, Price, Quantity)
+PK(TicketID)
+
+GuideService(GuideServiceID, GuideServiceType, Duration, MaxNumber, Price)
+PK(GuideServiceID)
+
+Visitor(VisitorID, VisitorName, IdsType, IDNO, Tel, Address, Email)
+PK(VisitorID)
+AK(IdsType, IDNO)
+
+Guider(CertificateNo, IssuanceTime, GuiderName, Nationality, IDNO, Tel)
+PK(CertificateNo)
+AK(IDNO)
+
+Language(Name)
+PK(Name)
+
+Department(DepartmentID, DepartmentName, Des, OfficeLocation)
+PK(DepartmentID)
+
+Order(OrderNumber, OrderDateTime, ContactsName, ContactsTel, PaymentType, PaymentTime, PaymentState, QRAddress)
+PK(OrderNumber)
+
+2.无仅与一个1:1标识所有者关系相关联的每个弱实体
+
+3.对于1:N或M:N标识关系相关联或参与多个关系的每个弱实体，创建一个新表T
+
+OrderItem(VisitDate, State)
+
+在1:N所有者关系的情况下，通过将所有者实体的主键作为外键包含在T中
+
+OrderItem(OrderNumber, CertificateNo, GuideServiceID, TicketID, VisitorID, VisitDate, State)
+PK(OrderNumber, TicketID, VisitDate)
+FK(OrderNumber)->Order(OrderNumber)
+FK(CertificateNo)->Guider(CertificateNo)
+FK(GuideServiceID)->GuideService(GuideServiceID)
+FK(TicketID)->Ticket(TicketID)
+FK(VisitorID)->Visitor(VisitorID)
+
+
+4.无1:1的关系
+
+5.对于每种二元1:N关系类型R，识别参与实体的表S（在N侧）和T，将T的主键作为S的外键
+
+GuideService(GuideServiceID, GuideServiceType, Duration, MaxNumber, Price, LanguageName)
+PK(GuideServiceID)
+FK(LanguageName)->Language(Name)
+
+Guider(CertificateNo, IssuanceTime, GuiderName, Nationality, IDNO, Tel, DepartmentID)
+PK(CertificateNo)
+AK(IDNO)
+FK(DepartmentID)->Department(DepartmentID)
+
+Department(DepartmentID, DepartmentName, Des, OfficeLocation, ParentDepartmentID)
+PK(DepartmentID)
+FK(ParentDepartmentID)->Department(DepartmentID)
+
+6.对于每种N元关系（包括二元N:M关系）类型R，创建一个新的表T，将参与的强或弱实体的主键作为外键包括在内，将T的主键指定为外键列表
+
+Guider_Language(CertificateNo, LanguageName)
+PK(CertificateNo, Name)
+FK (CertificateNo) -> Guider(CertificateNo),
+FK (LanguageName) -> Language(Name)
+
+7.无多值属性
+
+8.无互斥子类
+
+9.无重叠子类
+
+最终结果：
+Ticket(TicketID, TicketType, StartTime, EndTime, Price, Quantity)
+PK(TicketID)
+
+Order(OrderNumber, OrderDateTime, ContactsName, ContactsTel, PaymentType, PaymentTime, PaymentState, QRAddress)
+PK(OrderNumber)
+
+Visitor(VisitorID, VisitorName, IdsType, IDNO, Tel, Address, Email)
+PK(VisitorID)
+AK(IdsType, IDNO)
+
+GuideService(GuideServiceID, GuideServiceType, Duration, MaxNumber, Price, LanguageName)
+PK(GuideServiceID)
+FK(LanguageName)->Language(Name)
+
+Guider(CertificateNo, IssuanceTime, GuiderName, Nationality, IDNO, Tel, DepartmentID)
+PK(CertificateNo)
+AK(IDNO)
+FK(DepartmentID)->Department(DepartmentID)
+
+Guider_Language(CertificateNo, LanguageName)
+PK(CertificateNo, Name)
+FK (CertificateNo) -> Guider(CertificateNo),
+FK (LanguageName) -> Language(Name)
+
+Language(Name)
+PK(Name)
+
+Department(DepartmentID, DepartmentName, Des, OfficeLocation, ParentDepartmentID)
+PK(DepartmentID)
+FK(ParentDepartmentID)->Department(DepartmentID)
+
+OrderItem(OrderNumber, CertificateNo, GuideServiceID, TicketID, VisitorID, VisitDate, State)
+PK(OrderNumber, TicketID, VisitDate)
+FK(OrderNumber)->Order(OrderNumber)
+FK(CertificateNo)->Guider(CertificateNo)
+FK(GuideServiceID)->GuideService(GuideServiceID)
+FK(TicketID)->Ticket(TicketID)
+FK(VisitorID)->Visitor(VisitorID)
+
+生成SQL：
+DROP TABLE Language CASCADE;
+DROP TABLE Department CASCADE;
+DROP TABLE Ticket CASCADE;
+DROP TABLE "Order" CASCADE;
+DROP TABLE Visitor CASCADE;
+DROP TABLE GuideService CASCADE;
+DROP TABLE Guider CASCADE;
+DROP TABLE Guider_Language CASCADE;
+DROP TABLE OrderItem CASCADE;
+
+CREATE TABLE Language (
+    Name VARCHAR(50) PRIMARY KEY
+);
+
+CREATE TABLE Department (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(255) NOT NULL,
+    Des TEXT NOT NULL, 
+    OfficeLocation VARCHAR(255) NOT NULL,
+    ParentDepartmentID INT,
+    FOREIGN KEY (ParentDepartmentID) REFERENCES Department(DepartmentID)
+);
+
+CREATE TABLE Ticket (
+    TicketID INT PRIMARY KEY,
+    TicketType INT NOT NULL 
+        CHECK (TicketType IN (0,1,2,3)),  -- 全价票=0/学生票=1/儿童票=2/免费票=3
+    StartTime TIME NOT NULL,
+    EndTime TIME NOT NULL,
+    Price DECIMAL(10,2) NOT NULL 
+        CHECK (Price >= 0),  -- 价格不能为负
+    Quantity INT NOT NULL 
+        CHECK (Quantity > 0)  -- 库存必须大于0
+);
+
+CREATE TABLE "Order" (
+    OrderNumber INT PRIMARY KEY,
+    OrderDate DATE NOT NULL,
+	OrderTime TIME  NOT NULL,
+    ContactsName VARCHAR(255) NOT NULL,
+    ContactsTel VARCHAR(20) NOT NULL 
+        CHECK (ContactsTel ~ '^[0-9+()-]+$'),  -- 电话号码格式验证
+    PaymentType INT NULL
+        CHECK (PaymentType IN (0,1,2,3)),  -- 银联=0/微信=1/支付宝=2/现金=3
+    PaymentTime TIME,
+    PaymentState INT NOT NULL 
+        CHECK (PaymentState IN (0,1,2,3))  -- 待支付=0/已支付=1/已核销=2/已取消=3
+        DEFAULT 0,
+    QRAddress VARCHAR(255)
+);
+
+CREATE TABLE Visitor (
+    VisitorID INT PRIMARY KEY,
+    VisitorName VARCHAR(255) NOT NULL,
+    IdsType INT NOT NULL 
+        CHECK (IdsType BETWEEN 0 AND 7),  -- 证件类型范围约束
+    IDNO VARCHAR(50) NOT NULL 
+        CHECK (LENGTH(IDNO) >= 8),  -- 证件号最小长度
+    Tel VARCHAR(20) 
+        CHECK (Tel ~ '^[0-9+()-]+$'),  -- 可选电话格式验证
+    Address VARCHAR(255),
+    Email VARCHAR(255) 
+        CHECK (Email ~ '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),  -- 邮箱格式验证
+    UNIQUE (IdsType, IDNO)  -- 组合备用键
+);
+
+CREATE TABLE GuideService (
+    GuideServiceID INT PRIMARY KEY,
+    GuideServiceType INT NOT NULL CHECK (GuideServiceType IN (0,1)),
+    Duration INT NOT NULL CHECK (Duration > 0),
+    MaxNumber INT NOT NULL CHECK (MaxNumber > 0),
+    Price DECIMAL(10,2) NOT NULL,
+    LanguageName VARCHAR(50) NOT NULL,
+    FOREIGN KEY (LanguageName) REFERENCES Language(Name)
+);
+
+CREATE TABLE Guider (
+    CertificateNo VARCHAR(50) PRIMARY KEY,
+    IssuanceTime DATE NOT NULL,
+    GuiderName VARCHAR(255) NOT NULL,
+    Nationality VARCHAR(50) NOT NULL,
+    IDNO VARCHAR(50) NOT NULL CHECK (LENGTH(IDNO) = 18),
+    Tel VARCHAR(20) NOT NULL CHECK (Tel ~ '^[0-9+()-]+$'),
+    DepartmentID INT NOT NULL,
+    UNIQUE (IDNO), -- 单列备用键
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+);
+
+CREATE TABLE Guider_Language (
+    CertificateNo VARCHAR(50) NOT NULL,
+    LanguageName VARCHAR(50) NOT NULL,
+    PRIMARY KEY (CertificateNo, LanguageName),
+    FOREIGN KEY (CertificateNo) REFERENCES Guider(CertificateNo),
+    FOREIGN KEY (LanguageName) REFERENCES Language(Name)
+);
+
+CREATE TABLE OrderItem (
+    OrderNumber INT NOT NULL REFERENCES "Order"(OrderNumber),
+    CertificateNo VARCHAR(50) REFERENCES Guider(CertificateNo),
+    GuideServiceID INT REFERENCES GuideService(GuideServiceID),
+    TicketID INT NOT NULL REFERENCES Ticket(TicketID),
+    VisitorID INT NOT NULL REFERENCES Visitor(VisitorID),
+    VisitDate DATE NOT NULL,
+    State INT NOT NULL CHECK (State BETWEEN 0 AND 1),
+    PRIMARY KEY (OrderNumber, TicketID, VisitDate)
+);
+-- 添加字段注释示例
+COMMENT ON COLUMN Visitor.IdsType IS '0=身份证,1=护照,2=军官证,...7=港澳台居民居住证';
+COMMENT ON COLUMN "Order".PaymentState IS '0=待支付,1=已支付,2=已核销,3=已取消';
+
+
+
