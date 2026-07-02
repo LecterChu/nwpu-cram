@@ -1,0 +1,25 @@
+name: "🐛 Document Error / 资料修正反馈"
+description: "Report a typographical error, wrong exam key, or outdated links in notes"
+title: "[Docs Error]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill out this form to report document errors. / 请填写此表单报告资料排版、公式或习题答案错误。
+  - type: textarea
+    id: details
+    attributes:
+      label: "Error Details / 问题细节"
+      description: "Which course notes and lines have issues?"
+      placeholder: "e.g., In Discrete Mathematics course notes, Section 2 page..."
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: "Suggested Correction / 方案"
+      description: "What should the text say instead?"
+      placeholder: "Change formula to..."
+    validations:
+      required: true
