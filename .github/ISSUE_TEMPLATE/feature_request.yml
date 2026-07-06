@@ -1,0 +1,17 @@
+name: "📚 Course Material Request / 新增资料申请"
+description: "Request review notes or slides for a new course"
+title: "[Request]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Suggest new courses to add. / 欢迎申请新增西工大软件学院课程的突击资料。
+  - type: textarea
+    id: course
+    attributes:
+      label: "Course Name / 课程名称"
+      description: "Name of the course you need resources for."
+      placeholder: "e.g., Software Architecture..."
+    validations:
+      required: true
